@@ -1,7 +1,7 @@
 Upgrading from 1.9.3 to 2.2.0
 =============================
 
-**Note:** This file is written using the Markdown markup. To view the formatted result, visit the address https://github.com/ppetr/tremstats/blob/master/README_upgrade_193_to_200.md at the project repository.
+**Note:** This file is written using the Markdown markup. To view the formatted result, visit the address https://github.com/ppetr/tremstats/blob/master/README_upgrade_from_193.md at the project repository.
 
 **WARNING: Before taking any steps, backup your database and your working version of TremStats! I take no responsibility for any damage or loss of your data.**
 
