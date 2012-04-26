@@ -34,7 +34,7 @@ import MySQLdb
 # Internal libraries
 from internals.log_parse import Parser
 from internals.data_calc import Calculator
-from internals.trueskill_calc import Trueskills
+from internals.skill_calc import Skills
 from internals.pk3_read import Reader
 
 # Config
@@ -98,7 +98,7 @@ class Tremstats:
 			if self.clear_ids == True:
 				print "clearing player ids..."
 				self.dbc.execute("TRUNCATE `players`")
-				self.dbc.execute("TRUNCATE `trueskill`")
+				self.dbc.execute("TRUNCATE `skill`")
 				self.dbc.execute("TRUNCATE `nicks`")
 			else:
 				print "NOT clearing player ids, if this was desired use --clear-ids"
@@ -144,8 +144,8 @@ class Tremstats:
 			calculator = Calculator()
 			calculator.Main(self.dbc, self.players_to_update, self.calconly)
 
-                        trueskills = Trueskills()
-                        trueskills.Main(self.dbc)
+                        skills = Skills()
+                        skills.Main(self.dbc)
 
 	""" Check command line arguments """
 	def Check_command_line_arguments(self):
