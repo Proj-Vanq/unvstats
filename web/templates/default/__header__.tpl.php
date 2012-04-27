@@ -34,3 +34,4 @@
     </ul>
 
     <?php include '__pagelister__.php'; ?>
+    <?php require '__skill__.php'; ?>

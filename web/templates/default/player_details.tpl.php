@@ -101,9 +101,9 @@
 
       <tr>
         <td>Skill (<span title="The more games are played against advesaries with skills similar to a player, the less uncertain the computation is." class="tooltip">uncertainity</span>)</td>
-        <td><?php echo round($this->player_details['skill'],1); ?> (<?php echo round($this->player_details['skill_sigma'],1); ?>)</td>
-        <td><?php echo round($this->player_details['skill_a'],1); ?> (<?php echo round($this->player_details['skill_a_sigma'],1); ?>)</td>
-        <td><?php echo round($this->player_details['skill_h'],1); ?> (<?php echo round($this->player_details['skill_h_sigma'],1); ?>)</td>
+        <td><?php skill($this->player_details['skill'], $this->player_details['skill_sigma']) ?></td>
+        <td><?php skill($this->player_details['skill_a'], $this->player_details['skill_a_sigma']); ?></td>
+        <td><?php skill($this->player_details['skill_h'], $this->player_details['skill_h_sigma']); ?></td>
         <td></td>
       </tr>
 

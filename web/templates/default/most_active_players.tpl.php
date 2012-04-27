@@ -50,13 +50,9 @@
           <td><?php echo $player['player_total_efficiency']; ?></td>
           <td><?php echo $player['player_games_played']; ?></td>
           <td><?php echo $player['player_game_time_factor']; ?></td>
-          <td title="uncertainity <?php echo round($player['skill_sigma'], 1); ?>">
-            <?php echo round($player['skill'], 1); ?>
-          </td>
-          <td title="uncertainity <?php echo round($player['skill_a_sigma'], 1); ?>"><?php echo round($player['skill_a'], 1); ?>
-          </td>
-          <td title="uncertainity <?php echo round($player['skill_h_sigma'], 1); ?>"><?php echo round($player['skill_h'], 1); ?>
-          </td>
+          <?php skillTD($player['skill'], $player['skill_sigma']); ?>
+          <?php skillTD($player['skill_a'], $player['skill_a_sigma']); ?>
+          <?php skillTD($player['skill_h'], $player['skill_h_sigma']); ?>
         </tr>
       <?php endforeach; ?>
 
