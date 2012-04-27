@@ -7,7 +7,7 @@ Upgrading from 1.9.3
 
 ------------------------------------------------------------------------
 
-The only thing needed for upgrading is to create a new database table `skill` and a new view `skill_last`. On the next run the parser will detect that the skills have not been computed yet, and will automatically examine the whole history stored in the database and compute the skills of the players based on all the games in your database. __This means that after upgrading the computed skills will reflect all your stored history.__
+The only thing needed for upgrading is to create a new database table `skill` and a new view `skill_last`. On the next run the parser will detect that the skills have not been computed yet. It will automatically examine the whole history stored in the database and compute the skills of the players based on all the games in your database. __This means that after upgrading the computed skills will reflect all your stored history.__
 
 To create the table and the view, execute the following SQL statements in your database (if you're viewing the unformatted text file, ignore the lines starting with \`\`\`, they are just Markdown delimiters for the SQL code):
 
@@ -38,4 +38,9 @@ CREATE VIEW `skill_last` AS
      ( SELECT MAX(s.skill_game_id) FROM skill s
         WHERE s.skill_player_id = t.skill_player_id )
 ;
+```
+
+If for any reason you wish to recompute the skills, just erase the content of `skill` by issuing
+```sql
+TRUNCATE TABLE `skill` ;
 ```

@@ -27,17 +27,9 @@ class Skills:
         self.skillModule.SetParameters()
 
         # Update skills -----------------------------------
-        #self.dbc.execute("""SELECT MAX(g) FROM (SELECT GREATEST(COALESCE(p.`player_first_game_id`, 0), COALESCE(t.`gid`,0)) AS g FROM `players` p LEFT JOIN (SELECT MAX(`skill_game_id`) AS gid, skill_player_id FROM `skill`) AS t ON p.`player_id` = t.`skill_player_id`) AS t1""");
-        # Find the least game which is missing skill stats.
-        self.dbc.execute("""SELECT MIN(stats_game_id) FROM per_game_stats p WHERE NOT EXISTS (SELECT * FROM skill t WHERE p.stats_player_id = t.skill_player_id AND p.stats_game_id = t.skill_game_id)""");
-        result = self.dbc.fetchone()
-        ts_last_game = result[0]
-
-        self.dbc.execute("""SELECT game_id, game_length, game_winner FROM games WHERE game_id > %s""", ts_last_game);
+        self.dbc.execute("""SELECT game_id, game_length, game_winner FROM games WHERE game_id > COALESCE((SELECT MAX(`skill_game_id`) FROM `skill`), 0) AND game_winner NOT IN ('none','undefined')""");
         games = self.dbc.fetchall();
-        print "Last game with computed skills is %s, deleting newer stats and recomputing %s games." % (ts_last_game, len(games));
-
-        self.dbc.execute("""DELETE FROM `skill` WHERE `skill_game_id` > %s""", ts_last_game);
+        print "Computing skills for %s games." % (len(games));
 
         progress(games, lambda row: self.skillStats(self.dbc, row[0], totalSeconds(row[1]), row[2] == 'aliens', row[2] == 'humans'))
 
@@ -92,20 +84,26 @@ class Skills:
             self.skillModule.AdjustPlayers(map(lambda p: p.team, players))
         except Exception as e:
             print "Recomputation for game %s failed, please report to the develper.\n%s" % (game_id, e)
+
         # Update the database
-        for player in players:
-            #print "Player %s with skill %s/%s and rank %s." % (player.id, player.skill[0], player.skill[1], player.rank)
-            self.dbc.execute("""INSERT INTO `skill`
-              (`skill_player_id`, `skill_game_id`,
-               `skill_mu`, `skill_sigma`,
-               `skill_alien_mu`, `skill_alien_sigma`,
-               `skill_human_mu`, `skill_human_sigma`)
-              VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
-              (player.id, game_id, 
-                  player.total.skill[0], player.total.skill[1],
-                  player.alien.skill[0], player.alien.skill[1],
-                  player.human.skill[0], player.human.skill[1] )
-            )
+        self.dbc.execute("""BEGIN""");
+        try:
+            for player in players:
+                #print "Player %s with skill %s/%s and rank %s." % (player.id, player.skill[0], player.skill[1], player.rank)
+                self.dbc.execute("""INSERT INTO `skill`
+                  (`skill_player_id`, `skill_game_id`,
+                   `skill_mu`, `skill_sigma`,
+                   `skill_alien_mu`, `skill_alien_sigma`,
+                   `skill_human_mu`, `skill_human_sigma`)
+                  VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                  (player.id, game_id,
+                      player.total.skill[0], player.total.skill[1],
+                      player.alien.skill[0], player.alien.skill[1],
+                      player.human.skill[0], player.human.skill[1] )
+                )
+            self.dbc.execute("""COMMIT""");
+        except Exception as e:
+            self.dbc.execute("""ROLLBACK""");
 
 def loadModule(name, msg):
     try:
