@@ -1,5 +1,5 @@
-Upgrading from 1.9.3 to 2.2.0
-=============================
+Upgrading from 1.9.3
+====================
 
 **Note:** This file is written using the Markdown markup. To view the formatted result, visit the address https://github.com/ppetr/tremstats/blob/master/README_upgrade_from_193.md at the project repository.
 

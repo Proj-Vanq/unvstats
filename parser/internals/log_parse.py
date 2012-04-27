@@ -4,6 +4,8 @@
 import sys, os, re
 import time, datetime
 import shutil
+import hashlib
+import base64
 
 # External libraries
 from externals.progressbar import ProgressBar, Percentage, Bar, ETA
@@ -82,6 +84,9 @@ class Parser:
 		# Collect data
 		self.Get_weapon_ids()
 		self.Get_building_ids()
+
+                # Hash QKEYs (if necessary).
+                self.hashQKEYs();
 
 		# Read the logfile
 		result = self.Log_read()
@@ -639,6 +644,7 @@ class Parser:
 		player_id             = result[0]
 		player_ip             = result[1]
 		player_qkey           = result[2]
+                player_qkeyhash       = self.hashqkey(player_qkey)
 		player_name_uncolored = self.Remove_colors(result[3])
 		if result[4] != None:
 			player_name   = result[4]
@@ -647,11 +653,11 @@ class Parser:
 		t = self.Gametime_seconds(gametime)
 
 		# Check against MySQL
-		self.dbc.execute("SELECT `player_id`, `player_name`, `player_first_game_id` FROM `players` WHERE `player_qkey` = %s", (player_qkey))
+		self.dbc.execute("SELECT `player_id`, `player_name`, `player_first_game_id` FROM `players` WHERE `player_qkey` = %s", (player_qkeyhash))
 		result = self.dbc.fetchone()
 		if result == None:
 			# We have to insert this as new player
-			self.dbc.execute("INSERT INTO `players` (`player_name`, `player_qkey`, `player_name_uncolored`, `player_first_game_id`, `player_first_gametime`, `player_last_game_id`, `player_last_gametime`) VALUES (%s, %s, %s, %s, %s, %s, %s)", (player_name, player_qkey, player_name_uncolored, self.game_id, self.game_timestamp, self.game_id, self.game_timestamp))
+			self.dbc.execute("INSERT INTO `players` (`player_name`, `player_qkey`, `player_name_uncolored`, `player_first_game_id`, `player_first_gametime`, `player_last_game_id`, `player_last_gametime`) VALUES (%s, %s, %s, %s, %s, %s, %s)", (player_name, player_qkeyhash, player_name_uncolored, self.game_id, self.game_timestamp, self.game_id, self.game_timestamp))
 			self.dbc.execute("SELECT LAST_INSERT_ID()")
 			result = self.dbc.fetchone()
 			mysql_id = result[0]
@@ -677,7 +683,7 @@ class Parser:
 				self.dbc.execute("UPDATE `nicks` SET `nick_name` = %s WHERE `nick_id` = %s", (player_name, result[1]))
 
 		# Add the player to internal list
-		self.players[player_id] = {'name': player_name, 'name_uncolored': player_name_uncolored, 'id': mysql_id, 'qkey': player_qkey, 'ip': player_ip, 'team': 'spectator', 'team_time': t}
+                self.players[player_id] = {'name': player_name, 'name_uncolored': player_name_uncolored, 'id': mysql_id, 'qkey': player_qkey, 'qkeyhash': player_qkeyhash, 'ip': player_ip, 'team': 'spectator', 'team_time': t}
 
 		# If the player wasn't in the current game, we set his gamecount up by one
 		if not self.game_players.has_key(mysql_id):
@@ -717,8 +723,9 @@ class Parser:
 			return
 
 		result = match.groups()
-		player_id   = result[0]
-		player_qkey = result[1]
+		player_id       = result[0]
+		player_qkey     = result[1]
+                player_qkeyhash = self.hashqkey(player_qkey)
 		player_name_uncolored = self.Remove_colors(result[2])
 		if result[3] != None:
 			player_name = result[3]
@@ -1089,3 +1096,18 @@ class Parser:
 		                    (passed, yescount, nocount, count, gametime, self.vote[team]))
 		self.vote[team] = None
 
+        # QKEY hashing -------------------------------------------------
+
+        def hashqkey(self, qkey):
+            # The Base64-encoded SHA1 hash has 28 characters, so the result
+            # still fits in 32 characters. Hence, we don't need to alter the database.
+            return "SHA|" + base64.b64encode(hashlib.sha1(qkey).digest())
+
+        # Replace all QKEYs by their hashes.
+        def hashQKEYs(self):
+            self.dbc.execute("SELECT `player_qkey` FROM `players` WHERE `player_qkey` NOT LIKE 'SHA|%'")
+            rows = self.dbc.fetchall()
+            if len(rows) > 0:
+		print "Hashing QKEYs ..."
+                for row in rows:
+                    self.dbc.execute("UPDATE `players` SET `player_qkey` = %s WHERE `player_qkey` = %s", (self.hashqkey(row[0]), row[0]))
