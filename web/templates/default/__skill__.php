@@ -2,9 +2,9 @@
     function skill($skill, $sigma) {
         if (($skill > 0) && ($sigma > 0)) {
             echo round($skill, 1);
-            echo " (";
+            echo " <span title='uncertainity'>(";
             echo round($sigma, 1);
-            echo ")";
+            echo ")</span>";
         } else
             echo "<span class='n-a'></span>";
     }

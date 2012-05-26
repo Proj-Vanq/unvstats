@@ -115,6 +115,21 @@ $top_score = $db->GetRow("SELECT player_id,
                           LIMIT 0, 1",
                           array($game_cutoff));
 
+$top_skill = $db->GetRow("SELECT player_id,
+                                 player_name,
+                                 skill,
+                                 skill_sigma
+                          FROM players p,
+                            (SELECT skill_player_id AS skill_player_id,
+                                    skill_mu - 3 * skill_sigma AS skill,
+                                    skill_sigma
+                             FROM skill) s
+                          WHERE s.skill_player_id = p.player_id
+                            AND player_last_game_id > ?
+                          ORDER BY skill DESC
+                          LIMIT 0, 1",
+                          array($game_cutoff));
+
 $most_played_map = $db->GetRow("SELECT map_id,
                                        if (map_longname != '', map_longname, map_name) AS map_text_name,
                                        mapstat_games,
@@ -139,6 +154,7 @@ $overview['top_feeder']         = $top_feeder;
 $overview['top_teamkiller']     = $top_teamkiller;
 $overview['most_active_player'] = $most_active_player;
 $overview['top_score']          = $top_score;
+$overview['top_skill']          = $top_skill;
 
 $overview['most_played_map'] = $most_played_map;
 

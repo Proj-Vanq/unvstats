@@ -195,6 +195,10 @@
         <td><span class="playername"><a href="player_details.php?player_id=<?php echo $this->overview['top_score']['player_id'] ?>"><?php echo replace_color_codes($this->overview['top_score']['player_name']); ?></a></span> (Score: <?php echo $this->overview['top_score']['stats_score']; ?>)</td>
       </tr>
       <tr>
+        <td>Top Skill</td>
+        <td><span class="playername"><a href="player_details.php?player_id=<?php echo $this->overview['top_skill']['player_id'] ?>"><?php echo replace_color_codes($this->overview['top_skill']['player_name']); ?></a></span> (Skill: <?php skill($this->overview['top_skill']['skill'], $this->overview['top_skill']['skill_sigma']); ?>)</td>
+      </tr>
+      <tr>
         <td>Most Active Player</td>
         <td><span class="playername"><a href="player_details.php?player_id=<?php echo $this->overview['most_active_player']['player_id'] ?>"><?php echo replace_color_codes($this->overview['most_active_player']['player_name']); ?></a></span> (Game-time factor: <?php echo $this->overview['most_active_player']['player_game_time_factor']; ?>)</td>
       </tr>
