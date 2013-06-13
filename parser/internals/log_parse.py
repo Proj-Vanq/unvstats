@@ -2,6 +2,7 @@
 
 # Main imports
 import sys, os, re
+import string
 import time, datetime
 import shutil
 import hashlib
@@ -23,7 +24,7 @@ class Parser:
 
 		self.RE_GAMETIME      = re.compile("([0-9]+):([0-9]{2}):([0-9]{2})")
 
-		self.RE_UNCOLOR_NAME  = re.compile("\\^[^\\^]")
+		self.RE_UNCOLOR_NAME  = re.compile("\\^[*0-o]") # need to handle ^^ separately
 
 					# ClientConnect: ID [IP] (GUID) "NAME" "COLORNAME"
 		self.RE_CONNECT      = re.compile("^([0-9]+) \\[([^\\]]+)\\] \\(([^\\)]+)\\) \"([^\"]*)\"(?: \")?([^\"]+)?\"?$")
@@ -131,9 +132,10 @@ class Parser:
 			self.buildings[row[1]] = row[0]
 
 	""" Remove colors from string """
-	def Remove_colors(self, string):
-		string = re.sub(self.RE_UNCOLOR_NAME, '', string)
-		return string
+	def Remove_colors(self, str):
+		str = string.replace(str, '^^', '\n') # \n Can't Happen in names, and we want ^^ → ^
+		str = re.sub(self.RE_UNCOLOR_NAME, '', str)
+		return string.replace(str, '\n', '^');
 
 	def Player_is_unnamed(self, name):
 		for part in CONFIG['UNNAMED_PLAYER']:
