@@ -5,7 +5,7 @@ INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `b
 INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (5, 'trapper', 'Trapper', 'Alien/Structures/Trapper.png', 'alien', 1);
 INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (6, 'booster', 'Booster', 'Alien/Structures/Booster.png', 'alien', 3);
 INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (7, 'hive', 'Hive', 'Alien/Structures/Hive.png', 'alien', 1);
-INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (8, 'hovel', 'Hovel', 'Alien/Structures/Hovel.png', 'alien', 0);
+INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (8, 'leech', 'Leech', 'Alien/Structures/Leech.png', 'alien', 4);
 INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (9, 'telenode', 'Telenode', 'Human/Structures/Telenode.png', 'human', 6);
 INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (10, 'mgturret', 'MG Turret', 'Human/Structures/Turret.png', 'human', 1);
 INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (11, 'tesla', 'Tesla', 'Human/Structures/Tesla.png', 'human', 1);
@@ -14,6 +14,7 @@ INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `b
 INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (14, 'medistat', 'Medi Station', 'Human/Structures/MedStat.png', 'human', 2);
 INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (15, 'reactor', 'Reactor', 'Human/Structures/Reactor.png', 'human', 10);
 INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (16, 'repeater', 'Repeater', 'Human/Structures/Repeater.png', 'human', 2);
+INSERT INTO `buildings` (`building_id`, `building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES (17, 'drill', 'Drill', 'Human/Structures/Drill.png', 'human', 4);
 
 INSERT INTO `weapons` (`weapon_id`, `weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES (1, 'MOD_SHOTGUN', 'Shotgun', 'Human/Weapons/Shotgun.png', 'human');
 INSERT INTO `weapons` (`weapon_id`, `weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES (2, 'MOD_BLASTER', 'Blaster', 'Human/Weapons/Blaster.png', 'human');
