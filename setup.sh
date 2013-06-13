@@ -180,6 +180,7 @@ echo ""
 
 PARSER_CONFIG="parser/config.py"
 echo "updating file '$PARSER_CONFIG'..."
+test -f "$PARSER_CONFIG" || cp -a "$PARSER_CONFIG".default "$PARSER_CONFIG"
 sed --in-place=.bak -e "s/CONFIG\['MYSQL_HOSTNAME'\] = '[^']*\?'/CONFIG\['MYSQL_HOSTNAME'\] = '$MYSQL_HOST'/g" $PARSER_CONFIG
 sed --in-place -e "s/CONFIG\['MYSQL_USERNAME'\] = '[^']*\?'/CONFIG\['MYSQL_USERNAME'\] = '$MYSQL_USER'/g" $PARSER_CONFIG
 sed --in-place -e "s/CONFIG\['MYSQL_PASSWORD'\] = '[^']*\?'/CONFIG\['MYSQL_PASSWORD'\] = '$MYSQL_PASS'/g" $PARSER_CONFIG
@@ -189,6 +190,7 @@ sed --in-place -e "s@CONFIG\['PK3_DIR'\] *\?= '[^']*\?'@CONFIG\['PK3_DIR'\] = '$
 
 WEB_CONFIG="web/core/config.inc.php"
 echo "updating file '$WEB_CONFIG'..."
+test -f "$WEB_CONFIG" || cp -a "$WEB_CONFIG".default "$WEB_CONFIG"
 sed --in-place=.bak -e "s@define('MYSQL_HOSTNAME', '[^']*\?')@define('MYSQL_HOSTNAME', '$MYSQL_HOST')@g" $WEB_CONFIG
 sed --in-place -e "s@define('MYSQL_USERNAME', '[^']*\?')@define('MYSQL_USERNAME', '$MYSQL_USER')@g" $WEB_CONFIG
 sed --in-place -e "s@define('MYSQL_PASSWORD', '[^']*\?')@define('MYSQL_PASSWORD', '$MYSQL_PASS')@g" $WEB_CONFIG
