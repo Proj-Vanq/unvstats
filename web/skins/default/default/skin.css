@@ -271,38 +271,38 @@ td.playerothernames {
   vertical-align: top;
 }
 
-span.quakecolor_black {
-  color: #000000;
-}
-
-span.quakecolor_red {
-  color: #FF0000;
-
-}
-
-span.quakecolor_green {
-  color: #00FF00;
-}
-
-span.quakecolor_yellow {
-  color: #FFFF00;
-}
-
-span.quakecolor_blue {
-  color: #0000FF;
-}
-
-span.quakecolor_cyan {
-  color: #00FFFF;
-}
-
-span.quakecolor_magenta {
-  color: #FF00FF;
-}
-
-span.quakecolor_white {
-  color: #FFFFFF;
-}
+span.quakecolor_0, span.quakecolor_black   { color: #000000; }
+span.quakecolor_1, span.quakecolor_red     { color: #FF0000; }
+span.quakecolor_2, span.quakecolor_green   { color: #00FF00; }
+span.quakecolor_3, span.quakecolor_yellow  { color: #FFFF00; }
+span.quakecolor_4, span.quakecolor_blue    { color: #0000FF; }
+span.quakecolor_5, span.quakecolor_cyan    { color: #00FFFF; }
+span.quakecolor_6, span.quakecolor_magenta { color: #FF00FF; }
+span.quakecolor_7, span.quakecolor_white   { color: #FFFFFF; }
+span.quakecolor_8  { color: #ff7f00; }
+span.quakecolor_9  { color: #7f7f7f; }
+span.quakecolor_10 { color: #bfbfbf; }
+span.quakecolor_11 { color: #bfbfbf; }
+span.quakecolor_12 { color: #007f00; }
+span.quakecolor_13 { color: #7f7f00; }
+span.quakecolor_14 { color: #00007f; }
+span.quakecolor_15 { color: #7f0000; }
+span.quakecolor_16 { color: #7f3f00; }
+span.quakecolor_17 { color: #ff9919; }
+span.quakecolor_18 { color: #007f7f; }
+span.quakecolor_19 { color: #7f007f; }
+span.quakecolor_20 { color: #007fff; }
+span.quakecolor_21 { color: #7f00ff; }
+span.quakecolor_22 { color: #3399cc; }
+span.quakecolor_23 { color: #ccffcc; }
+span.quakecolor_24 { color: #006633; }
+span.quakecolor_25 { color: #ff0033; }
+span.quakecolor_26 { color: #b21919; }
+span.quakecolor_27 { color: #993300; }
+span.quakecolor_28 { color: #cc9933; }
+span.quakecolor_29 { color: #999933; }
+span.quakecolor_30 { color: #ffffbf; }
+span.quakecolor_31 { color: #ffff7f; }
 
 div.update {
   text-align: right;

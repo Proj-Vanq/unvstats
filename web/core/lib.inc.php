@@ -16,18 +16,6 @@ function AdoDB_Count_Handler ($query, $args) {
 }
 
 function replace_color_codes ($string) {
-  // Define colors for codes
-  $colors = array(
-    '0' => 'black',  // Black
-    '1' => 'red',    // Red
-    '2' => 'green',  // Green
-    '3' => 'yellow', // Yellow
-    '4' => 'blue',   // Blue
-    '5' => 'cyan',   // Cyan
-    '6' => 'magenta',// Magenta
-    '7' => 'white',  // White
-  );
-
   // escape html reserved chars
   $string = htmlspecialchars($string, ENT_QUOTES);
 
@@ -60,15 +48,23 @@ function replace_color_codes ($string) {
       // Get first character after the token
       $num = substr($part, 0, 1);
 
-      // Check if the first character exists in the color array
-      if (!array_key_exists($num, $colors)) {
-        $num = ((ord($num)) - (ord('0'))) & 7;
+      if ($num == '*') {
+        // just ignore it
+      } else if ($num == '^') {
+        // literal ^
+        $result .= $part;
+      } else if (ord($num) >= 48 && ord($num) < 112) {
+        // valid colour control ('0' .. 'o')
+        $num = (ord($num) - 48) & 31;
+
+        if ($color_open) $result .= '</span>';
+
+        $result .= '<span class="quakecolor_'.$num.'">'.substr($part, 1);
+        $color_open = true;
+      } else {
+        // not valid, so include as a literal
+        $result .= '^'.$part;
       }
-
-      if ($color_open) $result .= '</span>';
-
-      $result .= '<span class="quakecolor_'.$colors[$num].'">'.substr($part, 1);
-      $color_open = true;
     }
 
     // Get next token
