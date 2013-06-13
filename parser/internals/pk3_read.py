@@ -3,13 +3,14 @@
 import sys, os, re, zipfile
 from PIL import Image
 import StringIO
+import tempfile
 
 """ Class: Reader """
 class Reader:
 	""" Init Reader """
 	def Main(self, dbc, Check_map_in_database, pk3_dir, one_pk3):
 		# Regular expressions
-		self.RE_FILESCAN = re.compile("^(levelshots|scripts)/(.+)\.(jpg|tga|arena)$")
+		self.RE_FILESCAN = re.compile("^(levelshots|scripts)/(.+)\.(png|jpg|webp|tga|arena)$")
 		self.RE_ARENA    = re.compile("longname\s*\"(.*?)\"")
 
 		# Localize parents function
@@ -61,7 +62,7 @@ class Reader:
 			mapname   = result[1]
 			extension = result[2]
 
-			if filetype == 'levelshots' and (extension == 'jpg' or extension == 'tga'):
+			if filetype == 'levelshots' and extension != 'arena':
 				self.Save_levelshot(pk3, mapname, extension)
 			elif filetype == 'scripts' and extension == 'arena':
 				self.Save_mapname(pk3, mapname)
@@ -69,16 +70,45 @@ class Reader:
 	""" Save a levelshot """
 	def Save_levelshot(self, pk3, mapname, extension):
 		data = pk3.read('levelshots/' + mapname + '.' + extension)
+		webp = None
+		png = None
 
 		try:
+			if extension == 'webp':
+				# We need to convert to PNG: use dwebp
+				# This is expected to break on Windows (or maybe any non-POSIX)
+				webp = tempfile.NamedTemporaryFile(suffix = '.webp')
+				png = tempfile.NamedTemporaryFile(suffix = '.png')
+
+				webp.file.write(data)
+				webp.file.flush()
+
+				print 'running dwebp %s -o %s' % (webp.name, png.name)
+				ret = os.spawnlp(os.P_WAIT, 'dwebp', 'dwebp', webp.name, '-o', png.name)
+				if ret:
+					raise Exception('dwebp returned %d' % ret)
+
+				png.file.seek(0)
+				data = png.file.read()
+				# now we have PNG
+
 			image = Image.open(StringIO.StringIO(data))
-			image.thumbnail((160, 120), Image.BICUBIC)
+			image.thumbnail((256, 144), Image.BICUBIC)
 			levelshot = StringIO.StringIO()
 			image.save(levelshot, 'JPEG')
 			levelshot_string = levelshot.getvalue()
-		except:
-			print "Error while processing levelshot " + mapname + "." + extension
+		except Exception as e:
+			print "Error while processing levelshot %s.%s: %s" % (mapname, extension, e)
+			if webp != None:
+				webp.file.close()
+			if png != None:
+				png.file.close()
 			return
+
+		if webp != None:
+			webp.file.close()
+		if png != None:
+			png.file.close()
 
 		# Image thumbnail created, insert it into database
 		map_id    = self.Check_map_in_database(mapname)
