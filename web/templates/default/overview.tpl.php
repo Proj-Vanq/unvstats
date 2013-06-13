@@ -97,8 +97,8 @@
 
     <tbody>
       <tr>
-        <td rowspan="5">
-          <img width="160" height="120" alt="<?php echo htmlspecialchars($this->running_map['map_text_name'],ENT_QUOTES); ?>" src="_levelshot.php?map_id=<?php echo ($this->running_map['map_id']); ?>" />
+        <td rowspan="5" class="levelshot">
+          <img class="levelshot" alt="<?php echo htmlspecialchars($this->running_map['map_text_name'],ENT_QUOTES); ?>" src="_levelshot.php?map_id=<?php echo ($this->running_map['map_id']); ?>" />
         </td>
         <td><strong>Map Name</strong></td>
         <td><strong><a href="map_details.php?map_id=<?php echo $this->running_map['map_id'] ; ?>"><?php echo replace_color_codes($this->running_map['map_text_name']); ?></a></strong></td>
@@ -221,8 +221,8 @@
 
     <tbody>
       <tr>
-        <td rowspan="5">
-          <img width="160" height="120" alt="<?php echo htmlspecialchars($this->overview['most_played_map']['map_text_name'],ENT_QUOTES); ?>" src="_levelshot.php?map_id=<?php echo ($this->overview['most_played_map']['map_id']); ?>" />
+        <td rowspan="5" class="levelshot">
+          <img class="levelshot" alt="<?php echo htmlspecialchars($this->overview['most_played_map']['map_text_name'],ENT_QUOTES); ?>" src="_levelshot.php?map_id=<?php echo ($this->overview['most_played_map']['map_id']); ?>" />
         </td>
         <td><strong>Map Name</strong></td>
         <td><strong><a href="map_details.php?map_id=<?php echo $this->overview['most_played_map']['map_id'] ; ?>"><?php echo replace_color_codes($this->overview['most_played_map']['map_text_name']); ?></a></strong></td>

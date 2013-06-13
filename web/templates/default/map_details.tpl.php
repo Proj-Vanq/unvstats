@@ -23,7 +23,7 @@
       <tr>
         <td>Short Name</td>
         <td><?php echo $this->map_details['map_name']; ?></td>
-        <td rowspan="7" style="vertical-align:top"><img width="160" height="120" alt="<?php echo htmlspecialchars($this->map_details['map_text_name'],ENT_QUOTES); ?>" src="_levelshot.php?map_id=<?php echo ($this->map_details['map_id']); ?>" /></td>
+        <td rowspan="7" class="levelshot"><img class="levelshot" alt="<?php echo htmlspecialchars($this->map_details['map_text_name'],ENT_QUOTES); ?>" src="_levelshot.php?map_id=<?php echo ($this->map_details['map_id']); ?>" /></td>
       </tr>
       <tr>
         <td>Games</td>

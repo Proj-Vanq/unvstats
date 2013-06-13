@@ -39,8 +39,8 @@
           <tr class="spacer"></tr>
         <?php endif; ?>
         <tr>
-          <td rowspan="5">
-            <img width="160" height="120" alt="<?php echo htmlspecialchars($game['map_name'],ENT_QUOTES); ?>" src="_levelshot.php?map_id=<?php echo ($game['map_id']); ?>" />
+          <td rowspan="5" class="levelshot">
+            <img class="levelshot" alt="<?php echo htmlspecialchars($game['map_name'],ENT_QUOTES); ?>" src="_levelshot.php?map_id=<?php echo ($game['map_id']); ?>" />
           </td>
           <td><strong>Map Name</strong></td>
           <td><strong><a href="map_details.php?map_id=<?php echo $game['map_id'] ; ?>"><?php echo replace_color_codes($game['map_text_name']); ?></a></strong></td>

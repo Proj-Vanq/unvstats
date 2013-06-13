@@ -231,7 +231,7 @@ tbody.padded td {
   padding: 1em;
 }
 
-tr {
+tr td {
   background-color: #22262a;
 }
 
@@ -370,7 +370,7 @@ col.weaponicon {
 }
 
 col.levelshot {
-  width: 170px;
+  width: 266px;
 }
 
 col.chart {
@@ -379,6 +379,17 @@ col.chart {
 
 col.balancebar {
   width: 410px;
+}
+
+td.levelshot {
+  text-align: center;
+  vertical-align: middle;
+}
+
+img.levelshot {
+  max-height: 144px;
+  max-width: 256px;
+  border: 0px;
 }
 
 input.sig {
