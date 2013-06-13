@@ -20,7 +20,7 @@ CONFIG['MYSQL_DATABASE'] = ''
 CONFIG['GAMES_LOG']      = '/path/to/your/games.log'
 
 # Directory which contains the PK3 files. Must be absolute.
-CONFIG['PK3_DIR']        = '/root/.tremulous/base/'
+CONFIG['PK3_DIR']        = '/root/.Unvanquished/main/'
 
 # Name/Partname of unnamed nick (case sensitive)
 # Lakitu7's patch have these cvars: 

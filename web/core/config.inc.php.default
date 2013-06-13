@@ -1,6 +1,6 @@
 <?php
 /**
- * Project:     Tremstats
+ * Project:     Unvstats
  * File:        config.inc.php
  *
  * For license and version information, see /index.php
@@ -52,13 +52,13 @@ define('TRESHOLD_MIN_GAMES_PLAYED', 25);
 define('TRESHOLD_MAX_GAMES_PAUSED', 500);
 
 // Tremulous server name
-define('TREMULOUS_SERVER_NAME', 'Tremulous 1.2 server');
+define('TREMULOUS_SERVER_NAME', 'Unvanquished server');
 
 /**
- * Address of the tremulous server to report from, should
- * be something like 'serverip:port'. The default Tremulous
- * port is 30720, so if you want to watch your local server,
- * use 'localhost:30720'.
+ * Address of the Unvanquished server to report from, should
+ * be something like 'serverip:port'. The default Unvanquished
+ * port is 27960, so if you want to watch your local server,
+ * use 'localhost:27960'.
  */
 define('TREMULOUS_ADDRESS', '');
 

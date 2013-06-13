@@ -1,6 +1,10 @@
-Tremstats Too 2.3.0
+Unvstats 2.3.0
 ===============================================================================
-The program parses Tremulous 1.2 games.log and stores the extracted information in a database. Then it can be viewed through a set of PHP pages.
+The program parses Unvanquished games.log and stores the extracted information in a database. Then it can be viewed through a set of PHP pages.
+
+It is derived from Tremstats Too.
+
+From Tremstats Too:
 
 Version 2.0.0 adds the computation of individual players' skills based on the [TrueSkill](http://en.wikipedia.org/wiki/Trueskill) algorithm.
 
@@ -10,9 +14,11 @@ Version 2.2.0 renames all references to the term _TrueSkill_ to avoid legal issu
 
 Version 2.3.0 hashes QKEYs so that they cannot misused. It upgrades the database automatically. **Note** that the database becomes backward incompatible.
 
+
+
 Requirements
 -------------------------------------------------------------------------------
-You need atleast the following things for the Tremulous server:
+You need at least the following things for the Unvanquished server:
 
  -  Python 2.6
  -  Site-Packages:                (common .deb or .rpm package name)
@@ -27,11 +33,11 @@ And the following things for the webserver (may be the same box):
 
 A server running:
 
- - Tremulous 1.2
+ - Unvanquished
 
 *Note:* Windows specific code has been removed from the log parser, this plus
       the lack of any testing whatsoever on Windows almost guarantees
-      that you will need to fix tremstats.py if you plan to parse
+      that you will need to fix unvstats.py if you plan to parse
       logs on a Windows platform.
 
 
@@ -55,14 +61,14 @@ First you have to setup your MySQL database. So create a new database or change
 to an existing one. Then execute both of the SQL files _structure.sql_ and
 _data.sql_.
 
-Now copy all files from the _parser_ directory to a directory on your Tremulous
-server, for example _/usr/local/games/tremstats/_. Then give the mainfile
-execute rights by typing `chmod a+x tremstats.py`.
+Now copy all files from the _parser_ directory to a directory on your Unvanquished
+server, for example _/usr/local/games/unvstats/_. Then give the mainfile
+execute rights by typing `chmod a+x unvstats.py`.
 
 Then copy _config.py.default_ to _config.py_, open _config.py_ in your prefered
 texteditor and edit the first few lines and enter your MySQL data and location
 of the _games.log_ and all your custom maps PK3s. After this part is done, you
-may parse your log which was created so far by typing `./tremstats.py`.
+may parse your log which was created so far by typing `./unvstats.py`.
 
 You may want to parse your logfile every 12 hours or something like that.
 (as your database gets bigger, calculating stats will take more time, so
@@ -70,7 +76,7 @@ You may want to parse your logfile every 12 hours or something like that.
  processing power to spare -Rezyn )
 If you use crontab, you can enter the following line into _/etc/crontab_:
 
-    0 */12 * * * root /usr/local/games/tremstats/tremstats.py
+    0 */12 * * * root /usr/local/games/unvstats/unvstats.py
 
 For further information about crontab, see Google.
 
@@ -78,15 +84,15 @@ Now, as you have setup all important things, you also want to see some output.
 So copy all files from _web_ to a directory reachable from the internet.  Copy
 the file _core/config.inc.php.default_ to _core/config.inc.php_, edit
 _core/config.inc.php_ and enter your MySQL data here again. The last setting in
-this file is the address of your tremulous server. This should be something
-like `localhost:30720` or an external address. If you have done this step, you
-have done everything. Have fun with Tremstats!
+this file is the address of your Unvanquished server. This should be something
+like `localhost:27960` or an external address. If you have done this step, you
+have done everything. Have fun with Unvstats!
 
 
 
-Notices on tremstats.py
+Notices on unvstats.py
 -------------------------------------------------------------------------------
-Tremstats.py offers you some nice features. Type `tremstats.py --help` for
+unvstats.py offers you some nice features. Type `unvstats.py --help` for
 more information.
 
 
@@ -126,8 +132,8 @@ information and gave me lots of tips. Your are the best!
 
 Contact
 -------------------------------------------------------------------------------
-Contact Petr at the [github project webpage](https://github.com/ppetr/tremstats).
-Do not contact Rezyn or DASPRiD about problems with this *Tremstats* fork.
+Contact us at the [github project webpage](https://github.com/dsalt/unvstats).
+Do not contact Rezyn, DASPRiD or Petr about problems with this *Tremstats* fork.
 
 ### Tremstats 2.3.0
 

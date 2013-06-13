@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
-" Project:     Tremstats
-" File:        tremstats.py
+" Project:     Unvstats
+" File:        unvstats.py
 "
 " This program is free software; you can redistribute it and/or
 " modify it under the terms of the GNU Lesser General Public
@@ -40,9 +40,9 @@ from internals.pk3_read import Reader
 # Config
 from config import CONFIG
 
-""" Mainclass: Tremstats """
-class Tremstats:
-	""" Init Tremstats """
+""" Mainclass: Unvstats """
+class Unvstats:
+	""" Init Unvstats """
 	def Main(self):
 		# Internal datas
 		self.games_log         = CONFIG['GAMES_LOG']
@@ -155,7 +155,7 @@ class Tremstats:
 
 			if len(arg_data) == 1:
 				if arg_data[0] == '--help':
-					print "Usage of tremstats.py:"
+					print "Usage of unvstats.py:"
 					print "----------------------------------------------------"
 					print "--help:        Print this help"
 					print "--reparse:     Reparses all archived logs"
@@ -181,7 +181,7 @@ class Tremstats:
 				elif arg_data[0] == '--clear-ids':
 					self.clear_ids = True
 				else:
-					sys.exit("Invalid arguments, see `tremstats.py --help`")
+					sys.exit("Invalid arguments, see `unvstats.py --help`")
 			elif len(arg_data) == 2:
 				if arg_data[0] == '--log':
 					self.games_log  = arg_data[1]
@@ -195,7 +195,7 @@ class Tremstats:
 				elif arg_data[0] == '--pw':
 					CONFIG['MYSQL_PASSWORD'] = arg_data[1]
 				else:
-					sys.exit("Invalid arguments, see `tremstats.py --help`")
+					sys.exit("Invalid arguments, see `unvstats.py --help`")
 
 	""" Connect to MySQL """
 	def MySQL_connect(self):
@@ -236,5 +236,5 @@ class Tremstats:
 
 """ Init Application """
 if __name__ == '__main__':
-	app = Tremstats()
+	app = Unvstats()
 	app.Main()

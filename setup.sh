@@ -1,20 +1,20 @@
 #!/bin/bash
 
-echo "Tremstats Too simple setup script"
+echo "Unvstats simple setup script"
 echo "you will be prompted for these things:"
 echo "  mysql host, username, password"
-echo "  mysql name to use for Tremstats database"
+echo "  mysql name to use for Unvstats database"
 echo "  ip:port of server (optional, for server status)"
 echo "  full path to games.log and map pk3 files"
 echo "  full path to copy website files"
-echo "  full path to copy tremstats log parser"
+echo "  full path to copy unvstats log parser"
 echo ""
 read -p "press enter to continue" INPUT
 echo ""
 
-if [ ! -f "sql/data.sql" ] || [ ! -f "parser/tremstats.py" ] ; then
+if [ ! -f "sql/data.sql" ] || [ ! -f "parser/unvstats.py" ] ; then
   echo "Sorry, this script must be run from within"
-  echo " the Tremstats package directory (as ./setup.sh)"
+  echo " the Unvstats package directory (as ./setup.sh)"
   exit
 fi
 
@@ -22,15 +22,15 @@ fi
 MYSQL_HOST="localhost"
 MYSQL_USER=""
 MYSQL_PASS=""
-MYSQL_NAME="tremstats"
+MYSQL_NAME="unvstats"
 
 SERVER_IP="localhost:30720"
 SERVER_NAME="Unnamed Server"
 
-PATH_LOG="$HOME/.tremulous/base/games.log"
-PATH_MAPS="$HOME/tremulous/base"
+PATH_LOG="$HOME/.Unvanquished/main/games.log"
+PATH_MAPS="$HOME/unvanquished/main"
 PATH_WEBSITE="/var/www/html"
-PATH_PARSER="$HOME/tremstats"
+PATH_PARSER="$HOME/unvstats"
 COPY_WEBSITE="no"
 COPY_PARSER="no"
 
@@ -94,7 +94,7 @@ MYSQL_PASS=$RESULT
 request "Enter mysql database" "mysql database name" "$MYSQL_NAME"
 MYSQL_NAME=$RESULT
 
-echo "Tremulous server information"
+echo "Unvanquished server information"
 echo ""
 
 request "Enter path to games.log" "games.log" "$PATH_LOG"
@@ -103,10 +103,10 @@ PATH_LOG=$RESULT
 request "Enter path to map pk3 files" "map pk3 files" "$PATH_MAPS"
 PATH_MAPS=$RESULT
 
-request "Enter tremulous server ip" "trem server ip" "$SERVER_IP"
+request "Enter Unvanquished server ip" "unv server ip" "$SERVER_IP"
 SERVER_IP=$RESULT
 
-request "Enter tremulous server name" "trem server name" "$SERVER_NAME"
+request "Enter Unvanquished server name" "unv server name" "$SERVER_NAME"
 SERVER_NAME=$RESULT
 
 echo "INSTALLATION paths"
@@ -121,13 +121,13 @@ echo "say no here, and copy the 'web' directory to the desired location"
 request "Do you want to install website files [yes/no]" "copy www" "$COPY_WEBSITE"
 COPY_WEBSITE=$RESULT
 
-request "Enter path to install tremstats.py" "parser path" "$PATH_PARSER"
+request "Enter path to install unvstats.py" "parser path" "$PATH_PARSER"
 PATH_PARSER=$RESULT
 
 echo "note: if you do not have permissions to write $PATH_PARSER,"
 echo "say no here, and copy the 'parser' directory to the desired location"
 
-request "Do you want to install tremstats.py files [yes/no]" "copy parser" "$COPY_PARSER"
+request "Do you want to install unvstats.py files [yes/no]" "copy parser" "$COPY_PARSER"
 COPY_PARSER=$RESULT
 
 savestate
@@ -165,7 +165,7 @@ else
 fi
 
 echo "Enter 'yes' to setup the database structure for '$MYSQL_NAME' or 'no' to skip this step."
-echo "NOTE: by saying 'yes', any existing tremstats data in database '$MYSQL_NAME' will be lost"
+echo "NOTE: by saying 'yes', any existing unvstats data in database '$MYSQL_NAME' will be lost"
 read -p "Setup database structure ? [yes/no] ]" INPUT
 if [ "$INPUT" == "yes" ] ; then
   echo "setting up essential data..."
@@ -227,5 +227,5 @@ echo " games.log     = $PATH_LOG"
 echo " maps          = $PATH_MAPS"
 echo " database name = $MYSQL_NAME"
 echo ""
-echo "Tremstats Too setup script complete."
+echo "Unvstats setup script complete."
 

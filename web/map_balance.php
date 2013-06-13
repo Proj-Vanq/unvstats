@@ -1,6 +1,6 @@
 <?php
 /**
- * Project:     Tremstats
+ * Project:     Unvstats
  * File:        map_balance.php
  *
  * For license and version information, see /index.php
