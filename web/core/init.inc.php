@@ -8,7 +8,7 @@
 
 $calculation_start = microtime(true);
 
-define('VERSION', '2.3.0');
+define('VERSION', '0.1.0');
 
 require_once dirname(__FILE__).'/config.inc.php';
 require_once dirname(__FILE__).'/lib.inc.php';

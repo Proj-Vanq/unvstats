@@ -1,4 +1,4 @@
-Unvstats 2.3.0
+Unvstats 0.1.0
 ===============================================================================
 The program parses Unvanquished games.log and stores the extracted information in a database. Then it can be viewed through a set of PHP pages.
 
