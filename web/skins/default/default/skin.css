@@ -73,12 +73,14 @@ form.search fieldset input[type="submit"]:hover {
 }
 
 a:active, a:link, a:visited {
-  color: #FFFFFF;
   text-decoration: none;
 }
 
+a:active, a:link, a:visited, a:hover {
+  color: #9FFFFF;
+}
+
 a:hover {
-  color: #FFFFFF;
   text-decoration: underline;
 }
 
@@ -165,10 +167,6 @@ ul.menu li a:hover {
 
   font-size: 1em;
   text-align: right;
-}
-
-#footer a:active, #footer a:link, #footer a:visited, #footer a:hover {
-  color: #9FFFFF;
 }
 
 #footer_time {
