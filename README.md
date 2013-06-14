@@ -132,7 +132,10 @@ information and gave me lots of tips. Your are the best!
 
 Contact
 -------------------------------------------------------------------------------
-Contact us at the [github project webpage](https://github.com/dsalt/unvstats).
+ * Forum:      http://unvanquished.net/forum/
+ * IRC:        irc://irc.freenode.net/Unvanquished-dev
+ * Repository: https://github.com/Unvanquished/unvstats/
+
 Do not contact Rezyn, DASPRiD or Petr about problems with this *Tremstats* fork.
 
 ### Tremstats 2.3.0
