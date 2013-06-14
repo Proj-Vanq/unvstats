@@ -62,8 +62,8 @@ class Parser:
 					# Construct: ID entitynum BUILDING entityreplacelist: name is building buildmesssage
 		self.RE_BUILD        = re.compile("^([0-9]+) [0-9]+ ([a-zA-Z_]+)[0-9 ]*?: .+ is building .+$")
 
-					# RealTime: YYYY/MM/DD HH:MM:SS
-		self.RE_REALTIME     = re.compile("^([0-9]+)/([0-9]+)/([0-9]+) ([0-9]+):([0-9]+):([0-9]+)$")
+					# RealTime: YYYY-MM-DD HH:MM:SS
+		self.RE_REALTIME     = re.compile("^([0-9]+)-([0-9]+)-([0-9]+) ([0-9]+):([0-9]+):([0-9]+)$")
 
 					# CallVote: ID "name": VOTETYPE VOTEDATA
 		self.RE_VOTE         = re.compile("^([0-9]+) \"[^\"]*\": ([a-zA-Z0-9_]+)[ \"]*([^\" ]*)[ \"]*([^\"]*).*$");
