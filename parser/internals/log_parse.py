@@ -27,13 +27,13 @@ class Parser:
 		self.RE_UNCOLOR_NAME  = re.compile("\\^[*0-o]") # need to handle ^^ separately
 
 					# ClientConnect: ID [IP] (GUID) "NAME" "COLORNAME"
-		self.RE_CONNECT      = re.compile("^([0-9]+) \\[([^\\]]+)\\] \\(([^\\)]+)\\) \"([^\"]*)\"(?: \")?([^\"]+)?\"?$")
+		self.RE_CONNECT      = re.compile("^([0-9]+) \\[([^\\]]*)\\] \\(([^\\)]+)\\) \"([^\"]*)\"(?: \")?([^\"]+)?\"?$")
 
 					# ClientDisconnect: ID [ip] (guid) "name"
-		self.RE_DISCONNECT   = re.compile("^([0-9]+) \\[[^\\]]+\\] \\([^\\)]+\\) \"[^\"]+\"$")
+		self.RE_DISCONNECT   = re.compile("^([0-9]+) \\[[^\\]]*\\] \\([^\\)]+\\) \"[^\"]+\"$")
 
 					# ClientRename: ID [ip] (GUID) "oldname" -> "NEWNAME" "COLORNAME"
-		self.RE_RENAME       = re.compile("^([0-9]+) \\[[^\\]]+\\] \\(([^\\)]+)\\) \"[^\"]+\" -> \"([^\"]+)\"(?: \")?([^\"]+)?\"?$")
+		self.RE_RENAME       = re.compile("^([0-9]+) \\[[^\\]]*\\] \\(([^\\)]+)\\) \"[^\"]+\" -> \"([^\"]+)\"(?: \")?([^\"]+)?\"?$")
 
 					# ChangeTeam: ID TEAMNAME: NAME switched teams
 		self.RE_CHANGETEAM   = re.compile("^([0-9]+) (alien|human|spectator): (.+)$")
