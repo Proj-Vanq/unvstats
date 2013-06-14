@@ -49,15 +49,39 @@ if( constant('PRIVACY_QUOTE') != '1' ):
                                array($_GET['player_id']));
 endif;
 
-$colors = array(
-  '0' => array( 0 => 60, 60, 60 ),  // Black
-  '1' => array( 0 => 255, 0, 0 ),    // Red
-  '2' => array( 0 => 0, 255, 0 ),  // Green
-  '3' => array( 0 => 255, 255, 0 ), // Yellow
-  '4' => array( 0 => 0, 0, 255 ),   // Blue
-  '5' => array( 0 => 0, 255, 255 ),   // Cyan
-  '6' => array( 0 => 255, 0, 255 ),   // Magenta
-  '7' => array( 0 => 255, 255, 255 ),  // White
+$rgb = array(
+  array(  51,  51,  51 ),
+  array( 255,   0,   0 ),
+  array(   0, 255,   0 ),
+  array( 255, 255,   0 ),
+  array(   0,   0, 255 ),
+  array(   0, 255, 255 ),
+  array( 255,   0, 255 ),
+  array( 255, 255, 255 ),
+  array( 255, 128,   0 ),
+  array( 128, 128, 128 ),
+  array( 191, 191, 191 ),
+  array( 191, 191, 191 ),
+  array(   0, 128,   0 ),
+  array( 128, 128,   0 ),
+  array(   0,   0, 128 ),
+  array( 128,   0,   0 ),
+  array( 128,  64,   0 ),
+  array( 255, 153,  26 ),
+  array(   0, 128, 128 ),
+  array( 128,   0, 128 ),
+  array(   0, 128, 255 ),
+  array( 128,   0, 255 ),
+  array(  51, 153, 204 ),
+  array( 204, 255, 204 ),
+  array(   0, 102,  51 ),
+  array( 255,   0,  51 ),
+  array( 179,  26,  26 ),
+  array( 153,  51,   0 ),
+  array( 204, 153,  51 ),
+  array( 153, 153,  51 ),
+  array( 255, 255, 191 ),
+  array( 255, 255, 128 )
 );
 
 
@@ -67,10 +91,10 @@ header("Content-type: image/png");
 
 $im = imagecreatetruecolor($w, $h);
 
-for($i = 0; $i < 8; $i++)
+for($i = 0; $i < 32; $i++)
 {
-  $colors[$i]['alloc'] = imagecolorallocate($im, $colors[$i][0], $colors[$i][1], $colors[$i][2]);
-  $colors[$i]['alpha'] = imagecolorallocatealpha($im, $colors[$i][0], $colors[$i][1], $colors[$i][2], 64);
+  $colors[$i]['alloc'] = imagecolorallocate($im, $rgb[$i][0], $rgb[$i][1], $rgb[$i][2]);
+  $colors[$i]['alpha'] = imagecolorallocatealpha($im, $rgb[$i][0], $rgb[$i][1], $rgb[$i][2], 64);
 }
 
 function char_width( $size )
@@ -93,9 +117,13 @@ function string_width( $size, $string ) {
   for ($i = 0, $l = strlen($string); $i < $l; $i++) {
     $c = $string[$i];
 
-    if($c == '^' && $i < $l && $string[$i+1] != '^') {
-      $i++;
-      continue;
+    if($c == '^' && $i < $l) {
+      $c = $string[$i+1];
+      if($c == '*' || ($c >= '0' && $c <= 'o')) {
+        $i++;
+        if ($c != '^')
+          continue;
+      }
     }
     $w += char_width( $size );
   }
@@ -104,28 +132,31 @@ function string_width( $size, $string ) {
 
 function color_print( $x, $y, $string, $im, $colors, $size, $alpha ) {
   if($alpha == 1) {
-    $color = $colors['7']['alpha'];
+    $color = $colors[7]['alpha'];
   } else {
-    $color = $colors['7']['alloc'];
+    $color = $colors[7]['alloc'];
   }
 
   for ($i = 0, $l = strlen($string); $i < $l; $i++) {
     $c = $string[$i];
 
-    if($c == '^' && $i < $l && $string[$i+1] != '^') {
-      $i++;
-      $c = $string[$i];
-      if(!array_key_exists($c, $colors)) {
-        $c = ((ord($c)) - (ord('0'))) & 7;
-      }
-      if(array_key_exists($c, $colors)) {
+    if($c == '^' && $i < $l) {
+      $c = $string[$i+1];
+
+      if($c == '*') $c = '7';
+
+      if($c == '^')
+        $i++;
+      else if($c >= '0' && $c <= 'o') {
+        $i++;
+        $c = (ord($c) - 48) & 31;
         if($alpha == 1) {
           $color = $colors[$c]['alpha'];
         } else {
           $color = $colors[$c]['alloc'];
         }
+        continue;
       }
-      continue;
     }
     imagechar( $im, $size, $x, $y, $c, $color );
     $x += char_width( $size );
