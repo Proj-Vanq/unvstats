@@ -50,6 +50,7 @@ class Unvstats:
 		self.calconly          = False
 		self.pk3only           = False
 		self.parseonly         = False
+		self.logsonly          = False
 		self.one_pk3           = None
 		self.reparse           = False
 		self.clear_ids         = False
@@ -69,11 +70,15 @@ class Unvstats:
 			return
 
 		# Read pk3 map files
-		if self.calconly == False:
+		if self.calconly == False and self.logsonly == False:
 			pk3reader = Reader()
 			pk3reader.Main(self.dbc, self.Check_map_in_database, self.pk3_dir, None)
 			if self.pk3only == True:
 				return
+
+		if self.logsonly == True:
+			self.calconly  = False
+			self.parseonly = False
 
 		# Check for reparsing
 		if self.reparse == True:
@@ -174,6 +179,8 @@ class Unvstats:
 					self.calconly = True
 				elif arg_data[0] == '--parseonly':
 					self.parseonly = True
+				elif arg_data[0] == '--logsonly':
+					self.logsonly = True
 				elif arg_data[0] == '--pk3only':
 					self.pk3only = True
 				elif arg_data[0] == '--reparse':
