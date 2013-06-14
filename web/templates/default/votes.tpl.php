@@ -185,7 +185,7 @@
         <td><?php echo $total; ?></td>
         <td><?php echo $pass; ?></td>
         <td><?php echo ($total - $pass); ?></td>
-        <td><?php echo (int)(100 * $pass / $total); ?> %</td>
+        <td><?php echo $total ? '' . (int)(100 * $pass / $total) . ' %' : '-'; ?></td>
       </tr>
     </tbody>
   </table>

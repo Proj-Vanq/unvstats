@@ -178,30 +178,42 @@
     </thead>
 
     <tbody>
+<?php if (isset($this->overview['top_player']['player_id'])) { ?>
       <tr>
         <td>Top Player</td>
         <td><span class="playername"><a href="player_details.php?player_id=<?php echo $this->overview['top_player']['player_id'] ?>"><?php echo replace_color_codes($this->overview['top_player']['player_name']); ?></a></span> (Efficiency: <?php echo $this->overview['top_player']['player_total_efficiency']; ?>)</td>
       </tr>
+<?php } ?>
+<?php if (isset($this->overview['top_feeder']['player_id'])) { ?>
       <tr>
         <td>Top Feeder</td>
         <td><span class="playername"><a href="player_details.php?player_id=<?php echo $this->overview['top_feeder']['player_id'] ?>"><?php echo replace_color_codes($this->overview['top_feeder']['player_name']); ?></a></span> (Average Deaths: <?php echo $this->overview['top_feeder']['average_deaths_by_enemy']; ?>)</td>
       </tr>
+<?php } ?>
+<?php if (isset($this->overview['top_teamkiller']['player_id'])) { ?>
       <tr>
         <td>Top Teamkiller</td>
         <td><span class="playername"><a href="player_details.php?player_id=<?php echo $this->overview['top_teamkiller']['player_id'] ?>"><?php echo replace_color_codes($this->overview['top_teamkiller']['player_name']); ?></a></span> (Average Team Kills: <?php echo $this->overview['top_teamkiller']['average_kills_to_team']; ?>)</td>
       </tr>
+<?php } ?>
+<?php if (isset($this->overview['top_score']['player_id'])) { ?>
       <tr>
         <td>Top Score</td>
         <td><span class="playername"><a href="player_details.php?player_id=<?php echo $this->overview['top_score']['player_id'] ?>"><?php echo replace_color_codes($this->overview['top_score']['player_name']); ?></a></span> (Score: <?php echo $this->overview['top_score']['stats_score']; ?>)</td>
       </tr>
+<?php } ?>
+<?php if (isset($this->overview['top_skill']['player_id'])) { ?>
       <tr>
         <td>Top Skill</td>
         <td><span class="playername"><a href="player_details.php?player_id=<?php echo $this->overview['top_skill']['player_id'] ?>"><?php echo replace_color_codes($this->overview['top_skill']['player_name']); ?></a></span> (Skill: <?php skill($this->overview['top_skill']['skill'], $this->overview['top_skill']['skill_sigma']); ?>)</td>
       </tr>
+<?php } ?>
+<?php if (isset($this->overview['most_active_player']['player_id'])) { ?>
       <tr>
         <td>Most Active Player</td>
         <td><span class="playername"><a href="player_details.php?player_id=<?php echo $this->overview['most_active_player']['player_id'] ?>"><?php echo replace_color_codes($this->overview['most_active_player']['player_name']); ?></a></span> (Game-time factor: <?php echo $this->overview['most_active_player']['player_game_time_factor']; ?>)</td>
       </tr>
+<?php } ?>
     </tbody>
   </table>
 

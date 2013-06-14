@@ -50,9 +50,9 @@
           <td><?php echo $player['player_total_efficiency']; ?></td>
           <td><?php echo $player['player_games_played']; ?></td>
           <td><?php echo $player['player_game_time_factor']; ?></td>
-          <?php skillTD($player['skill'], $player['skill_sigma']); ?>
-          <?php skillTD($player['skill_a'], $player['skill_a_sigma']); ?>
-          <?php skillTD($player['skill_h'], $player['skill_h_sigma']); ?>
+          <?php skillTD($player['skill'], @$player['skill_sigma']); ?>
+          <?php skillTD($player['skill_a'], @$player['skill_a_sigma']); ?>
+          <?php skillTD($player['skill_h'], @$player['skill_h_sigma']); ?>
         </tr>
       <?php endforeach; ?>
 
