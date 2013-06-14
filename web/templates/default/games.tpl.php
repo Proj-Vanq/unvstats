@@ -45,7 +45,7 @@
     <thead>
       <tr>
         <th>Game ID</th>
-        <th>Date</th>
+        <th>Date <small>(UTC)</small></th>
         <th>Map</th>
         <th>Length</th>
         <th>Winner</th>

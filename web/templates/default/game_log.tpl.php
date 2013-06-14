@@ -31,7 +31,7 @@
       <td><?php echo $this->game_details['game_length']; ?></td>
      </tr>
      <tr>
-      <td>Date</td>
+      <td>Date <small>(UTC)</small></td>
       <td><?php echo $this->game_details['game_timestamp']; ?></td>
      </tr>
     </tbody>
