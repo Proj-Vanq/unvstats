@@ -14,8 +14,29 @@ from externals.progressbar import ProgressBar, Percentage, Bar, ETA
 # Config
 from config import CONFIG
 
+class tz_UTC (datetime.tzinfo):
+        def dst(self, dt):
+                return datetime.timedelta(0)
+
+        def utcoffset(self, dt):
+                return datetime.timedelta(0)
+
+# Whatever offset from GMT is CURRENTLY in use locally
+class tz_Local (datetime.tzinfo):
+        _tzdiff = (datetime.datetime.now() - datetime.datetime.utcnow()).total_seconds() # there'll be a small inaccuracy here
+        _tzdiff = datetime.timedelta(seconds = (_tzdiff + 30) // 60 * 60) # round to nearest minute
+
+        def dst(self, dt):
+                return datetime.timedelta(0) # pretend that DST isn't in use
+
+        def utcoffset(self, dt):
+                return self._tzdiff
+
 """ Class: Parser """
 class Parser:
+        tz_utc = tz_UTC()
+        tz_local = tz_Local()
+
 	""" Init Parser """
 	def Main(self, dbc, Check_map_in_database, Add_player_to_update, games_log):
 		# Regular expressions
@@ -62,8 +83,8 @@ class Parser:
 					# Construct: ID entitynum BUILDING entityreplacelist: name is building buildmesssage
 		self.RE_BUILD        = re.compile("^([0-9]+) [0-9]+ ([a-zA-Z_]+)[0-9 ]*?: .+ is building .+$")
 
-					# RealTime: YYYY-MM-DD HH:MM:SS
-		self.RE_REALTIME     = re.compile("^([0-9]+)-([0-9]+)-([0-9]+) ([0-9]+):([0-9]+):([0-9]+)$")
+					# RealTime: YYYY-MM-DD HH:MM:SS( Z)
+		self.RE_REALTIME     = re.compile("^([0-9]+)-([0-9]+)-([0-9]+) ([0-9]+):([0-9]+):([0-9]+)((?: Z)?)$")
 
 					# CallVote: ID "name": VOTETYPE VOTEDATA
 		self.RE_VOTE         = re.compile("^([0-9]+) \"[^\"]*\": ([a-zA-Z0-9_]+)[ \"]*([^\" ]*)[ \"]*([^\"]*).*$");
@@ -78,6 +99,9 @@ class Parser:
 		# Internal datas
 		self.dbc                 = dbc
 		self.games_log           = games_log
+
+		# Set time zone
+		self.dbc.execute('SET time_zone = `+00:00`');
 
 		# initialize game
 		self.Clear_game()
@@ -330,7 +354,7 @@ class Parser:
 		if result == None:
  			self.dbc.execute("INSERT INTO `state` (`log_id`, `log_offset`, `log_filesize`, `log_runcount`) VALUES (%s, %s, %s, %s)", (0, logstop, filesize, 1))
 		else:
-			dt = datetime.datetime.now()
+			dt = datetime.datetime.utcnow()
 			stamp = dt.isoformat()
 			self.dbc.execute("UPDATE `state` SET `log_runcount` = `log_runcount` + 1, `log_offset` = %s, `log_filesize` = %s, `log_timestamp` = %s WHERE `log_id` = 0", (logstop, filesize, stamp))
 
@@ -495,7 +519,7 @@ class Parser:
 					game_map = data[i+1]
 					break
 		# No time stamp yet, use current time
-		dt = datetime.datetime.now()
+		dt = datetime.datetime.utcnow()
 		self.game_timestamp = dt.isoformat()
 
 		# If no map-name was given, return
@@ -516,8 +540,14 @@ class Parser:
 			return
 
 		result = match.groups()
-		dt = datetime.datetime(int(result[0]), int(result[1]), int(result[2]), int(result[3]), int(result[4]), int(result[5]))
-		self.game_timestamp = dt.isoformat()
+		if len(result[6]):
+			# 'Z' suffix is present, so this is UTC
+			dt = datetime.datetime(int(result[0]), int(result[1]), int(result[2]), int(result[3]), int(result[4]), int(result[5]), 0, self.tz_utc)
+		else:
+			# Otherwise it's (probably) local. However, we have no tz info; let's use the current offset and ignore DST.
+			dt = datetime.datetime(int(result[0]), int(result[1]), int(result[2]), int(result[3]), int(result[4]), int(result[5]), 0, self.tz_local).astimezone(self.tz_utc)
+
+		self.game_timestamp = dt.replace(tzinfo=None).isoformat() # don't want TZ info here
 
 		# Update game id's timestamp
 		self.dbc.execute("UPDATE `games` SET `game_timestamp` = %s WHERE `game_id` = %s", (self.game_timestamp, self.game_id))

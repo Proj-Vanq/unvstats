@@ -21,6 +21,7 @@ require_once dirname(__FILE__).'/pagelister/PageLister.class.php';
 try {
   $db = NewADOConnection('mysql');
   $db->Connect(MYSQL_HOSTNAME, MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_DATABASE);
+  $db->Execute('SET time_zone = `+00:00`');
 } catch (exception $e) {
   die;
 }
