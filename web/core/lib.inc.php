@@ -44,15 +44,13 @@ function replace_color_codes ($string) {
 
     if (!$part) {
       $result .= '^';
+      ++$pos;
     } else {
       // Get first character after the token
       $num = substr($part, 0, 1);
 
       if ($num == '*') {
         // just ignore it
-      } else if ($num == '^') {
-        // literal ^
-        $result .= $part;
       } else if (ord($num) >= 48 && ord($num) < 112) {
         // valid colour control ('0' .. 'o')
         $num = (ord($num) - 48) & 31;
