@@ -28,6 +28,7 @@ INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LCANNON_SPLASH', 'Lucifer Cannon Splash', 'Human/Weapons/Luciffer_Cannon.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_FLAMER', 'Flamer', 'Human/Weapons/Flamer.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_FLAMER_SPLASH', 'Flamer Splash', 'Human/Weapons/Flamer.png', 'human');
+INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_BURN', 'Fire', 'Human/Weapons/Flamer.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_GRENADE', 'Grenade', 'Human/Weapons/Grenade.png', 'human');
 
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_WATER', 'Water', '', 'world');
