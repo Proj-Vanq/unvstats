@@ -204,12 +204,12 @@ WEB_CONFIG="web/core/config.inc.php"
 echo "updating file '$WEB_CONFIG'..."
 test -f "$WEB_CONFIG" && cp -af "$WEB_CONFIG" "$WEB_CONFIG".bak
 test -f "$WEB_CONFIG" -a -s "$WEB_CONFIG" || cp -af "$WEB_CONFIG".default "$WEB_CONFIG"
-sed -e '/define.*MYSQL_HOSTNAME/ s!, .*$!= '"'$(Quote "$MYSQL_HOST")'"');!g;
-	/define.*MYSQL_USERNAME/ s!, .*$!= '"'$(Quote "$MYSQL_USER")'"');!g;
-	/define.*MYSQL_PASSWORD/ s!, .*$!= '"'$(Quote "$MYSQL_PASS")'"');!g;
-	/define.*MYSQL_DATABASE/ s!, .*$!= '"'$(Quote "$MYSQL_NAME")'"');!g;
-	/define.*SERVER_ADDRESS/ s!, .*$!= '"'$(Quote "$SERVER_IP")'"');!g;
-	/define.*SERVER_NAME/    s!, .*$!= '"'$(Quote "$SERVER_NAME")'"');!g;
+sed -e '/define.*MYSQL_HOSTNAME/ s!, .*$!, '"'$(Quote "$MYSQL_HOST")'"');!g;
+	/define.*MYSQL_USERNAME/ s!, .*$!, '"'$(Quote "$MYSQL_USER")'"');!g;
+	/define.*MYSQL_PASSWORD/ s!, .*$!, '"'$(Quote "$MYSQL_PASS")'"');!g;
+	/define.*MYSQL_DATABASE/ s!, .*$!, '"'$(Quote "$MYSQL_NAME")'"');!g;
+	/define.*SERVER_ADDRESS/ s!, .*$!, '"'$(Quote "$SERVER_IP")'"');!g;
+	/define.*SERVER_NAME/    s!, .*$!, '"'$(Quote "$SERVER_NAME")'"');!g;
 ' <"$WEB_CONFIG.default" >"$WEB_CONFIG"
 
 if [ "$COPY_WEBSITE" == "yes" ] ; then
