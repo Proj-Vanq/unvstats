@@ -6,6 +6,9 @@
  * For license and version information, see /index.php
  */
 
+/* ================================ *
+ * START OF SCRIPT-MODIFIED SECTION *
+ * ================================ */
 
 /**
  * The MySQL Hostname
@@ -27,6 +30,22 @@ define('MYSQL_PASSWORD', '');
  */
 define('MYSQL_DATABASE', '');
 
+/**
+ * Address of the Unvanquished server to report from, should
+ * be something like 'serverip:port'. The default Unvanquished
+ * port is 27960, so if you want to watch your local server,
+ * use 'localhost:27960'.
+ */
+define('TREMULOUS_ADDRESS', '');
+
+/**
+ * Tremulous server name
+ */
+define('TREMULOUS_SERVER_NAME', 'Unvanquished server');
+
+/* ============================== *
+ * END OF SCRIPT-MODIFIED SECTION *
+ * ============================== */
 
 /**
  * Template to use from /templates
@@ -50,18 +69,6 @@ define('TRESHOLD_MIN_GAMES_PLAYED', 25);
 
 // Max games paused to still appear in a list
 define('TRESHOLD_MAX_GAMES_PAUSED', 500);
-
-// Tremulous server name
-define('TREMULOUS_SERVER_NAME', 'Unvanquished server');
-
-/**
- * Address of the Unvanquished server to report from, should
- * be something like 'serverip:port'. The default Unvanquished
- * port is 27960, so if you want to watch your local server,
- * use 'localhost:27960'.
- */
-define('TREMULOUS_ADDRESS', '');
-
 /**
  * Privacy settings
  * set to 1 to hide information
@@ -78,4 +85,13 @@ define('PRIVACY_QUOTE', '0');
 // Hide alias names in player details
 define('PRIVACY_NAME', '0');
 
+
+/* ===================================== *
+ * ADDITIONAL LOCAL SCRIPTING BELOW HERE *
+ * ===================================== */
+
+
+/* ========== *
+ * END MARKER *
+ * ========== */
 ?>

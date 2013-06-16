@@ -63,72 +63,77 @@ function request {
 }
 
 function savestate {
-  echo "MYSQL_HOST=$MYSQL_HOST" > $STATE_FILE
-  echo "MYSQL_USER=$MYSQL_USER" >> $STATE_FILE
-  echo "MYSQL_PASS=$MYSQL_PASS" >> $STATE_FILE
-  echo "MYSQL_NAME=$MYSQL_NAME" >> $STATE_FILE
+  # write out in shell-safe form
+  exec 3>"$STATE_FILE"
 
-  echo "SERVER_IP=\"$SERVER_IP\"" >> $STATE_FILE
-  echo "SERVER_NAME=\"$SERVER_NAME\"" >> $STATE_FILE
+  printf >&3 'MYSQL_HOST=%q\n'   "$MYSQL_HOST"
+  printf >&3 'MYSQL_USER=%q\n'   "$MYSQL_USER"
+  printf >&3 'MYSQL_PASS=%q\n'   "$MYSQL_PASS"
+  printf >&3 'MYSQL_NAME=%q\n'   "$MYSQL_NAME"
 
-  echo "PATH_LOG=\"$PATH_LOG\"" >> $STATE_FILE
-  echo "PATH_MAPS=\"$PATH_MAPS\"" >> $STATE_FILE
-  echo "PATH_WEBSITE=\"$PATH_WEBSITE\"" >> $STATE_FILE
-  echo "PATH_PARSER=\"$PATH_PARSER\"" >> $STATE_FILE
-  echo "COPY_WEBSITE=\"$COPY_WEBSITE\"" >> $STATE_FILE
-  echo "COPY_PARSER=\"$COPY_PARSER\"" >> $STATE_FILE
+  printf >&3 'SERVER_IP=%q\n'    "$SERVER_IP"
+  printf >&3 'SERVER_NAME=%q\n'  "$SERVER_NAME"
+
+  printf >&3 'PATH_LOG=%q\n'     "$PATH_LOG"
+  printf >&3 'PATH_MAPS=%q\n'    "$PATH_MAPS"
+  printf >&3 'PATH_WEBSITE=%q\n' "$PATH_WEBSITE"
+  printf >&3 'PATH_PARSER=%q\n'  "$PATH_PARSER"
+  printf >&3 'COPY_WEBSITE=%q\n' "$COPY_WEBSITE"
+  printf >&3 'COPY_PARSER=%q\n'  "$COPY_PARSER"
+
+  exec 3>&-
 }
 
 echo "MYSQL information"
 echo ""
 
 request "Enter mysql hostname" "mysql hostname" "$MYSQL_HOST"
-MYSQL_HOST=$RESULT
+MYSQL_HOST="$RESULT"
 
 request "Enter mysql username" "mysql username" "$MYSQL_USER"
-MYSQL_USER=$RESULT
+MYSQL_USER="$RESULT"
 
 request "Enter mysql password" "mysql password" "$MYSQL_PASS"
-MYSQL_PASS=$RESULT
+MYSQL_PASS="$RESULT"
 
 request "Enter mysql database" "mysql database name" "$MYSQL_NAME"
-MYSQL_NAME=$RESULT
+MYSQL_NAME="$RESULT"
 
 echo "Unvanquished server information"
 echo ""
 
 request "Enter path to games.log" "games.log" "$PATH_LOG"
-PATH_LOG=$RESULT
+PATH_LOG="$RESULT"
 
 request "Enter path to map pk3 files" "map pk3 files" "$PATH_MAPS"
-PATH_MAPS=$RESULT
+PATH_MAPS="$RESULT"
 
 request "Enter Unvanquished server ip" "unv server ip" "$SERVER_IP"
-SERVER_IP=$RESULT
+SERVER_IP="$RESULT"
 
 request "Enter Unvanquished server name" "unv server name" "$SERVER_NAME"
-SERVER_NAME=$RESULT
+SERVER_NAME="$RESULT"
 
 echo "INSTALLATION paths"
 echo ""
 
 request "Enter path to install website files" "www path" "$PATH_WEBSITE"
-PATH_WEBSITE=$RESULT
+PATH_WEBSITE="$RESULT"
 
 echo "note: if you do not have permissions to write $PATH_WEBSITE,"
 echo "say no here, and copy the 'web' directory to the desired location"
 
 request "Do you want to install website files [yes/no]" "copy www" "$COPY_WEBSITE"
-COPY_WEBSITE=$RESULT
+COPY_WEBSITE="$RESULT"
 
 request "Enter path to install unvstats.py" "parser path" "$PATH_PARSER"
-PATH_PARSER=$RESULT
+PATH_PARSER="$RESULT"
 
 echo "note: if you do not have permissions to write $PATH_PARSER,"
 echo "say no here, and copy the 'parser' directory to the desired location"
 
 request "Do you want to install unvstats.py files [yes/no]" "copy parser" "$COPY_PARSER"
-COPY_PARSER=$RESULT
+COPY_PARSER="$RESULT"
 
 savestate
 
@@ -137,7 +142,7 @@ echo "by logging in with mysql and running a STATUS command"
 read -p "Press enter to continue" INPUT
 
 echo "testing mysql information..."
-mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASS -e STATUS
+mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASS" -e STATUS
 MYSQL_OK=$?
 if [ "$MYSQL_OK" != "0" ] ; then
   echo "ERROR communicating with mysql host, please check entered values"
@@ -178,26 +183,34 @@ fi
 
 echo ""
 
+Quote()
+{
+  echo "-- $*" | sed -e 's/^-- //; s/\\/\\\\/g; s/'\''/\\'\''/g'
+}
+
 PARSER_CONFIG="parser/config.py"
 echo "updating file '$PARSER_CONFIG'..."
-test -f "$PARSER_CONFIG" || cp -a "$PARSER_CONFIG".default "$PARSER_CONFIG"
-sed --in-place=.bak -e "s/CONFIG\['MYSQL_HOSTNAME'\] = '[^']*\?'/CONFIG\['MYSQL_HOSTNAME'\] = '$MYSQL_HOST'/g" $PARSER_CONFIG
-sed --in-place -e "s/CONFIG\['MYSQL_USERNAME'\] = '[^']*\?'/CONFIG\['MYSQL_USERNAME'\] = '$MYSQL_USER'/g" $PARSER_CONFIG
-sed --in-place -e "s/CONFIG\['MYSQL_PASSWORD'\] = '[^']*\?'/CONFIG\['MYSQL_PASSWORD'\] = '$MYSQL_PASS'/g" $PARSER_CONFIG
-sed --in-place -e "s/CONFIG\['MYSQL_DATABASE'\] = '[^']*\?'/CONFIG\['MYSQL_DATABASE'\] = '$MYSQL_NAME'/g" $PARSER_CONFIG
-sed --in-place -e "s@CONFIG\['GAMES_LOG'\] *\?= '[^']*\?'@CONFIG\['GAMES_LOG'\] = '$PATH_LOG'@g" $PARSER_CONFIG
-sed --in-place -e "s@CONFIG\['PK3_DIR'\] *\?= '[^']*\?'@CONFIG\['PK3_DIR'\] = '$PATH_MAPS'@g" $PARSER_CONFIG
+test -f "$PARSER_CONFIG" && cp -af "$PARSER_CONFIG" "$PARSER_CONFIG".bak
+test -f "$PARSER_CONFIG" -a -s "$PARSER_CONFIG"  || cp -af "$PARSER_CONFIG".default "$PARSER_CONFIG"
+sed -e '/CONFIG.*MYSQL_HOSTNAME/ s!= .*$!= '"'$(Quote "$MYSQL_HOST")'"'!g;
+	/CONFIG.*MYSQL_USERNAME/ s!= .*$!= '"'$(Quote "$MYSQL_USER")'"'!g;
+	/CONFIG.*MYSQL_PASSWORD/ s!= .*$!= '"'$(Quote "$MYSQL_PASS")'"'!g;
+	/CONFIG.*MYSQL_DATABASE/ s!= .*$!= '"'$(Quote "$MYSQL_NAME")'"'!g;
+	/CONFIG.*GAMES_LOG/      s!= .*$!= '"'$(Quote "$PATH_LOG")'"'!g;
+	/CONFIG.*PK3_DIR/        s!= .*$!= '"'$(Quote "$PATH_MAPS")'"'!g;
+' <"$PARSER_CONFIG.default" >"$PARSER_CONFIG"
 
 WEB_CONFIG="web/core/config.inc.php"
 echo "updating file '$WEB_CONFIG'..."
-test -f "$WEB_CONFIG" || cp -a "$WEB_CONFIG".default "$WEB_CONFIG"
-sed --in-place=.bak -e "s@define('MYSQL_HOSTNAME', '[^']*\?')@define('MYSQL_HOSTNAME', '$MYSQL_HOST')@g" $WEB_CONFIG
-sed --in-place -e "s@define('MYSQL_USERNAME', '[^']*\?')@define('MYSQL_USERNAME', '$MYSQL_USER')@g" $WEB_CONFIG
-sed --in-place -e "s@define('MYSQL_PASSWORD', '[^']*\?')@define('MYSQL_PASSWORD', '$MYSQL_PASS')@g" $WEB_CONFIG
-sed --in-place -e "s@define('MYSQL_DATABASE', '[^']*\?')@define('MYSQL_DATABASE', '$MYSQL_NAME')@g" $WEB_CONFIG
-sed --in-place -e "s@define('TREMULOUS_ADDRESS', '[^']*\?')@define('TREMULOUS_ADDRESS', '$SERVER_IP')@g" $WEB_CONFIG
-sed --in-place -e "s@define('TREMULOUS_SERVER_NAME', '[^']*\?')@define('TREMULOUS_SERVER_NAME', '$SERVER_NAME')@g" $WEB_CONFIG
-
+test -f "$WEB_CONFIG" && cp -af "$WEB_CONFIG" "$WEB_CONFIG".bak
+test -f "$WEB_CONFIG" -a -s "$WEB_CONFIG" || cp -af "$WEB_CONFIG".default "$WEB_CONFIG"
+sed -e '/define.*MYSQL_HOSTNAME/        s!, .*$!= '"'$(Quote "$MYSQL_HOST")'"');!g;
+	/define.*MYSQL_USERNAME/        s!, .*$!= '"'$(Quote "$MYSQL_USER")'"');!g;
+	/define.*MYSQL_PASSWORD/        s!, .*$!= '"'$(Quote "$MYSQL_PASS")'"');!g;
+	/define.*MYSQL_DATABASE/        s!, .*$!= '"'$(Quote "$MYSQL_NAME")'"');!g;
+	/define.*TREMULOUS_ADDRESS/     s!, .*$!= '"'$(Quote "$SERVER_IP")'"');!g;
+	/define.*TREMULOUS_SERVER_NAME/ s!, .*$!= '"'$(Quote "$SERVER_NAME")'"');!g;
+' <"$WEB_CONFIG.default" >"$WEB_CONFIG"
 
 if [ "$COPY_WEBSITE" == "yes" ] ; then
   echo "Copying 'web' directory to $PATH_WEBSITE"
