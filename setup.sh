@@ -24,7 +24,7 @@ MYSQL_USER=""
 MYSQL_PASS=""
 MYSQL_NAME="unvstats"
 
-SERVER_IP="localhost:30720"
+SERVER_IP="localhost:27960"
 SERVER_NAME="Unnamed Server"
 
 PATH_LOG="$HOME/.Unvanquished/main/games.log"
