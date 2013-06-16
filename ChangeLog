@@ -86,7 +86,7 @@
 2009-11-13 Rezyn <rezyn0@gmail.com>
 	* more general web layout and css cleanups
 	* added player_getsig.php for player sig images
-	* add TREMULOUS_SERVER_NAME config for web
+	* add SERVER_NAME config for web
 
 2009-11-11 Rezyn <rezyn0@gmail.com>
 	* add game log web page

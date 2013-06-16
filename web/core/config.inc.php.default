@@ -36,12 +36,12 @@ define('MYSQL_DATABASE', '');
  * port is 27960, so if you want to watch your local server,
  * use 'localhost:27960'.
  */
-define('TREMULOUS_ADDRESS', '');
+define('SERVER_ADDRESS', '');
 
 /**
  * Tremulous server name
  */
-define('TREMULOUS_SERVER_NAME', 'Unvanquished server');
+define('SERVER_NAME', 'Unvanquished server');
 
 /* ============================== *
  * END OF SCRIPT-MODIFIED SECTION *

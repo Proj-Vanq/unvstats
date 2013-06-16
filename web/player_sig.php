@@ -13,7 +13,7 @@ if (!isset($_GET['player_id'])) {
 }
 
 // basic info
-$servername = TREMULOUS_SERVER_NAME;
+$servername = SERVER_NAME;
 
 switch( $_GET['style'] ) {
   case 1:

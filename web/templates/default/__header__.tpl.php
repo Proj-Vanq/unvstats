@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
-    <title>Unvstats – <?php echo replace_color_codes(TREMULOUS_SERVER_NAME); ?></title>
+    <title>Unvstats – <?php echo replace_color_codes(SERVER_NAME); ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="Publisher" content="DASPRiD's" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->css_file(); ?>" />
@@ -18,7 +18,7 @@
         </fieldset>
       </form>
 
-      <h1>Unvstats <span class="for"><br></span><?php echo replace_color_codes(TREMULOUS_SERVER_NAME); ?></h1>
+      <h1>Unvstats <span class="for"><br></span><?php echo replace_color_codes(SERVER_NAME); ?></h1>
     </div>
 
     <ul class="menu">
