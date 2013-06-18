@@ -81,8 +81,15 @@ a:hover {
   text-decoration: underline;
 }
 
+#header, ul.menu, #footer {
+  width: 64em;
+}
+
+#box {
+  width: 62em;
+}
+
 #header {
-  width: 60em;
   margin: 0.5em auto;
   padding: 0;
 }
@@ -107,8 +114,6 @@ span.for {
 
 ul.menu {
   clear: both;
-
-  width: 60em;
 
   margin: 0 auto;
   padding: 0;
@@ -147,8 +152,6 @@ ul.menu li a:hover {
 }
 
 #box {
-  width: 58em;
-
   margin: 0 auto;
   padding: 1em;
 
@@ -158,8 +161,6 @@ ul.menu li a:hover {
 }
 
 #footer {
-  width: 60em;
-
   margin: 0.5em auto;
 
   font-size: 1em;
