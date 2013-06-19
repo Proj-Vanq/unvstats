@@ -10,7 +10,7 @@ require_once 'core/init.inc.php';
 
 
 // maps
-$map_votes = $db->GetAll("SELECT map_id, map_longname,
+$map_votes = $db->GetAll("SELECT map_id, if (map_longname != '', map_longname, map_name) AS map_text_name,
                                  SUM( vote_pass = 'yes' ) AS count_pass,
                                  SUM( vote_pass = 'no' ) AS count_fail
                           FROM votes
@@ -20,7 +20,7 @@ $map_votes = $db->GetAll("SELECT map_id, map_longname,
                           ORDER BY count_pass DESC, map_name ASC
                           LIMIT 0, 10");
 
-$map_skips = $db->GetAll("SELECT map_id, map_longname,
+$map_skips = $db->GetAll("SELECT map_id, if (map_longname != '', map_longname, map_name) AS map_text_name,
                                  SUM( vote_pass = 'yes' ) AS count_pass,
                                  SUM( vote_pass = 'no' ) AS count_fail
                           FROM votes

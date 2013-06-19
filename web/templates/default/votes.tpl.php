@@ -31,7 +31,7 @@
       <?php for ($i=0; $i<$rows; $i++): ?>
       <tr>
         <?php if (!empty($this->map_votes[$i])): $map = $this->map_votes[$i]; ?>
-          <td><a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_longname']); ?></a></td>
+          <td><a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_text_name']); ?></a></td>
           <td><?php echo $map['count_pass']; ?></td>
           <td><?php echo $map['count_fail']; ?></td>
         <?php elseif ($i == 0): ?>
@@ -41,7 +41,7 @@
         <?php endif; ?>
 
         <?php if (!empty($this->map_skips[$i])): $map = $this->map_skips[$i]; ?>
-          <td><a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_longname']); ?></a></td>
+          <td><a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_text_name']); ?></a></td>
           <td><?php echo $map['count_pass']; ?></td>
           <td><?php echo $map['count_fail']; ?></td>
         <?php elseif ($i == 0): ?>

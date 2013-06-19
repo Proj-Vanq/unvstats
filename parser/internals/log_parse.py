@@ -1121,7 +1121,7 @@ class Parser:
 			votetype = 'draw'
 		elif votetype == 'set' and votearg1 == 'g_nextMap':
 			votetype = 'nextmap'
-			votearg1 = votearg2
+			votearg1 = votearg2.split(';')[0] # lose layout setting
 		elif votetype == 'echo' and votearg1 == 'poll':
 			votetype = 'poll'
 			votearg1 = votearg2
