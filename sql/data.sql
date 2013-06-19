@@ -9,7 +9,7 @@ INSERT IGNORE INTO `buildings` (`building_constant`, `building_name`, `building_
 INSERT IGNORE INTO `buildings` (`building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES ('telenode', 'Telenode', 'Human/Structures/Telenode.png', 'human', 6);
 INSERT IGNORE INTO `buildings` (`building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES ('mgturret', 'MG Turret', 'Human/Structures/Turret.png', 'human', 1);
 INSERT IGNORE INTO `buildings` (`building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES ('tesla', 'Tesla', 'Human/Structures/Tesla.png', 'human', 1);
-INSERT IGNORE INTO `buildings` (`building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES ('arm', 'Armory', 'Human/Structures/Armoury.png', 'human', 5);
+INSERT IGNORE INTO `buildings` (`building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES ('arm', 'Armoury', 'Human/Structures/Armoury.png', 'human', 5);
 INSERT IGNORE INTO `buildings` (`building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES ('dcc', 'DCC', 'Human/Structures/DefComp.png', 'human', 2);
 INSERT IGNORE INTO `buildings` (`building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES ('medistat', 'Medi Station', 'Human/Structures/MedStat.png', 'human', 2);
 INSERT IGNORE INTO `buildings` (`building_constant`, `building_name`, `building_icon`, `building_team`, `building_efficiency_multiplier`) VALUES ('reactor', 'Reactor', 'Human/Structures/Reactor.png', 'human', 10);
@@ -24,8 +24,8 @@ INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_PRIFLE', 'Pulse Rifle', 'Human/Weapons/Pulse_Rifle.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_MDRIVER', 'Mass Driver', 'Human/Weapons/Mass_Driver.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LASGUN', 'Lasgun', 'Human/Weapons/Lasgun.png', 'human');
-INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LCANNON', 'Lucifer Cannon', 'Human/Weapons/Luciffer_Cannon.png', 'human');
-INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LCANNON_SPLASH', 'Lucifer Cannon Splash', 'Human/Weapons/Luciffer_Cannon.png', 'human');
+INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LCANNON', 'Lucifer Cannon', 'Human/Weapons/Lucifer_Cannon.png', 'human');
+INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LCANNON_SPLASH', 'Lucifer Cannon Splash', 'Human/Weapons/Lucifer_Cannon.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_FLAMER', 'Flamer', 'Human/Weapons/Flamer.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_FLAMER_SPLASH', 'Flamer Splash', 'Human/Weapons/Flamer.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_BURN', 'Fire', 'Human/Weapons/Flamer.png', 'human');
@@ -44,7 +44,7 @@ INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_ABUILDER_CLAW', 'Granger''s Claw', 'Alien/Aliens/Granger.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL0_BITE', 'Dretch''s Bite', 'Alien/Aliens/Dretch.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL1_CLAW', 'Basilisk''s Claw', 'Alien/Aliens/Basilisk.png', 'alien');
-INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL1_PCLOUD', 'Basilisk''s Gas', 'Alien/Aliens/Adveanced_Basilisk.png', 'alien');
+INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL1_PCLOUD', 'Basilisk''s Gas', 'Alien/Aliens/Advanced_Basilisk.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL3_CLAW', 'Dragoon''s Claw', 'Alien/Aliens/Dragoon.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL3_POUNCE', 'Dragoon''s Pounce', 'Alien/Aliens/Dragoon.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL3_BOUNCEBALL', 'Dragoon''s Barb', 'Alien/Aliens/Advanced_Dragoon.png', 'alien');

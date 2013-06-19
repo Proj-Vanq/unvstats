@@ -115,9 +115,9 @@
 
     <thead>
       <tr>
-        <th >Kick Happy Players</th>
+        <th >Kick-Happy Players</th>
         <th >Called Kicks</th>
-        <th >Mute Happy Players</th>
+        <th >Mute-Happy Players</th>
         <th >Called Mutes</th>
       </tr>
     </thead>

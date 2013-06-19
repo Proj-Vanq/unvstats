@@ -118,7 +118,7 @@
       </tr>
 
       <tr>
-        <td>Favorite Target</td>
+        <td>Favourite Target</td>
         <td colspan="4"><?php if ($this->favorite_target): ?><a href="player_details.php?player_id=<?php echo $this->favorite_target['player_id']; ?>"><?php echo replace_color_codes($this->favorite_target['player_name']) ?></a> with <?php echo $this->favorite_target['kill_count']; ?> kills<?php endif; ?></td>
       </tr>
 
