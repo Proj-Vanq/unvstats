@@ -1108,7 +1108,7 @@ class Parser:
 		else:
 			team = 'public'
 
-		if votetype == 'denybuild' or votetype == 'allowbuild' or votetype == 'mute' or votetype == 'unmute':
+		if votetype == 'denybuild' or votetype == 'allowbuild' or votetype == 'mute' or votetype == 'unmute' or votetype == 'speclock' or votetype == 'specunlock':
 			if self.players.has_key(votearg1):
 				victim_id = votearg1
 		elif votetype == 'ban':
