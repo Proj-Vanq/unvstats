@@ -70,3 +70,5 @@ INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `
 
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_DECONSTRUCT', 'Deconstruct', '', 'world');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_NOCREEP', 'No Power', '', 'world');
+
+INSERT IGNORE INTO `players` (`player_qkey`, `player_name`, `player_name_uncolored`) VALUES (''. 'console', 'console');

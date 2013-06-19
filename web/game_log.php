@@ -39,8 +39,17 @@ $says = $db->GetAll("SELECT player_name,
                             say_message
                         FROM says
                         INNER JOIN players ON say_player_id = player_id
-                        WHERE say_game_id = ?",
-                        array($_GET['game_id']));
+                        WHERE say_game_id = ?
+                     UNION
+                     SELECT 'console',
+                            0,
+                            say_gametime,
+                            say_mode,
+                            say_message
+                        FROM says
+                        WHERE say_game_id = ? AND say_player_id = 0
+                        ",
+                        array($_GET['game_id'], $_GET['game_id']));
 
 $kills = $db->GetAll("SELECT players.player_name AS victim_name,
                              players.player_id AS victim_id,

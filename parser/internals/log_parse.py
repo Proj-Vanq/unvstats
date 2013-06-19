@@ -72,7 +72,7 @@ class Parser:
 		self.RE_SCORE        = re.compile("^([0-9]+)  ping: ([0-9]+)  client: ([0-9]+) (.+)$")
 
 					# Say: ID "NAME": MESSAGE
-		self.RE_SAY          = re.compile("^([0-9]+) \"([^\"]*)\": (.+)$")
+		self.RE_SAY          = re.compile("^(-1|[0-9]+) \"([^\"]*)\": (.+)$")
 
 					# Die: KILLERId VICTIMId MOD: killername killed victimname
 		self.RE_DIE          = re.compile("^([0-9]+) ([0-9]+) ([^:]+): .+ killed .+$")
@@ -850,7 +850,10 @@ class Parser:
 			return
 
 		result = match.groups()
-		player_id   = result[0]
+		try:
+			player_id   = int(result[0])
+		except Exception:
+			return
 		message     = result[2]
 
 		# Check string length
@@ -859,7 +862,7 @@ class Parser:
 		if len(message) > 255:
 			message = message[0:255]
 
-		if self.players.has_key(player_id):
+		if player_id == -1 or self.players.has_key(player_id):
 
 			if mode == 'team':
 				if self.players[player_id]['team'] == 'alien':
@@ -871,14 +874,18 @@ class Parser:
 			else:
 				channel = 'public'
 
-			mysql_player_id = self.players[player_id]['id']
-			if self.game_players.has_key(mysql_player_id):
+			if player_id == -1:
 				self.dbc.execute("""INSERT INTO `says` (`say_game_id`, `say_gametime`, `say_mode`, `say_player_id`, `say_message`)
-				                    VALUES (%s, %s, %s, %s, %s)""", (self.game_id, gametime, channel, mysql_player_id, message))
+				                    VALUES (%s, %s, %s, 0, %s)""", (self.game_id, gametime, channel, message))
+			else:
+				mysql_player_id = self.players[player_id]['id']
+				if self.game_players.has_key(mysql_player_id):
+					self.dbc.execute("""INSERT INTO `says` (`say_game_id`, `say_gametime`, `say_mode`, `say_player_id`, `say_message`)
+					                    VALUES (%s, %s, %s, %s, %s)""", (self.game_id, gametime, channel, mysql_player_id, message))
 
-                        # Non-bot player has said something => game isn't empty
-			if not self.bots.has_key(mysql_player_id):
-                                self.game_is_empty = False;
+				# Non-bot player has said something => game isn't empty
+				if not self.bots.has_key(mysql_player_id):
+					self.game_is_empty = False;
 
 	""" A kill was done """
 	def Log_Die(self, gametime, line):

@@ -66,7 +66,7 @@
        <tr class="list" >
         <?php if (isset($log['say_gametime'])): ?>
          <td><?php echo $log['say_gametime'] ?></td>
-         <td class="playername"><a href="player_details.php?player_id=<?php echo $log['player_id']; ?>"><?php echo replace_color_codes($log['player_name']) ?></a></td>
+         <td class="playername"><?php if ($log['player_id'] == 0) echo 'console'; else { ?><a href="player_details.php?player_id=<?php echo $log['player_id']; ?>"><?php echo replace_color_codes($log['player_name']) ?></a><?php } ?></td>
          <td></td>
          <td></td>
          <td><span class="quakecolor_<?php if ($log['say_mode'] == 'alien'): echo 'red'; elseif ($log['say_mode'] == 'human'): echo 'cyan'; elseif ($log['say_mode'] == 'spectator'): echo 'yellow'; else: echo 'green'; endif; ?>"><?php echo htmlspecialchars($log['say_message'],ENT_QUOTES); ?></span></td>
