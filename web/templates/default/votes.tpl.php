@@ -81,7 +81,7 @@
       <?php for ($i=0; $i<$rows; $i++): ?>
       <tr>
         <?php if (!empty($this->kick_votes[$i])): $kick = $this->kick_votes[$i]; ?>
-          <td class="playername"><a href="player_details.php?player_id=<?php echo $kick['player_id']; ?>"><?php echo replace_color_codes($kick['player_name']) ?></a></td>
+          <td class="playername"><?php echo player_link($kick['player_id'], $kick['player_name']); ?></td>
           <td><?php echo $kick['count_pass']; ?></td>
           <td><?php echo $kick['count_fail']; ?></td>
         <?php elseif ($i == 0): ?>
@@ -91,7 +91,7 @@
         <?php endif; ?>
 
         <?php if (!empty($this->mute_votes[$i])): $mute = $this->mute_votes[$i]; ?>
-          <td class="playername"><a href="player_details.php?player_id=<?php echo $mute['player_id']; ?>"><?php echo replace_color_codes($mute['player_name']) ?></a></td>
+          <td class="playername"><?php echo player_link($mute['player_id'], $mute['player_name']); ?></td>
           <td><?php echo $mute['count_pass']; ?></td>
           <td><?php echo $mute['count_fail']; ?></td>
         <?php elseif ($i == 0): ?>
@@ -127,7 +127,7 @@
       <?php for ($i=0; $i<$rows; $i++): ?>
       <tr>
         <?php if (!empty($this->kick_happy[$i])): $kick = $this->kick_happy[$i]; ?>
-          <td class="playername"><a href="player_details.php?player_id=<?php echo $kick['player_id']; ?>"><?php echo replace_color_codes($kick['player_name']) ?></a></td>
+          <td class="playername"><?php echo player_link($kick['player_id'], $kick['player_name']); ?></td>
           <td><?php echo $kick['votes']; ?></td>
         <?php elseif ($i == 0): ?>
           <td colspan="2">No Votes</td>
@@ -136,7 +136,7 @@
         <?php endif; ?>
 
         <?php if (!empty($this->mute_happy[$i])): $mute = $this->mute_happy[$i]; ?>
-          <td class="playername"><a href="player_details.php?player_id=<?php echo $mute['player_id']; ?>"><?php echo replace_color_codes($mute['player_name']) ?></a></td>
+          <td class="playername"><?php echo player_link($mute['player_id'], $mute['player_name']); ?></td>
           <td><?php echo $mute['votes']; ?></td>
         <?php elseif ($i == 0): ?>
           <td colspan="2">No Votes</td>

@@ -307,6 +307,8 @@ span.quakecolor_29 { color: #999933; }
 span.quakecolor_30 { color: #ffffbf; }
 span.quakecolor_31 { color: #ffff7f; }
 
+span.bot { font-style: italic; }
+
 div.update {
   text-align: right;
 }

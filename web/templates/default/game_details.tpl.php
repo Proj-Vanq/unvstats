@@ -56,7 +56,7 @@
       <?php $count = 0; foreach ($this->players AS $player): ?>
        <?php if ($player['time_alien'] > $player['time_human']): ?>
         <tr class="list" >
-         <td class="playername"><a href="player_details.php?player_id=<?php echo $player['player_id']; ?>"><?php echo replace_color_codes($player['player_name']) ?></a></td>
+         <td class="playername"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
          <td><?php echo $player['stats_score'] ?></td>
          <td><?php echo $player['stats_kills'] ?></td>
          <td><?php echo $player['stats_teamkills'] ?></td>
@@ -92,7 +92,7 @@
       <?php $count = 0; foreach ($this->players AS $player): ?>
        <?php if ($player['time_human'] > $player['time_alien']): ?>
         <tr class="list" >
-         <td class="playername"><a href="player_details.php?player_id=<?php echo $player['player_id']; ?>"><?php echo replace_color_codes($player['player_name']) ?></a></td>
+         <td class="playername"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
          <td><?php echo $player['stats_score'] ?></td>
          <td><?php echo $player['stats_kills'] ?></td>
          <td><?php echo $player['stats_teamkills'] ?></td>
@@ -127,7 +127,7 @@
       <?php $count = 0; foreach ($this->players AS $player): ?>
        <?php if (empty($player['time_human']) and empty($player['time_alien'])): ?>
         <tr class="list" >
-         <td class="playername"><a href="player_details.php?player_id=<?php echo $player['player_id']; ?>"><?php echo replace_color_codes($player['player_name']) ?></a></td>
+         <td class="playername"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
          <td></td>
          <td><?php echo $player['stats_kills'] ?></td>
          <td><?php echo $player['stats_teamkills'] ?></td>

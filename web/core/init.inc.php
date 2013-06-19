@@ -40,4 +40,8 @@ $pagelister->SetCountHandler($counthandler);
 $tpl = new tiny_templating(TREMSTATS_TEMPLATE, TREMSTATS_SKIN);
 $tpl->assign('calculation_start', $calculation_start);
 $tpl->assign('pagelister',        $pagelister);
+
+$bots = $db->GetAll("SELECT `players`.`player_id` AS `player_id` FROM `players` WHERE `players`.`player_is_bot` = TRUE");
+foreach ($bots as $k => $v)
+  $bots[$k] = $v[0];
 ?>
