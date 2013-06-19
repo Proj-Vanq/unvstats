@@ -30,6 +30,7 @@ $db->Execute("CREATE TEMPORARY TABLE tmp (
                 FROM players
                 WHERE player_games_played >= ?
                       AND player_last_game_id > ?
+                      AND player_is_bot = FALSE
                 ORDER BY average_deaths_by_enemy DESC
               )", array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
 

@@ -74,6 +74,7 @@ $top_player = $db->GetRow("SELECT player_id,
                            FROM players
                            WHERE player_games_played >= ?
                                  AND player_last_game_id > ?
+                                 AND player_is_bot = FALSE
                            ORDER BY player_total_efficiency DESC
                            LIMIT 0, 1",
                            array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
@@ -83,6 +84,7 @@ $top_feeder = $db->GetRow("SELECT player_id,
                            FROM players
                            WHERE player_games_played >= ?
                                  AND player_last_game_id > ?
+                                 AND player_is_bot = FALSE
                            ORDER BY average_deaths_by_enemy DESC
                            LIMIT 0, 1",
                            array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
@@ -92,6 +94,7 @@ $top_teamkiller = $db->GetRow("SELECT player_id,
                                FROM players
                                WHERE player_games_played >= ?
                                      AND player_last_game_id > ?
+                                     AND player_is_bot = FALSE
                                ORDER BY average_kills_to_team DESC
                                LIMIT 0, 1",
                                array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
@@ -101,6 +104,7 @@ $most_active_player = $db->GetRow("SELECT player_id,
                                    FROM players
                                    WHERE player_games_played >= ?
                                          AND player_last_game_id > ?
+                                         AND player_is_bot = FALSE
                                    ORDER BY player_game_time_factor DESC
                                    LIMIT 0, 1",
                                    array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
@@ -111,6 +115,7 @@ $top_score = $db->GetRow("SELECT player_id,
                           FROM per_game_stats
                           INNER JOIN players ON player_id = stats_player_id
                           WHERE player_last_game_id > ?
+                                AND player_is_bot = FALSE
                           ORDER BY stats_score DESC
                           LIMIT 0, 1",
                           array($game_cutoff));
@@ -126,6 +131,7 @@ $top_skill = $db->GetRow("SELECT player_id,
                              FROM skill) s
                           WHERE s.skill_player_id = p.player_id
                             AND player_last_game_id > ?
+                            AND player_is_bot = FALSE
                           ORDER BY skill DESC
                           LIMIT 0, 1",
                           array($game_cutoff));

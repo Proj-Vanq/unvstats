@@ -70,4 +70,3 @@ INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `
 
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_DECONSTRUCT', 'Deconstruct', '', 'world');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_NOCREEP', 'No Power', '', 'world');
-

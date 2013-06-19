@@ -47,6 +47,7 @@ $db->Execute("CREATE TEMPORARY TABLE tmp (
                    ON t.skill_player_id = players.player_id
                 WHERE player_games_played >= ?
                       AND player_last_game_id > ?
+                      AND player_is_bot = FALSE
                 ORDER BY player_total_efficiency DESC
               )", array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
 

@@ -25,6 +25,7 @@ if (isset($_GET['query'])) {
                                 player_total_efficiency
                          FROM players
                          WHERE player_name_uncolored LIKE '%".$namelike."%'
+                           AND player_is_bot = FALSE
                          ORDER BY ".$order);
   $players = $db->GetAll($pagelister->GetQuery());
   
@@ -37,6 +38,7 @@ if (isset($_GET['query'])) {
                                    player_total_efficiency
                             FROM players JOIN nicks ON players.player_id = nicks.nick_player_id
                             WHERE  nicks.nick_name_uncolored LIKE '%".$namelike."%' AND nicks.nick_name_uncolored != players.player_name_uncolored
+                               AND player_is_bot = FALSE
                             ORDER BY ".$order);
 
   // Assign variables to template

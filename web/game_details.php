@@ -43,6 +43,7 @@ $players = $db->GetAll("SELECT player_name,
                         FROM per_game_stats
                         INNER JOIN players ON stats_player_id = player_id
                         WHERE stats_game_id = ?
+                          AND player_is_bot = FALSE
                         GROUP BY player_id
                         ORDER BY stats_score DESC",
                         array($_GET['game_id']));

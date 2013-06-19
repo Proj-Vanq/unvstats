@@ -6,6 +6,16 @@
     <!-- span class="headinglink"> ( <a href="player_getsig.php?player_id=<?php echo $this->player_details['player_id'] ?>">get a player signature</a> )</span -->
   </div>
 
+<?php if ($this->player_details['player_is_bot']) { ?>
+  <table>
+    <thead>
+      <tr>
+        <th >This player is a bot.</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+<?php } else { ?>
   <table>
     <colgroup>
       <col class="item" />
@@ -281,6 +291,8 @@
       </tr>
     </tbody>
   </table>
+<?php } /* not a bot */ ?>
+
 </div>
 
 <?php include '__footer__.tpl.php'; ?>

@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `games` (
   `game_human_deaths` int(10) unsigned NOT NULL default '0',
   `game_total_kills` int(10) unsigned NOT NULL default '0',
   `game_total_deaths` int(10) unsigned NOT NULL default '0',
+  `game_is_empty` boolean NOT NULL default TRUE,
   PRIMARY KEY  (`game_id`),
   KEY `game_map_id` (`game_map_id`),
   KEY `game_winner` (`game_winner`),
@@ -163,8 +164,9 @@ DROP TABLE IF EXISTS `players`;
 CREATE TABLE IF NOT EXISTS `players` (
   `player_id` int(11) unsigned NOT NULL auto_increment,
   `player_qkey` varchar(32) NOT NULL default 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-  `player_name` varchar(200) NOT NULL default '',
-  `player_name_uncolored` varchar(200) NOT NULL default '',
+  `player_is_bot` boolean NOT NULL default FALSE,
+  `player_name` varchar(128) NOT NULL default '',
+  `player_name_uncolored` varchar(128) NOT NULL default '',
   `player_games_played` int(11) NOT NULL default '0',
   `player_first_game_id` int(11) unsigned NOT NULL default '0',
   `player_first_gametime` timestamp NOT NULL default '0000-00-00 00:00:00',
@@ -210,8 +212,8 @@ DROP TABLE IF EXISTS `nicks`;
 CREATE TABLE `nicks` (
   `nick_id` int(11) unsigned NOT NULL auto_increment,
   `nick_player_id` int(11) unsigned NOT NULL default '0',
-  `nick_name_uncolored` varchar(200) NOT NULL default '',
-  `nick_name` varchar(200) NOT NULL default '',
+  `nick_name_uncolored` varchar(128) NOT NULL default '',
+  `nick_name` varchar(128) NOT NULL default '',
   PRIMARY KEY  (`nick_id`),
   KEY `nick_id_and_name` (`nick_player_id`, `nick_name_uncolored` ),
   KEY `nick_player_id` (`nick_player_id`),
@@ -294,3 +296,21 @@ CREATE TABLE IF NOT EXISTS `state` (
   PRIMARY KEY (`log_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP VIEW IF EXISTS `human_players`;
+CREATE VIEW `human_players` AS SELECT `player_id` FROM `players` WHERE `player_is_bot` = FALSE;
+
+DROP VIEW IF EXISTS `played_games`;
+CREATE VIEW `played_games` AS
+  SELECT `per_game_stats`.`stats_game_id` AS `game_id`
+    FROM `per_game_stats` LEFT JOIN `human_players` ON `stats_player_id` = `player_id`
+    WHERE (`per_game_stats`.`stats_time_human` > 0 OR `per_game_stats`.`stats_time_alien` > 0)
+    GROUP BY `stats_game_id`;
+
+DROP VIEW IF EXISTS `say_games`;
+CREATE VIEW `say_games` AS SELECT `say_game_id` AS `game_id` FROM `says` GROUP BY `say_game_id`;
+
+DROP VIEW IF EXISTS `active_games`;
+CREATE VIEW `active_games` AS SELECT * FROM `played_games` UNION SELECT * FROM `say_games`;
+
+DROP VIEW IF EXISTS `completed_games`;
+CREATE VIEW `completed_games` AS SELECT * FROM `games` WHERE `game_winner` != 'none' AND `game_winner` != 'undefined';

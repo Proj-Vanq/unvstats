@@ -48,7 +48,7 @@ class Parser:
 		self.RE_UNCOLOR_NAME  = re.compile("\\^[*0-o]") # need to handle ^^ separately
 
 					# ClientConnect: ID [IP] (GUID) "NAME" "COLORNAME"
-		self.RE_CONNECT      = re.compile("^([0-9]+) \\[([^\\]]*)\\] \\(([^\\)]+)\\) \"([^\"]*)\"(?: \")?([^\"]+)?\"?$")
+		self.RE_CONNECT      = re.compile("^([0-9]+) \\[([^\\]]*)\\] \\(([^\\)]+)\\) \"([^\"]*)\"(?: \")?([^\"]+)?\"?( \[BOT\])?$")
 
 					# ClientDisconnect: ID [ip] (guid) "name"
 		self.RE_DISCONNECT   = re.compile("^([0-9]+) \\[[^\\]]*\\] \\([^\\)]+\\) \"[^\"]+\"$")
@@ -133,7 +133,9 @@ class Parser:
 		self.game_human_deaths   = 0
 		self.game_exit           = None
 		self.game_exit_time      = None
+		self.game_is_empty       = True
 		self.players             = {}
+		self.bots                = {}
 		self.game_players        = {}
 		self.vote                = {}
 
@@ -499,6 +501,10 @@ class Parser:
 		   player['kills'], player['teamkills'], player['deaths'], player['score'],
 		   player['time_spec'], player['time_alien'], player['time_human']))
 
+		# Non-bot player has spent time on a team => game isn't empty
+		if not self.bots.has_key(player_id) and (player['time_alien'] > 0 or player['time_human'] > 0):
+                        self.game_is_empty = False
+
 		self.Player_Reset(player_id, player['joins'])
 
 		self.Add_player_to_update(player_id)
@@ -610,7 +616,8 @@ class Parser:
 		                         `game_stage_alien2` = %s,
 		                         `game_stage_alien3` = %s,
 		                         `game_stage_human2` = %s,
-		                         `game_stage_human3` = %s
+		                         `game_stage_human3` = %s,
+		                         `game_is_empty` = %s
 		                  WHERE `game_id` = %s""",
 				  (self.game_exit,
 				   self.game_alien_kills,
@@ -625,6 +632,7 @@ class Parser:
 				   self.game_stage_alien3,
 				   self.game_stage_human2,
 				   self.game_stage_human3,
+				   self.game_is_empty,
 				   self.game_id))
 
 		self.dbc.execute("SELECT `mapstat_id` FROM `map_stats` WHERE `mapstat_id` = %s", (self.game_map_id))
@@ -686,11 +694,18 @@ class Parser:
 		player_ip             = result[1]
 		player_qkey           = result[2]
                 player_qkeyhash       = self.hashqkey(player_qkey)
-		player_name_uncolored = self.Remove_colors(result[3])
-		if result[4] != None:
-			player_name   = result[4]
+
+		player_is_bot = result[5] != None
+		if player_is_bot:
+		        player_name = '"[BOT]"'
+		        player_name_uncolored = player_name
 		else:
-			player_name   = result[3]
+			player_name_uncolored = self.Remove_colors(result[3])
+			if result[4] != None:
+				player_name   = result[4]
+			else:
+				player_name   = result[3]
+
 		t = self.Gametime_seconds(gametime)
 
 		# Check against MySQL
@@ -698,11 +713,16 @@ class Parser:
 		result = self.dbc.fetchone()
 		if result == None:
 			# We have to insert this as new player
-			self.dbc.execute("INSERT INTO `players` (`player_name`, `player_qkey`, `player_name_uncolored`, `player_first_game_id`, `player_first_gametime`, `player_last_game_id`, `player_last_gametime`) VALUES (%s, %s, %s, %s, %s, %s, %s)", (player_name, player_qkeyhash, player_name_uncolored, self.game_id, self.game_timestamp, self.game_id, self.game_timestamp))
+			self.dbc.execute("INSERT INTO `players` (`player_name`, `player_qkey`, `player_is_bot`, `player_name_uncolored`, `player_first_game_id`, `player_first_gametime`, `player_last_game_id`, `player_last_gametime`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (player_name, player_qkeyhash, player_is_bot, player_name_uncolored, self.game_id, self.game_timestamp, self.game_id, self.game_timestamp))
 			self.dbc.execute("SELECT LAST_INSERT_ID()")
 			result = self.dbc.fetchone()
 			mysql_id = result[0]
 			self.dbc.execute("INSERT INTO `nicks` (`nick_player_id`, `nick_name_uncolored`, `nick_name`) VALUES (%s, %s, %s)", (mysql_id, player_name_uncolored, player_name))
+                        result = self.dbc.fetchone()
+
+		elif player_is_bot:
+			mysql_id = result[0]
+
 		else:
 			# update basic player info
 			mysql_id = result[0]
@@ -725,6 +745,9 @@ class Parser:
 
 		# Add the player to internal list
                 self.players[player_id] = {'name': player_name, 'name_uncolored': player_name_uncolored, 'id': mysql_id, 'qkey': player_qkey, 'qkeyhash': player_qkeyhash, 'ip': player_ip, 'team': 'spectator', 'team_time': t}
+
+                if player_is_bot:
+                        self.bots[mysql_id] = True
 
 		# If the player wasn't in the current game, we set his gamecount up by one
 		if not self.game_players.has_key(mysql_id):
@@ -754,7 +777,9 @@ class Parser:
 			# if self.game_players.has_key(mysql_player_id):
 			#	self.Log_PlayerSingleUpdate(mysql_player_id, self.game_players[mysql_player_id])
 
-			del self.players[player_id]
+			# only delete if not a bot -- bots are handled as a single player
+			if not self.bots.has_key(mysql_player_id):
+				del self.players[player_id]
 
 	""" A client renames """
 	def Log_ClientRename(self, gametime, line):
@@ -780,6 +805,10 @@ class Parser:
 			return
 
 		mysql_id = self.players[player_id]['id']
+
+		# Renaming of bots is ignored
+		if not self.bots.has_key(mysql_id):
+			return
 
 		# Add the new nick for this TJW player
 		if mysql_id != 0 and len(player_qkey) == 32:
@@ -846,6 +875,10 @@ class Parser:
 			if self.game_players.has_key(mysql_player_id):
 				self.dbc.execute("""INSERT INTO `says` (`say_game_id`, `say_gametime`, `say_mode`, `say_player_id`, `say_message`)
 				                    VALUES (%s, %s, %s, %s, %s)""", (self.game_id, gametime, channel, mysql_player_id, message))
+
+                        # Non-bot player has said something => game isn't empty
+			if not self.bots.has_key(mysql_player_id):
+                                self.game_is_empty = False;
 
 	""" A kill was done """
 	def Log_Die(self, gametime, line):

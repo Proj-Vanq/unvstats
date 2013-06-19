@@ -14,6 +14,7 @@ if (!isset($_GET['player_id'])) {
 
 // Player details
 $player_details = $db->GetRow("SELECT player_id,
+                                      player_is_bot,
                                       player_name,
                                       player_games_played,
                                       player_kills,
@@ -56,18 +57,22 @@ if( !isset($player_details['player_id']) ):
   die ("player id not found");
 endif;
 
+$tpl->assign('player_details',       $player_details);
+
+if( ! $player_details['player_is_bot'] ):
+// Prefered weapons
 // Other nicks used by this player
-$player_nicks = $db->GetAll("SELECT nick_name
+  $player_nicks = $db->GetAll("SELECT nick_name
                               FROM `nicks`
                               WHERE nick_player_id = ?
                               ORDER BY nick_name_uncolored ASC",
                               array($player_details['player_id']));
 
 // Random quote
-if( constant('PRIVACY_QUOTE') == '1' ):
-  $random_quote = '';
-else:
-  $random_quote = $db->GetRow("SELECT say_mode, say_message
+  if( constant('PRIVACY_QUOTE') == '1' ):
+    $random_quote = '';
+  else:
+    $random_quote = $db->GetRow("SELECT say_mode, say_message
                                FROM says
                                WHERE say_player_id = ?
                                ORDER BY RAND()
@@ -75,8 +80,7 @@ else:
                                array($player_details['player_id']));
 endif;
 
-// Prefered weapons
-$weapon_kills = $db->GetAll("SELECT COUNT(kill_id) AS weapon_count,
+  $weapon_kills = $db->GetAll("SELECT COUNT(kill_id) AS weapon_count,
                                         weapon_name,
                                         weapon_icon
                                  FROM kills
@@ -87,7 +91,7 @@ $weapon_kills = $db->GetAll("SELECT COUNT(kill_id) AS weapon_count,
                                  ORDER BY weapon_count DESC, weapon_name ASC",
                                  array($player_details['player_id']));
 
-$weapon_deaths = $db->GetAll("SELECT COUNT(kill_id) AS weapon_count,
+  $weapon_deaths = $db->GetAll("SELECT COUNT(kill_id) AS weapon_count,
                                         weapon_name,
                                         weapon_icon
                                  FROM kills
@@ -99,7 +103,7 @@ $weapon_deaths = $db->GetAll("SELECT COUNT(kill_id) AS weapon_count,
                                  array($player_details['player_id']));
 
 // Destroyed structures
-$destroyed_structures = $db->GetAll("SELECT COUNT(destruct_id) AS building_count,
+  $destroyed_structures = $db->GetAll("SELECT COUNT(destruct_id) AS building_count,
                                             building_name,
                                             building_icon
                                      FROM destructions
@@ -112,7 +116,7 @@ $destroyed_structures = $db->GetAll("SELECT COUNT(destruct_id) AS building_count
                                      ORDER BY building_count DESC, building_name ASC",
                                      array($player_details['player_id']));
 
-$built_structures = $db->GetAll("SELECT COUNT(build_id) AS building_count,
+  $built_structures = $db->GetAll("SELECT COUNT(build_id) AS building_count,
                                             building_name,
                                             building_icon
                                      FROM builds
@@ -122,7 +126,7 @@ $built_structures = $db->GetAll("SELECT COUNT(build_id) AS building_count,
                                      ORDER BY building_count DESC, building_name ASC",
                                      array($player_details['player_id']));
 
-$votes_called = $db->GetAll("SELECT COUNT(vote_id) AS vote_count,
+  $votes_called = $db->GetAll("SELECT COUNT(vote_id) AS vote_count,
                                             vote_type
                                      FROM votes
                                      WHERE vote_player_id = ?
@@ -130,7 +134,7 @@ $votes_called = $db->GetAll("SELECT COUNT(vote_id) AS vote_count,
                                      ORDER BY vote_count DESC, vote_type ASC",
                                      array($player_details['player_id']));
 
-$votes_against = $db->GetAll("SELECT COUNT(vote_id) AS vote_count,
+  $votes_against = $db->GetAll("SELECT COUNT(vote_id) AS vote_count,
                                             vote_type
                                      FROM votes
                                      WHERE vote_victim_id = ?
@@ -138,7 +142,7 @@ $votes_against = $db->GetAll("SELECT COUNT(vote_id) AS vote_count,
                                      ORDER BY vote_count DESC, vote_type ASC",
                                      array($player_details['player_id']));
 
-$favorite_target = $db->GetRow("SELECT player_id,
+  $favorite_target = $db->GetRow("SELECT player_id,
                                      player_name,
                                      COUNT(*) AS kill_count
                                      FROM kills
@@ -148,7 +152,7 @@ $favorite_target = $db->GetRow("SELECT player_id,
                                      ORDER BY kill_count desc
                                      LIMIT 0,1",
                                      array($player_details['player_id']));
-$favorite_nemesis = $db->GetRow("SELECT player_id,
+  $favorite_nemesis = $db->GetRow("SELECT player_id,
                                      player_name,
                                      COUNT(*) AS kill_count
                                      FROM kills
@@ -160,17 +164,18 @@ $favorite_nemesis = $db->GetRow("SELECT player_id,
                                      array($player_details['player_id']));
 
 // Assign variables to template
-$tpl->assign('player_details',       $player_details);
-$tpl->assign('player_nicks',         $player_nicks);
-$tpl->assign('random_quote',         $random_quote);
-$tpl->assign('weapon_kills',         $weapon_kills);
-$tpl->assign('weapon_deaths',        $weapon_deaths);
-$tpl->assign('destroyed_structures', $destroyed_structures);
-$tpl->assign('built_structures',     $built_structures);
-$tpl->assign('votes_called',         $votes_called);
-$tpl->assign('votes_against',        $votes_against);
-$tpl->assign('favorite_target',      $favorite_target);
-$tpl->assign('favorite_nemesis',     $favorite_nemesis);
+  $tpl->assign('player_nicks',         $player_nicks);
+  $tpl->assign('random_quote',         $random_quote);
+  $tpl->assign('weapon_kills',         $weapon_kills);
+  $tpl->assign('weapon_deaths',        $weapon_deaths);
+  $tpl->assign('destroyed_structures', $destroyed_structures);
+  $tpl->assign('built_structures',     $built_structures);
+  $tpl->assign('votes_called',         $votes_called);
+  $tpl->assign('votes_against',        $votes_against);
+  $tpl->assign('favorite_target',      $favorite_target);
+  $tpl->assign('favorite_nemesis',     $favorite_nemesis);
+
+endif;
                                      
 // Show the template
 $tpl->display('player_details.tpl.php');

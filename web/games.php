@@ -15,11 +15,11 @@ if (isset($_GET['map_id'])) {
 }
 if (isset($_GET['hideempty']) and $_GET['hideempty'] == "1") {
   if (isset($_GET['map_id'])) {
-    $map_search.=" AND "; 
+    $map_search.=" AND";
   } else {
-    $map_search.="WHERE ";
+    $map_search.="WHERE";
   }
-  $map_search.="game_winner != 'none' AND game_winner != 'undefined'";
+  $map_search .= " game_is_empty = FALSE";
   $tpl->assign('hideempty', $_GET['hideempty']);
 }
 

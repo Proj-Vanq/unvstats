@@ -37,7 +37,7 @@ class Skills:
     def skillStats(self, dbc, game_id, game_time, asWon, hsWon):
         #print "--- Updating stats for game %s that took %s (humans won: %s)." % (game_id, game_time, hs)
         halfgame = game_time / 2
-        # For each player select the last computed skill before the given game
+        # For each player (excluding bots) select the last computed skill before the given game
         players = []
         self.dbc.execute("""
             SELECT p.stats_player_id, p.stats_time_alien, p.stats_time_human,
@@ -46,7 +46,8 @@ class Skills:
                 COALESCE(t.skill_human_mu, %s) AS mu_h, COALESCE(t.skill_human_sigma, %s) AS sigma_h
             FROM per_game_stats p
               LEFT JOIN skill t ON t.skill_game_id IN (SELECT MAX(s.skill_game_id) FROM skill s WHERE s.skill_player_id = t.skill_player_id AND s.skill_game_id < %s) AND t.skill_player_id = p.stats_player_id
-              WHERE p.stats_game_id = %s
+              LEFT JOIN players ON p.stats_player_id = players.player_id
+              WHERE p.stats_game_id = %s AND player_is_bot = FALSE
             """, (self.initial_mu, self.initial_sigma,
                     self.initial_mu, self.initial_sigma,
                     self.initial_mu, self.initial_sigma,
@@ -85,10 +86,17 @@ class Skills:
         except Exception as e:
             print "Recomputation for game %s failed, please report to the develper.\n%s" % (game_id, e)
 
+        self.dbc.execute("SELECT player_id FROM players WHERE player_is_bot = TRUE")
+        bots = self.dbc.fetchall()
+
         # Update the database
         self.dbc.execute("""BEGIN""");
         try:
             for player in players:
+                # don't store info on bots!
+                if player in bots:
+                    continue
+
                 #print "Player %s with skill %s/%s and rank %s." % (player.id, player.skill[0], player.skill[1], player.rank)
                 self.dbc.execute("""INSERT INTO `skill`
                   (`skill_player_id`, `skill_game_id`,
