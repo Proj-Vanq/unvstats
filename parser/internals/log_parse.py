@@ -527,11 +527,20 @@ class Parser:
 			self.game_id = None
 			return
 
+		# Length = 0 indicates an empty game
+                self.dbc.execute("SELECT `game_id`, TIME_TO_SEC(`game_length`) FROM `games` ORDER BY `game_id` DESC LIMIT 1")
+		result = self.dbc.fetchone()
+
 		# Insert game into database
-		self.game_map_id = self.Check_map_in_database(game_map)
-		self.dbc.execute("INSERT INTO `games` (`game_map_id`) VALUES (%s)", (self.game_map_id))
-		self.dbc.execute("SELECT LAST_INSERT_ID()")
-		(self.game_id, ) = self.dbc.fetchone()
+		if result != None and result[1] == 0:
+			self.game_map_id = self.Check_map_in_database(game_map)
+			self.dbc.execute("UPDATE `games` SET `game_map_id` = %s WHERE `game_id` = %s", (self.game_map_id, result[0]))
+			self.game_id = result[0]
+		else:
+			self.game_map_id = self.Check_map_in_database(game_map)
+			self.dbc.execute("INSERT INTO `games` (`game_map_id`) VALUES (%s)", (self.game_map_id))
+			self.dbc.execute("SELECT LAST_INSERT_ID()")
+			(self.game_id, ) = self.dbc.fetchone()
 
 	""" Real time given """
 	def Log_RealTime(self, gametime, line):
