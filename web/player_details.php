@@ -142,21 +142,23 @@ endif;
                                      ORDER BY vote_count DESC, vote_type ASC",
                                      array($player_details['player_id']));
 
-  $favorite_target = $db->GetRow("SELECT player_id,
+  $favorite_target = $db->GetRow("SELECT players.player_id AS player_id,
                                      player_name,
                                      COUNT(*) AS kill_count
                                      FROM kills
-                                     LEFT JOIN players ON kill_target_player_id = player_id
+                                     LEFT JOIN players ON kill_target_player_id = players.player_id
+                                     INNER JOIN human_players ON kill_target_player_id = human_players.player_id
                                      WHERE kill_source_player_id = ?
                                      GROUP BY kill_target_player_id
                                      ORDER BY kill_count desc
                                      LIMIT 0,1",
                                      array($player_details['player_id']));
-  $favorite_nemesis = $db->GetRow("SELECT player_id,
+  $favorite_nemesis = $db->GetRow("SELECT players.player_id AS player_id,
                                      player_name,
                                      COUNT(*) AS kill_count
                                      FROM kills
-                                     LEFT JOIN players on kill_source_player_id = player_id
+                                     LEFT JOIN players on kill_source_player_id = players.player_id
+                                     INNER JOIN human_players ON kill_source_player_id = human_players.player_id
                                      WHERE kill_target_player_id = ? AND kill_type = 'enemy'
                                      GROUP BY kill_source_player_id
                                      ORDER BY kill_count desc
