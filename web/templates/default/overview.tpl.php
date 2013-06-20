@@ -261,7 +261,7 @@
     </tbody>
   </table>
 
- <div class="update">Last update: <?php echo $this->state['log_timestamp']; ?></div>
+ <div class="update">Last update: <?php echo $this->state['log_timestamp']; ?> <small>UTC</small></div>
 
 </div>
 
