@@ -44,7 +44,7 @@
       <?php foreach ($this->top AS $player): ?>
         <tr class="list" >
           <td><?php echo $player['player_rank']; ?></td>
-          <td class="playername"><?php echo player_link($player['player_id'], player['player_name']); ?></td>
+          <td class="playername"><?php echo player_link($player['player_id'], $player['player_name']); ?></td>
           <td><?php echo $player['player_kills']; ?></td>
           <td><?php echo $player['player_deaths']; ?></td>
           <td><?php echo $player['player_total_efficiency']; ?></td>
