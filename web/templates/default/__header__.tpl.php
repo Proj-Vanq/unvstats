@@ -32,13 +32,14 @@ if (is_readable($site_dir . '/site-style.php'))
 <?php
 function menu_link($page, $title)
 {
+  $p = is_array($page) ? $page[0] : $page;
   $a = substr(strrchr($_SERVER['REQUEST_URI'], '/'), 1);
   if (substr($a, -4) == '.php')
     $a = substr($a, 0, -4);
   if (is_array($page) ? in_array($a, $page) : ($a == $page))
-    echo "<li id=\"currentPage\"><a href=\"$page.php\">$title</a></li>";
+    echo "<li id=\"currentPage\"><a href=\"$p.php\">$title</a></li>";
   else
-    echo "<li><a href=\"$page.php\">$title</a></li>";
+    echo "<li><a href=\"$p.php\">$title</a></li>";
 }
 ?>
     <div class="menu">
