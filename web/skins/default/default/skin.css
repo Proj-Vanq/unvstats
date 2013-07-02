@@ -164,6 +164,9 @@ div.menu > div {
   border-collapse: separate;
   background: none;
 }
+div.menu > div + div {
+  margin-top: -0.5rem;
+}
 div.menu ul {
   display: table-row;
 }
