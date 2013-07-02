@@ -33,7 +33,9 @@ if (is_readable($site_dir . '/site-style.php'))
 function menu_link($page, $title)
 {
   $a = substr(strrchr($_SERVER['REQUEST_URI'], '/'), 1);
-  if ($a == ($page . '.php'))
+  if (substr($a, -4) == '.php')
+    $a = substr($a, 0, -4);
+  if (is_array($page) ? in_array($a, $page) : ($a == $page))
     echo "<li id=\"currentPage\"><a href=\"$page.php\">$title</a></li>";
   else
     echo "<li><a href=\"$page.php\">$title</a></li>";
@@ -42,7 +44,7 @@ function menu_link($page, $title)
     <div class="menu">
       <div>
         <ul class="menu">
-          <?php menu_link('index',               'Overview'); ?>
+          <?php menu_link(array('index', ''),    'Overview'); ?>
           <?php menu_link('top_players',         'Top Players'); ?>
           <?php menu_link('top_feeders',         'Feeders'); ?>
           <?php menu_link('top_teamkillers',     'Team Killers'); ?>
