@@ -1,6 +1,6 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div id="box">
+<div>
   <div class="heading">
     <span class="heading"><h2>Voting</h2></span>
   </div>

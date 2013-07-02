@@ -22,7 +22,7 @@
       endif;
 ?>
 
-<div id="box">
+<div>
   <div class="heading">
     <span class="heading"><h2><?php if(isset($this->order_name)): echo "Games with most ".$this->order_name; else: echo "Recent Games"; endif; ?></h2></span>
     <span class="headinglink">

@@ -1,6 +1,6 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div id="box">
+<div>
   <div class="heading">
     <span class="heading"><h2><?php if ($this->order == 'alienwins'): echo "Maps by Alien Wins"; elseif ($this->order == 'humanwins'): echo "Maps by Human Wins"; elseif ($this->order == 'mapname'): echo "Maps by Name"; else: echo "Most Played Maps"; endif; ?></h2></span>
     <span class="headinglink">

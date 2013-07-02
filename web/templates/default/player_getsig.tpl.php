@@ -8,7 +8,7 @@
  );
 ?>
 
-<div id="box">
+<div>
   <h2>Player Signature for <?php echo player_link($this->player_details['player_id'], $this->player_details['player_name']); ?></h2>
 
   <table>

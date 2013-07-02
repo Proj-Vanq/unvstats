@@ -1,6 +1,6 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div id="box">
+<div>
   <h2>Server Status</h2>
 
   <?php if (isset($this->server_status)): ?>

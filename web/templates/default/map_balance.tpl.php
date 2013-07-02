@@ -1,6 +1,6 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div id="box">
+<div id="mapbalance">
   <h2>Map Balance by Wins</h2>
 
   <table>

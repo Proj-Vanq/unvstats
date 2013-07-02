@@ -1,6 +1,6 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div id="box">
+<div>
   <h2>Search result</h2>
 
   <table>

@@ -6,32 +6,56 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="Publisher" content="DASPRiD's" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->css_file(); ?>" />
+<?php
+/* site hooks */
+$site_dir = dirname($_SERVER['SCRIPT_FILENAME']);
+if (is_readable($site_dir . '/site-style.css'))
+  echo '<link rel="stylesheet" type="text/css" href="' . dirname($_SERVER['REQUEST_URI']) . '/site-style.css" />';
+if (is_readable($site_dir . '/site-style.php'))
+{
+  include $site_dir . '/site-style.php';
+}
+?>
   </head>
-
   <body>
     <div id="header">
       <form class="search" method="get" accept-charset="utf-8" action="search_player.php">
         <fieldset>
           <label for="query">Player search:</label>
           <input type="text" name="query" id="query" value="<?php if (isset($_GET['query'])): ?><?php echo htmlspecialchars($_GET['query'],ENT_QUOTES) ?><?php endif; ?>" />
-          <input type="submit" value="search" />
+          <input type="submit" value="Search" />
         </fieldset>
       </form>
 
-      <h1>Unvstats <span class="for"><br></span><?php echo replace_color_codes(SERVER_NAME); ?></h1>
+      <h1><img src="images/unvstats.png" alt="Unvstats " /><span class="for"><br /></span><span id="serverName"><?php echo replace_color_codes(SERVER_NAME); ?></span></h1>
+    </div>
+<?php
+function menu_link($page, $title)
+{
+  $a = substr(strrchr($_SERVER['REQUEST_URI'], '/'), 1);
+  if ($a == ($page . '.php'))
+    echo "<li id=\"currentPage\"><a href=\"$page.php\">$title</a></li>";
+  else
+    echo "<li><a href=\"$page.php\">$title</a></li>";
+}
+?>
+    <div class="menu">
+      <div>
+        <ul class="menu">
+          <?php menu_link('index',               'Overview'); ?>
+          <?php menu_link('top_players',         'Top Players'); ?>
+          <?php menu_link('top_feeders',         'Feeders'); ?>
+          <?php menu_link('top_teamkillers',     'Team Killers'); ?>
+          <?php menu_link('most_active_players', 'Most Active Players'); ?>
+          <?php menu_link('votes',               'Votes'); ?>
+          <?php menu_link('most_played_maps',    'Maps'); ?>
+          <?php menu_link('map_balance',         'Balance'); ?>
+          <?php menu_link('games',               'Games'); ?>
+        </ul>
+      </div>
     </div>
 
-    <ul class="menu">
-      <li><a href="index.php">Overview</a>
-      </li><li><a href="top_players.php">Top Players</a>
-      </li><li><a href="top_feeders.php">Feeders</a>
-      </li><li><a href="top_teamkillers.php">Team Killers</a>
-      </li><li><a href="most_active_players.php">Most Active Players</a>
-      </li><li><a href="votes.php">Votes</a>
-      </li><li><a href="most_played_maps.php">Maps</a>
-      </li><li><a href="map_balance.php">Balance</a>
-      </li><li><a href="games.php">Games</a></li>
-    </ul>
-
-    <?php include '__pagelister__.php'; ?>
-    <?php require '__skill__.php'; ?>
+    <div id="box">
+      <div class="container">
+        <?php include '__pagelister__.php'; ?>
+        <?php require '__skill__.php'; ?>

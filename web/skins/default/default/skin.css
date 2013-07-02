@@ -1,8 +1,7 @@
 html, body {
   padding: 0;
   margin: 0;
-
-  background-color: #0e1011;
+  background-color: #222A2A;
 }
 
 * {
@@ -23,17 +22,70 @@ img {
   border: none;
 }
 
+body > * {
+  width: 65rem;
+}
+
+.container {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: 0.5rem solid transparent;
+  border-color: rgba(255, 255, 255, 0.063);
+  box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
+  border-radius: 0.5em;
+}
+
+body > *, #header .search {
+  margin: 1rem auto;
+  padding: 0.5rem;
+
+  background: transparent;
+  background: rgba(255,255,255,0.25);
+  background: -moz-linear-gradient(top, rgba(255,255,255,0.1), rgba(255,255,255,0.333), rgba(255,255,255,0.1));
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.1), rgba(255,255,255,0.333), rgba(255,255,255,0.1));
+  background: -o-linear-gradient(top, rgba(255,255,255,0.1), rgba(255,255,255,0.333), rgba(255,255,255,0.1));
+  background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.333), rgba(255,255,255,0.1));
+
+  border-radius: 0.5em;
+}
+body > * > *, #header .search > * {
+  background: #222222;
+}
+
 form.search {
   float: right;
   margin: 0;
   padding: 0;
+  margin-top: 3.4rem !important; /* alignment with 'stats' in logo */
 }
 
 form.search fieldset {
-  margin: 0.5em 0;
-  padding: 0.5em;
-  border: 1px solid #707880;
-  background-color: #1a1c1e;
+  padding: 0.5rem;
+  border: 0.25rem solid transparent;
+  border-color: rgba(255, 255, 255, 0.063);
+  border-radius: 0.25rem;
+  box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
+}
+
+#header {
+  background: none;
+  margin: 0px auto;
+  padding: 0px 0.5rem;
+}
+
+#header h1 {
+  background: none;
+  padding: 1rem;
+}
+
+/* server name alignment */
+#header h1 img {
+  margin-bottom: -2rem;
+}
+#serverName {
+  float: right;
+  margin-top: -2rem;
+  width: 48rem;
 }
 
 form.search fieldset label {
@@ -42,31 +94,36 @@ form.search fieldset label {
 
 form.search fieldset input[type="text"] {
   width: 15em;
-  margin: 0 0.5em 0 0;
   vertical-align: middle;
 
-  background-color: #22262a;
-  border-top: 1px solid #040505;
-  border-left: 1px solid #040505;
-  border-bottom: 1px solid #57616b;
-  border-right: 1px solid #57616b;
+  background: inherit;
+  color: inherit;
+  border: 1px solid grey;
+  border-radius: 2px;
 }
 
-form.search fieldset input[type="submit"] {
-  vertical-align: middle;
-
-  background-color: #22262a;
-  border-top: 1px solid #57616b;
-  border-left: 1px solid #57616b;
-  border-bottom: 1px solid #040505;
-  border-right: 1px solid #040505;
+input[type="submit"], input[type="button"] {
+  border: none;
+  background: #444444;
+  background: -moz-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -webkit-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -o-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -ms-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.5);
+  white-space: normal;
+  position: relative;
 }
-
-form.search fieldset input[type="submit"]:hover {
-  border-top: 1px solid #040505;
-  border-left: 1px solid #040505;
-  border-bottom: 1px solid #57616b;
-  border-right: 1px solid #57616b;
+input[type="submit"]:hover, input[type="button"]:hover {
+  text-decoration: underline;
+  -moz-text-decoration-color: #0088CC !important;
+  -webkit-text-decoration-color: #0088CC !important;
+  -o-text-decoration-color: #0088CC !important;
+  -ms-text-decoration-color: #0088CC !important;
+}
+input[type="submit"]:active, input[type="button"]:active {
+  top: 0.125rem;
+  left: 0.125rem;
 }
 
 a:active, a:link, a:visited {
@@ -81,21 +138,8 @@ a:hover {
   text-decoration: underline;
 }
 
-#header, ul.menu, #footer {
-  width: 64em;
-}
-
-#box {
-  width: 62em;
-}
-
-#header {
-  margin: 0.5em auto;
-  padding: 0;
-}
-
 h1 {
-  font-size: 1.6em;
+  font-size: 1.6rem;
   font-weight: bold;
   margin: 0;
 }
@@ -112,58 +156,67 @@ span.for {
   vertical-align: baseline;
 }
 
-ul.menu {
+div.menu {
   clear: both;
-
-  margin: 0 auto;
-  padding: 0;
-
-  background: url(images/bar.png) #111111;
-  border-top: 1px solid #7a7a79;
-  border-left: 1px solid #7a7a79;
-  border-bottom: 1px solid #141414;
-  border-right: 1px solid #141414;
+  font-variant: small-caps;
+  font-weight: 300;
+  padding: 0px;
 }
 
-ul.menu li {
-  display: inline-block;
+div.menu > div {
+  display: table;
+  width: 100%;
+  padding: 0px;
+  border-spacing: 0.5rem;
+  border-collapse: separate;
+  background: none;
+}
+div.menu ul {
+  display: table-row;
+}
+div.menu li {
+  display: table-cell;
+  text-align: center;
   list-style-type: none;
 
-  margin: -1px 1px -1px -1px;
-  padding: 4px 0;
+  background: #444444;
+  background: -moz-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -webkit-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -o-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -ms-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+
+  border: 0.25rem solid #222222;
+  border-radius: 0.25rem;
+  box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
+  margin: 0.25rem;
+  padding: 0.25rem;
 }
 
-ul.menu li a:active, ul.menu li a:link, ul.menu li a:visited {
+#currentPage {
+  background: #222222;
+  background: -moz-linear-gradient(center top , #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
+  background: -webkit-linear-gradient(center top , #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
+  background: -o-linear-gradient(center top , #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
+  background: -ms-linear-gradient(center top , #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
+  border-color: #111111;
+}
+
+div.menu li a {
+  display: block;
+  padding: 0.25rem;
   color: #FFFFFF;
   text-decoration: none;
-  padding: 3px 0.5em;
-
-  border-top: 1px solid #7a7a79;
-  border-left: 1px solid #7a7a79;
-  border-bottom: 1px solid #141414;
-  border-right: 1px solid #141414;
 }
-
-ul.menu li a:hover {
-  border-top: 1px solid #141414;
-  border-left: 1px solid #141414;
-  border-bottom: 1px solid #7a7a79;
-  border-right: 1px solid #7a7a79;
-}
-
-#box {
-  margin: 0 auto;
-  padding: 1em;
-
-  border: 1px solid #707880;
-  border-top: none;
-  background-color: #1a1c1e;
+div.menu li a:hover, div.menu li a:active {
+  color: cyan;
+  text-decoration: underline;
+  -moz-text-decoration-color: #0088CC !important;
+  -webkit-text-decoration-color: #0088CC !important;
+  -o-text-decoration-color: #0088CC !important;
+  -ms-text-decoration-color: #0088CC !important;
 }
 
 #footer {
-  margin: 0.5em auto;
-
-  font-size: 1em;
   text-align: right;
 }
 
@@ -189,9 +242,10 @@ h2 {
 table {
   width: 100%;
   clear: both;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 
   border-spacing: 0;
+  border-collapse: collapse;
 }
 
 table.legend {
@@ -215,6 +269,14 @@ table.legend td.c {
   color: #FFFFFF;
 }
 
+dtr:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.125);
+}
+
+dtr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.0625);
+}
+
 th, td {
   padding: 1px 3px;
 
@@ -223,20 +285,18 @@ th, td {
 
 th {
   text-align: left;
-  background: url(images/bar.png) #111111;
-  border-top: 1px solid #7a7a79;
-  border-left: 1px solid #7a7a79;
-  border-bottom: 1px solid #141414;
-  border-right: 1px solid #141414;
+  background: url(images/bar.png) #444444;
 }
 
 tbody.padded td {
   padding: 1em;
 }
 
+/*
 tr td {
   background-color: #22262a;
 }
+*/
 
 tr.spacer {
   height: 1em;
@@ -246,13 +306,9 @@ tr.list:hover {
   background-color: #32363a;
 }
 
-td {
-  border-top: 1px solid #57616b;
-  border-left: 1px solid #57616b;
-  border-bottom: 1px solid #040505;
-  border-right: 1px solid #040505;
+th, td {
+  border: 1px solid black;
 }
-
 
 td.quote_public {
   color: #00FF00;
@@ -336,6 +392,19 @@ div.privacy {
   margin: 0 auto 0.5em auto;
   text-align: center;
   color: #FF0000;
+}
+
+#mapbalance table {
+  table-layout: fixed;
+}
+#mapbalance col.item {
+  width: auto;
+}
+#mapbalance col.balancebar {
+  width: 410px;
+}
+#mapbalance col.data {
+  width: 10%;
 }
 
 col.id {

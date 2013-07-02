@@ -1,6 +1,6 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div id="box">
+<div>
   <div class="heading">
     <span class="heading"><h2>Player Details for <?php echo replace_color_codes($this->player_details['player_name']); ?></h2></span>
     <!-- span class="headinglink"> ( <a href="player_getsig.php?player_id=<?php echo $this->player_details['player_id'] ?>">get a player signature</a> )</span -->

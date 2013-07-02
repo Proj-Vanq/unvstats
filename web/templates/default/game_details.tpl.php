@@ -1,6 +1,6 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div id="box">
+<div>
   <div class="heading">
     <span class="heading"><h2>Game #<?php echo $this->game_details['game_id']; ?> Summary</h2></span>
     <span class="headinglink"> ( <a href="game_log.php?game_id=<?php echo $this->game_details['game_id'] ?>">show game log</a> )</span>
