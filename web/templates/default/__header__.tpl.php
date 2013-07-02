@@ -8,16 +8,21 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $this->css_file(); ?>" />
 <?php
 /* site hooks */
-$site_dir = dirname($_SERVER['SCRIPT_FILENAME']);
-if (is_readable($site_dir . '/site-style.css'))
-  echo '<link rel="stylesheet" type="text/css" href="' . dirname($_SERVER['REQUEST_URI']) . '/site-style.css" />';
-if (is_readable($site_dir . '/site-style.php'))
+function site_hook($hook)
 {
-  include $site_dir . '/site-style.php';
+  $hook = dirname($_SERVER['SCRIPT_FILENAME']) . '/' . $hook . '.php';
+  if (is_readable($hook))
+    include $hook;
 }
+
+if (is_readable(dirname($_SERVER['SCRIPT_FILENAME']) . '/site-style.css'))
+  echo '<link rel="stylesheet" type="text/css" href="' . dirname($_SERVER['REQUEST_URI']) . '/site-style.css" />';
+
+site_hook('site-style');
 ?>
   </head>
   <body>
+<?php site_hook('site-top'); ?>
     <div id="header">
       <form class="search" method="get" accept-charset="utf-8" action="search_player.php">
         <fieldset>
@@ -29,6 +34,7 @@ if (is_readable($site_dir . '/site-style.php'))
 
       <h1><img src="images/unvstats.png" alt="Unvstats " /><span class="for"><br /></span><span id="serverName"><?php echo replace_color_codes(SERVER_NAME); ?></span></h1>
     </div>
+    <div class="menu">
 <?php
 function menu_link($page, $title)
 {
@@ -41,8 +47,9 @@ function menu_link($page, $title)
   else
     echo "<li><a href=\"$p.php\">$title</a></li>";
 }
+
+site_hook('site-menu');
 ?>
-    <div class="menu">
       <div>
         <ul class="menu">
           <?php menu_link(array('index', ''),    'Overview'); ?>
