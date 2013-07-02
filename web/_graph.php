@@ -9,6 +9,8 @@
 require_once 'core/init.inc.php';
 require_once 'core/jpgraph/jpgraph.php';
 
+$BACKGROUND = '#22262a';
+
 switch ($_GET['type']) {
   case 'kills_per_game':
     if (!isset($_GET['player_id'])) {
@@ -76,8 +78,9 @@ switch ($_GET['type']) {
     // Create the graph
     $g = new Graph(573,200);
     $g->SetMargin(30,10,10,10);
-    $g->SetMarginColor('#22262a');
-    $g->SetColor('#22262a');
+    $g->SetMarginColor($BACKGROUND);
+    $g->SetColor($BACKGROUND);
+    $g->img->SetTransparent($BACKGROUND);
     $g->SetFrame(true, array(0, 0, 0), 0);
     $g->SetBox(false);
     $g->img->SetAntiAliasing();
@@ -209,8 +212,9 @@ switch ($_GET['type']) {
     // create graph
     $g = new Graph(573,200);
     $g->SetMargin(30,10,10,30);
-    $g->SetMarginColor('#22262a');
-    $g->SetColor('#22262a');
+    $g->SetMarginColor($BACKGROUND);
+    $g->SetColor($BACKGROUND);
+    $g->img->SetTransparent($BACKGROUND);
     $g->SetFrame(true, array(0, 0, 0), 0);
     $g->SetBox(false);
     $g->img->SetAntiAliasing();
@@ -270,8 +274,9 @@ switch ($_GET['type']) {
     // Build graph
     $g  = new PieGraph (200,120);
     $g->SetMargin(30,30,10,25);
-    $g->SetMarginColor('#22262a');
-    $g->SetColor('#22262a');
+    $g->SetMarginColor($BACKGROUND);
+    $g->SetColor($BACKGROUND);
+    $g->img->SetTransparent($BACKGROUND);
     $g->SetFrame(true, array(0, 0, 0), 0);
     $g->SetBox(false);
 
@@ -316,8 +321,9 @@ switch ($_GET['type']) {
     $graph = new Graph (400,30);
     $graph->SetScale('textlin', 0, 100);
     $graph->Set90AndMargin(1, 1, 1, 1);
-    $graph->SetMarginColor('#22262a');
-    $graph->SetColor('#22262a');
+    $graph->SetMarginColor($BACKGROUND);
+    $graph->SetColor($BACKGROUND);
+    $graph->img->SetTransparent($BACKGROUND);
     $graph->SetFrame(true, '#FFFFFF', 0);
 
     $bpa = new BarPlot($data_a);
@@ -361,8 +367,9 @@ switch ($_GET['type']) {
     $graph = new Graph (400,30);
     $graph->SetScale('textlin', 0, 100);
     $graph->Set90AndMargin(1, 1, 1, 1);
-    $graph->SetMarginColor('#22262a');
-    $graph->SetColor('#22262a');
+    $graph->SetMarginColor($BACKGROUND);
+    $graph->SetColor($BACKGROUND);
+    $graph->img->SetTransparent($BACKGROUND);
     $graph->SetFrame(true, '#FFFFFF', 0);
 
     $bpa = new BarPlot($data_a);
