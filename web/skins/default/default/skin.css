@@ -3,6 +3,10 @@ html, body {
   margin: 0;
   background-color: #222A2A;
 }
+body {
+  padding: 0 0 2rem;
+  margin: 0 0 -2rem;
+}
 
 * {
   font-family: "DejaVu Sans", Verdana, sans-serif;
