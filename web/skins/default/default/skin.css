@@ -165,7 +165,6 @@ span.for {
 div.menu {
   clear: both;
   font-variant: small-caps;
-  font-weight: 300;
   padding: 0px;
 }
 
@@ -212,7 +211,8 @@ div.menu li {
 
 div.menu li a {
   display: block;
-  padding: 0.25rem;
+  margin: -0.5rem;
+  padding: 0.75rem;
   color: #FFFFFF;
   text-decoration: none;
 }
