@@ -1,3 +1,7 @@
+html {
+  font-family: "DejaVu Sans", Verdana, sans-serif;
+  font-size: 10.5pt;
+}
 html, body {
   padding: 0;
   margin: 0;
@@ -6,7 +10,6 @@ body {
   padding: 0 0 2rem;
   margin: 0 0 -2rem;
   background-color: #222A2A;
-  font-size: 10.5pt;
   color: #FFFFFF;
 }
 
@@ -14,9 +17,7 @@ img {
   border: none;
 }
 
-* {
-  font-family: "DejaVu Sans", Verdana, sans-serif;
-}
+* { font-family: inherit; }
 
 body > * {
   width: 65rem;
@@ -90,21 +91,30 @@ form.search fieldset label {
 
 form.search fieldset input[type="text"] {
   width: 15em;
-  vertical-align: middle;
+}
 
-  background: inherit;
-  color: inherit;
-  border: 1px solid grey;
+input {
+  color: white;
+}
+
+input:hover {
+  color: #88FFFF;
+}
+
+input:not([type="submit"]):not([type="button"]), textarea {
+  background: #151515;
+  border: 2px solid grey;
   border-radius: 2px;
+  margin-bottom: 0.25rem;
 }
 
 input[type="submit"], input[type="button"] {
   border: none;
   background: #444444;
-  background: -moz-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: -webkit-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: -o-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: -ms-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -moz-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -webkit-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -o-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -ms-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
   border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
   box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.5);
   white-space: normal;
@@ -179,10 +189,10 @@ div.menu li {
   list-style-type: none;
 
   background: #444444;
-  background: -moz-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: -webkit-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: -o-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: -ms-linear-gradient(center top , #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -moz-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -webkit-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -o-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
 
   border: 0.25rem solid #222222;
   border-radius: 0.25rem;
@@ -193,10 +203,10 @@ div.menu li {
 
 #currentPage {
   background: #222222;
-  background: -moz-linear-gradient(center top , #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
-  background: -webkit-linear-gradient(center top , #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
-  background: -o-linear-gradient(center top , #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
-  background: -ms-linear-gradient(center top , #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
+  background: -moz-linear-gradient(top, #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
+  background: -webkit-linear-gradient(top, #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
+  background: -o-linear-gradient(top, #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
+  background: -ms-linear-gradient(top, #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
   border-color: #111111;
 }
 
