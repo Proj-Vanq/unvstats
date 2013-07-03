@@ -120,28 +120,25 @@ input[type="submit"], input[type="button"] {
   white-space: normal;
   position: relative;
 }
-input[type="submit"]:hover, input[type="button"]:hover {
+input[type="submit"]:active, input[type="button"]:active {
+  top: 0.125rem;
+  left: 0.125rem;
+}
+
+a:link:hover, a:active, input[type="submit"]:hover, input[type="button"]:hover {
   text-decoration: underline;
   -moz-text-decoration-color: #0088CC !important;
   -webkit-text-decoration-color: #0088CC !important;
   -o-text-decoration-color: #0088CC !important;
   -ms-text-decoration-color: #0088CC !important;
 }
-input[type="submit"]:active, input[type="button"]:active {
-  top: 0.125rem;
-  left: 0.125rem;
-}
 
-a:active, a:link, a:visited {
+a:link, a:visited {
   text-decoration: none;
 }
 
 a:active, a:link, a:visited, a:hover {
   color: #9FFFFF;
-}
-
-a:hover {
-  text-decoration: underline;
 }
 
 h1 {
@@ -218,11 +215,6 @@ div.menu li a {
 }
 div.menu li a:hover, div.menu li a:active {
   color: cyan;
-  text-decoration: underline;
-  -moz-text-decoration-color: #0088CC !important;
-  -webkit-text-decoration-color: #0088CC !important;
-  -o-text-decoration-color: #0088CC !important;
-  -ms-text-decoration-color: #0088CC !important;
 }
 
 #footer {
