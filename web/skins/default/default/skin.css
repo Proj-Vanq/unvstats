@@ -23,6 +23,40 @@ body > * {
   width: 65rem;
 }
 
+/* for embedded SVG */
+svg * {
+  stroke: white;
+  stroke-width: 0px;
+}
+svg text     { fill: white; }
+svg .percent { fill: #888888; dominant-baseline: hanging; alignment-baseline: hanging; font-size: 75%; }
+svg .axis-x  { text-anchor: middle; dominant-baseline: hanging; alignment-baseline: hanging; font-size: 75%; }
+svg .axis-y  { text-anchor: end; dominant-baseline: middle; alignment-baseline: middle; font-size: 75%; }
+svg .alien   { fill: #CC0000; }
+svg .human   { fill: #0055FF; }
+svg .world   { fill: #88FF00; }
+svg .tied    { fill: #888888; }
+svg .null    { fill: #222222; }
+svg .line.alien   { stroke: #CC0000; }
+svg .line.tied    { stroke: #888888; }
+svg .line.human   { stroke: #0055FF; }
+svg .line.world   { stroke: #88FF00; }
+svg .marker_major { stroke: #666666; stroke-width: 1px; }
+svg .marker_minor { stroke: #444444; stroke-width: 1px; }
+svg .player-kills     { fill: #00FF00; }
+svg .player-teamkills { fill: #FF0000; }
+svg .player-deaths    { fill: #0000FF; }
+svg .line.player-kills     { stroke: #00FF00; }
+svg .line.player-teamkills { stroke: #FF0000; }
+svg .line.player-deaths    { stroke: #0000FF; }
+svg .filler { fill: black; }
+svg .box    { stroke: black; stroke-width: 1px; }
+svg line,
+svg .line   { stroke-width: 1px; fill: none; }
+svg .grid   { stroke: #57616b; }
+
+/* back to HTML */
+
 .container {
   margin: 0.5rem;
   padding: 0.5rem;

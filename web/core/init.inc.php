@@ -8,10 +8,13 @@
 
 $calculation_start = microtime(true);
 
-define('VERSION', '0.1.0');
+define('VERSION', '0.2.0');
+
+define('CLIENT_IS_BOT', preg_match( '/apache|bot|catalog|cr[ao]wler|digg|https?:|facebook|feed|monitor|spider|syndication|yahoo/', $_SERVER['HTTP_USER_AGENT'] ) ? true : false);
 
 require_once dirname(__FILE__).'/config.inc.php';
 require_once dirname(__FILE__).'/lib.inc.php';
+require_once dirname(__FILE__).'/graphs.inc.php';
 require_once dirname(__FILE__).'/tiny_templating.class.php';
 require_once dirname(__FILE__).'/adodb/adodb-exceptions.inc.php';
 require_once dirname(__FILE__).'/adodb/adodb.inc.php';

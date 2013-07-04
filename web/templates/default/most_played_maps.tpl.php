@@ -44,9 +44,7 @@
           </td>
           <td><strong>Map Name</strong></td>
           <td><strong><a href="map_details.php?map_id=<?php echo $game['map_id'] ; ?>"><?php echo replace_color_codes($game['map_text_name']); ?></a></strong></td>
-          <td rowspan="5">
-            <img width="200" height="120" alt="Winners in Games" src="_graph.php?type=wins_in_game&amp;map_id=<?php echo ($game['map_id']); ?>" />
-          </td>
+          <td rowspan="5" title="Winners in Games"><?php graph_winsOnMap($game['map_id']); ?></td>
         </tr>
         <tr>
           <?php if($this->order == "mapname"): ?>

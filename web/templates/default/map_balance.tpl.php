@@ -1,4 +1,7 @@
-<?php include '__header__.tpl.php'; ?>
+<?php
+include '__header__.tpl.php';
+include dirname(__FILE__).'/../../_graph.php';
+?>
 
 <div id="mapbalance">
   <h2>Map Balance by Wins</h2>
@@ -24,8 +27,8 @@
           <td>
             <a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_text_name']); ?></a>
           </td>
-          <td>
-            <img width="400" height="30" alt="Balance" title="Alien Wins: <?php echo $map['mapstat_alien_wins']; ?>, Human Wins: <?php echo $map['mapstat_human_wins']; ?>, Ties: <?php echo $map['ties'];?>" src="_graph.php?type=balance_bar&amp;a=<?php echo ($map['mapstat_alien_wins']); ?>&amp;b=<?php echo ($map['ties']); ?>&amp;c=<?php echo ($map['mapstat_human_wins']); ?>" />
+          <td title="Alien Wins: <?php echo $map['mapstat_alien_wins']; ?>, Human Wins: <?php echo $map['mapstat_human_wins']; ?>, Ties: <?php echo $map['ties'];?>">
+            <?php graph_mapBalanceBar($map['mapstat_alien_wins'], $map['ties'], $map['mapstat_human_wins']); ?>
           </td>
           <td><?php echo $map['mapstat_alien_wins'] + $map['mapstat_human_wins'] + $map['ties']; ?></td>
         </tr>
@@ -74,8 +77,8 @@
           <td>
             <a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_text_name']); ?></a>
           </td>
-          <td>
-            <img width="400" height="30" alt="Balance" title="Alien Kills: <?php echo $map['mapstat_alien_kills'];?>, Human Kills: <?php echo $map['mapstat_human_kills']; ?>" src="_graph.php?type=balance_bar&amp;a=<?php echo ($map['mapstat_alien_kills']); ?>&amp;c=<?php echo ($map['mapstat_human_kills']); ?>" />
+          <td title="Alien Kills: <?php echo $map['mapstat_alien_kills'];?>, Human Kills: <?php echo $map['mapstat_human_kills']; ?>">
+            <?php graph_mapBalanceBar($map['mapstat_alien_kills'], 0, $map['mapstat_human_kills']); ?>
           </td>
           <td><?php echo $map['mapstat_alien_kills'] + $map['mapstat_human_kills']; ?></td>
         </tr>
@@ -123,8 +126,8 @@
           <td>
             <a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_text_name']); ?></a>
           </td>
-          <td>
-            <img width="400" height="30" alt="Balance" title="Alien Deaths: <?php echo $map['mapstat_alien_deaths'];?>, Human Deaths: <?php echo $map['mapstat_human_deaths']; ?>" src="_graph.php?type=balance_bar&amp;a=<?php echo ($map['mapstat_alien_deaths']); ?>&amp;c=<?php echo ($map['mapstat_human_deaths']); ?>" />
+          <td title="Alien Deaths: <?php echo $map['mapstat_alien_deaths'];?>, Human Deaths: <?php echo $map['mapstat_human_deaths']; ?>">
+            <?php graph_mapBalanceBar($map['mapstat_alien_deaths'], 0, $map['mapstat_human_deaths']); ?>
           </td>
           <td><?php echo $map['mapstat_alien_deaths'] + $map['mapstat_human_deaths']; ?></td>
         </tr>

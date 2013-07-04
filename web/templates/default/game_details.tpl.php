@@ -157,7 +157,7 @@
 
     <tbody>
       <tr>
-        <td><img src="_graph.php?type=kills_in_game&amp;game_id=<?php echo $this->game_details['game_id']; ?>" /></td>
+        <td><?php graph_killsInGame($this->game_details['game_id']); ?></td>
       </tr>
     </tbody>
   </table>

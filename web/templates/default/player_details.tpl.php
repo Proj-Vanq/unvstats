@@ -254,7 +254,7 @@
 
     <tbody>
       <tr>
-        <td><img src="_graph.php?type=kills_per_game&amp;player_id=<?php echo $this->player_details['player_id']; ?>" width="573" height="200" /></td>
+        <td><?php graph_killsPerGame($this->player_details['player_id']); ?></td>
       </tr>
     </tbody>
   </table>
