@@ -20,226 +20,268 @@
     <colgroup>
       <col class="item" />
       <col />
+    </colgroup>
+
+    <thead>
+      <tr>
+        <th colspan="2">General Stats</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <th>Games</th>
+        <td><?php echo $this->player_details['player_games_played']; ?></td>
+      </tr>
+      <tr>
+        <th>Aggregate Score</th>
+        <td><?php echo $this->player_details['player_score_total']; ?></td>
+      </tr>
+      <tr>
+        <th>First seen</th>
+        <td><?php echo $this->player_details['player_first_seen']; ?></td>
+      </tr>
+      <tr>
+        <th>Last seen</th>
+        <td><?php echo $this->player_details['player_last_seen']; ?></td>
+      </tr>
+
+      <tr>
+        <th>Random Quote</th>
+        <td class="<?php if (!$this->random_quote): ?>noquote<?php elseif ($this->random_quote['say_mode'] == 'public'): ?>quote_public<?php else: ?>quote_team<?php endif; ?>">
+          <?php if (!$this->random_quote): ?>No quote available<?php else: ?><?php echo replace_color_codes(wordwrap($this->random_quote['say_message'], 60, '<br \>', true)); ?><?php endif; ?>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Favourite Target</th>
+        <td><?php if ($this->favorite_target): echo player_link($this->favorite_target['player_id'], $this->favorite_target['player_name']); ?> with <?php echo $this->favorite_target['kill_count']; ?> kills<?php endif; ?></td>
+      </tr>
+      <tr>
+        <th>Nemesis</th>
+        <td><?php if ($this->favorite_nemesis): if ($this->favorite_nemesis['player_id'] > 0): echo player_link($this->favorite_nemesis['player_id'], $this->favorite_nemesis['player_name']); else: ?>&lt;world&gt;<?php endif; ?> with <?php echo $this->favorite_nemesis['kill_count']; ?> deaths<?php endif; ?></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table>
+    <colgroup>
+      <col class="item" />
+      <col />
       <col />
       <col />
     </colgroup>
 
     <thead>
       <tr>
-        <th ></th>
+        <th >Gameplay Stats</th>
         <th >Total</th>
         <th >Alien</th>
         <th >Human</th>
-        <th >Spectator</th>
       </tr>
     </thead>
 
     <tbody>
       <tr>
-        <td>Games</td>
-        <td><?php echo $this->player_details['player_games_played']; ?></td>
-        <td colspan="2"></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Time</td>
+        <th>Time</th>
         <td><?php echo $this->player_details['player_total_time']; ?></td>
         <td><?php echo $this->player_details['player_total_alien']; ?></td>
         <td><?php echo $this->player_details['player_total_human']; ?></td>
-        <td><?php echo $this->player_details['player_total_spec']; ?></td>
+        <!-- td><?php echo $this->player_details['player_total_spec']; ?></td -->
       </tr>
       <tr>
-        <td>Score</td>
-        <td><?php echo $this->player_details['player_score_total']; ?></td>
-        <td colspan="2"></td>
-        <td rowspan="7"></td>
-      </tr>
-      <tr>
-        <td>Kills</td>
+        <th>Kills</th>
         <td><?php echo $this->player_details['player_kills']; ?></td>
         <td><?php echo $this->player_details['player_kills_alien']; ?></td>
         <td><?php echo $this->player_details['player_kills_human']; ?></td>
       </tr>
       <tr>
-        <td>Team Kills</td>
+        <th>Team Kills</th>
         <td><?php echo $this->player_details['player_teamkills']; ?></td>
         <td><?php echo $this->player_details['player_teamkills_alien']; ?></td>
         <td><?php echo $this->player_details['player_teamkills_human']; ?></td>
       </tr>
       <tr>
-        <td>Deaths</td>
-        <td rowspan="4" style="vertical-align:top"><?php echo $this->player_details['player_deaths']; ?></td>
-        <td colspan="2"></td>
+        <th>Deaths (total)</th>
+        <td><?php echo $this->player_details['player_deaths']; ?></td>
+        <td class="subtotal"><?php echo $this->player_details['player_deaths_enemy_alien'] + $this->player_details['player_deaths_team_alien'] + $this->player_details['player_deaths_world_alien']; ?></td>
+        <td class="subtotal"><?php echo $this->player_details['player_deaths_enemy_human'] + $this->player_details['player_deaths_team_human'] + $this->player_details['player_deaths_world_human']; ?></td>
       </tr>
       <tr>
-        <td>Deaths by enemy</td>
+        <th>Deaths by enemy</th>
+        <td class="subtotal"><?php echo $this->player_details['player_deaths_enemy_alien'] + $this->player_details['player_deaths_enemy_human']; ?></td>
         <td><?php echo $this->player_details['player_deaths_enemy_alien']; ?></td>
         <td><?php echo $this->player_details['player_deaths_enemy_human']; ?></td>
       </tr>
       <tr>
-        <td>Deaths by team</td>
+        <th>Deaths by team</th>
+        <td class="subtotal"><?php echo $this->player_details['player_deaths_team_alien'] + $this->player_details['player_deaths_team_human']; ?></td>
         <td><?php echo $this->player_details['player_deaths_team_alien']; ?></td>
         <td><?php echo $this->player_details['player_deaths_team_human']; ?></td>
       </tr>
       <tr>
-        <td>Deaths by &lt;world&gt;</td>
+        <th>Deaths by &lt;world&gt;</th>
+        <td class="subtotal"><?php echo $this->player_details['player_deaths_world_alien'] + $this->player_details['player_deaths_world_human']; ?></td>
         <td><?php echo $this->player_details['player_deaths_world_alien']; ?></td>
         <td><?php echo $this->player_details['player_deaths_world_human']; ?></td>
       </tr>
       <tr>
-        <td>First seen</td>
-        <td colspan="4"><?php echo $this->player_details['player_first_seen']; ?></td>
-      </tr>
-      <tr>
-        <td>Last seen</td>
-        <td colspan="4"><?php echo $this->player_details['player_last_seen']; ?></td>
-      </tr>
-      <tr>
-        <td>Random Quote</td>
-        <td colspan="4" class="<?php if (!$this->random_quote): ?>noquote<?php elseif ($this->random_quote['say_mode'] == 'public'): ?>quote_public<?php else: ?>quote_team<?php endif; ?>">
-          <?php if (!$this->random_quote): ?>No quote available<?php else: ?><?php echo replace_color_codes(wordwrap($this->random_quote['say_message'], 60, '<br \>', true)); ?><?php endif; ?>
-       </td>
-      </tr>
-
-      <tr>
-        <td>Efficiencies</td>
-        <td><?php echo $this->player_details['player_total_efficiency']; ?> total</td>
-        <td><?php echo $this->player_details['player_kill_efficiency']; ?> kill</td>
-        <td><?php echo $this->player_details['player_destruction_efficiency']; ?> destruction</td>
-        <td></td>
-      </tr>
-
-      <tr>
-        <td>Skill (<span title="The more games are played against advesaries with skills similar to a player, the less uncertain the computation is." class="tooltip">uncertainity</span>)</td>
+        <th>Skill (<span title="The more games are played against advesaries with skills similar to a player, the less uncertain the computation is." class="tooltip">uncertainty</span>)</th>
         <td><?php skill($this->player_details['skill'], $this->player_details['skill_sigma']) ?></td>
         <td><?php skill($this->player_details['skill_a'], $this->player_details['skill_a_sigma']); ?></td>
         <td><?php skill($this->player_details['skill_h'], $this->player_details['skill_h_sigma']); ?></td>
-        <td></td>
       </tr>
 
       <tr>
-        <td>Favourite Target</td>
-        <td colspan="4"><?php if ($this->favorite_target): echo player_link($this->favorite_target['player_id'], $this->favorite_target['player_name']); ?> with <?php echo $this->favorite_target['kill_count']; ?> kills<?php endif; ?></td>
+        <th>Efficiencies</th>
+        <td colspan="3"><?php echo $this->player_details['player_total_efficiency'], ' (', $this->player_details['player_kill_efficiency'], ' kill, ', $this->player_details['player_destruction_efficiency']; ?> destruction)</td>
       </tr>
-
-      <tr>
-        <td>Nemesis</td>
-        <td colspan="4"><?php if ($this->favorite_nemesis): if ($this->favorite_nemesis['player_id'] > 0): echo player_link($this->favorite_nemesis['player_id'], $this->favorite_nemesis['player_name']); else: ?>&lt;world&gt;<?php endif; ?> with <?php echo $this->favorite_nemesis['kill_count']; ?> deaths<?php endif; ?></td>
-      </tr>
-
     </tbody>
   </table>
 
-  <table>
-    <colgroup>
-      <col />
-      <col class="data" />
-      <col />
-      <col class="data" />
-    </colgroup>
+  <div class="split-table">
+    <table>
+      <colgroup>
+        <col />
+        <col class="data" />
+      </colgroup>
 
-    <thead>
-      <?php $rows = max(count($this->weapon_kills), count($this->weapon_deaths)); $rows = max($rows, 1) ?>
-      <tr>
-        <th colspan="2">Kills by Weapon</th>
-        <th colspan="2">Deaths by Weapon</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <?php for ($i=0; $i<$rows; $i++): ?>
+      <thead>
         <tr>
-          <?php if (!empty($this->weapon_kills[$i])): $weapon = $this->weapon_kills[$i]; ?>
+          <th colspan="2">Kills by Weapon</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php if (empty($this->weapon_kills)) { ?>
+          <tr><td colspan="2">No kills</td><tr>
+        <?php } else foreach ($this->weapon_kills as $weapon) { ?>
+          <tr>
             <td><?php $icon = "images/icons/".(!empty($weapon['weapon_icon']) ? $weapon['weapon_icon'] : "blank.png"); ?><img src="<?php echo $icon; ?>" <?php list($width, $height, $type, $attr) = getimagesize($icon); echo $attr; ?> <?php if ($width == 15): ?>style="margin-right: 15px;"<?php endif; ?> alt="<?php echo $weapon['weapon_name']; ?>" ><?php echo $weapon['weapon_name']; ?></td>
             <td><?php echo $weapon['weapon_count']; ?></td>
-          <?php elseif ($i == count($this->weapon_kills)): ?>
-            <td colspan="2" rowspan="<?php echo $rows - $i; ?>" style="vertical-align:top" ><?php if ($i == 0): ?>No kills<?php endif; ?></td>
-          <?php endif; ?>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table><!-- --><table>
+      <colgroup>
+        <col />
+        <col class="data" />
+      </colgroup>
 
-          <?php if (!empty($this->weapon_deaths[$i])): $weapon = $this->weapon_deaths[$i]; ?>
+      <thead>
+        <tr>
+          <th colspan="2">Deaths by Weapon</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php if (empty($this->weapon_deaths)) { ?>
+          <tr><td colspan="2">No deaths</td><tr>
+        <?php } else foreach ($this->weapon_deaths as $weapon) { ?>
+          <tr>
             <td><?php $icon = "images/icons/".(!empty($weapon['weapon_icon']) ? $weapon['weapon_icon'] : "blank.png"); ?><img src="<?php echo $icon; ?>" <?php list($width, $height, $type, $attr) = getimagesize($icon); echo $attr; ?> <?php if ($width == 15): ?>style="margin-right: 15px;"<?php endif; ?> alt="<?php echo $weapon['weapon_name']; ?>" ><?php echo $weapon['weapon_name']; ?></td>
             <td><?php echo $weapon['weapon_count']; ?></td>
-          <?php elseif ($i == count($this->weapon_deaths)): ?>
-            <td colspan="2" rowspan="<?php echo $rows - $i; ?>" style="vertical-align:top" ><?php if ($i == 0): ?>No deaths<?php endif; ?></td>
-          <?php endif; ?>
-        </tr>
-      <?php endfor; ?>
-    </tbody>
-  </table>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
 
-  <table>
-    <colgroup>
-      <col />
-      <col class="data" />
-      <col />
-      <col class="data" />
-    </colgroup>
+  <div class="split-table">
+    <table>
+      <colgroup>
+        <col />
+        <col class="data" />
+      </colgroup>
 
-    <thead>
-      <?php $rows = max(count($this->built_structures), count($this->destroyed_structures)); $rows = max($rows, 1) ?>
-      <tr>
-        <th colspan="2">Built Structures</th>
-        <th colspan="2">Destroyed Structures</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <?php for ($i=0; $i<$rows; $i++): ?>
+      <thead>
         <tr>
-          <?php if (!empty($this->built_structures[$i])): $build = $this->built_structures[$i]; ?>
-            <td><?php if (!empty($build['building_icon'])): ?><img src="images/icons/<?php echo $build['building_icon']; ?>" width="15" height="15" alt="<?php echo $build['building_name']; ?>" /> <?php endif; ?><?php echo $build['building_name']; ?></td>
-            <td><?php echo $build['building_count']; ?></td>
-          <?php elseif ($i == count($this->built_structures)): ?>
-            <td colspan="2" rowspan="<?php echo $rows - $i; ?>" style="vertical-align:top" ><?php if ($i == 0): ?>No built structures<?php endif; ?></td>
-          <?php endif; ?>
-
-          <?php if (!empty($this->destroyed_structures[$i])): $build = $this->destroyed_structures[$i]; ?>
-            <td><?php if (!empty($build['building_icon'])): ?><img src="images/icons/<?php echo $build['building_icon']; ?>" width="15" height="15" alt="<?php echo $build['building_name']; ?>" /> <?php endif; ?><?php echo $build['building_name']; ?></td>
-            <td><?php echo $build['building_count']; ?></td>
-          <?php elseif ($i == count($this->destroyed_structures)): ?>
-            <td colspan="2" rowspan="<?php echo $rows - $i; ?>" style="vertical-align:top" ><?php if ($i == 0): ?>No destroyed structures<?php endif; ?></td>
-          <?php endif; ?>
+          <th colspan="2">Built Structures</th>
         </tr>
-      <?php endfor; ?>
-    </tbody>
-  </table>
+      </thead>
 
-  <table>
-    <colgroup>
-      <col />
-      <col class="data" />
-      <col />
-      <col class="data" />
-    </colgroup>
+      <tbody>
+        <?php if (empty($this->built_structures)) { ?>
+          <tr><td colspan="2">No structures built</td><tr>
+        <?php } else foreach ($this->built_structures as $build) { ?>
+          <tr>
+            <td><?php if (!empty($build['building_icon'])): ?><img src="images/icons/<?php echo $build['building_icon']; ?>" width="15" height="15" alt="<?php echo $build['building_name']; ?>" /> <?php endif; ?><?php echo $build['building_name']; ?></td>
+            <td><?php echo $build['building_count']; ?></td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table><!-- --><table>
+      <colgroup>
+        <col />
+        <col class="data" />
+      </colgroup>
 
-    <thead>
-      <?php $rows = max(count($this->votes_called), count($this->votes_against)); $rows = max($rows, 1) ?>
-      <tr>
-        <th colspan="2">Called Votes</th>
-        <th colspan="2">Votes Against</th>
-      </tr>
-    </thead>
+      <thead>
+        <tr>
+          <th colspan="2">Destroyed Structures</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <?php for ($i=0; $i<$rows; $i++): ?>
-       <tr>
-         <?php if(!empty($this->votes_called[$i])): ?>
-           <td><?php echo $this->votes_called[$i]['vote_type']; ?></td>
-           <td><?php echo $this->votes_called[$i]['vote_count']; ?></td>
-         <?php elseif($i == count($this->votes_called)): ?>
-           <td colspan="2" rowspan="<?php echo $rows - $i; ?>" style="vertical-align:top" ><?php if ($i == 0): ?>No votes called<?php endif; ?></td>
-         <?php endif; ?>
+      <tbody>
+        <?php if (empty($this->destroyed_structures)) { ?>
+          <tr><td colspan="2">No structures destroyed</td><tr>
+        <?php } else foreach ($this->destroyed_structures as $build) { ?>
+          <tr>
+            <td><?php if (!empty($build['building_icon'])): ?><img src="images/icons/<?php echo $build['building_icon']; ?>" width="15" height="15" alt="<?php echo $build['building_name']; ?>" /> <?php endif; ?><?php echo $build['building_name']; ?></td>
+            <td><?php echo $build['building_count']; ?></td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
 
-         <?php if(!empty($this->votes_against[$i])): ?>
-           <td><?php echo $this->votes_against[$i]['vote_type']; ?></td>
-           <td><?php echo $this->votes_against[$i]['vote_count']; ?></td>
-         <?php elseif($i == count($this->votes_against)): ?>
-           <td colspan="2" rowspan="<?php echo $rows - $i; ?>" style="vertical-align:top" ><?php if ($i == 0): ?>No votes<?php endif; ?></td>
-         <?php endif; ?>
-       </tr>
-      <?php endfor ?>
-    <tbody>
-  </table>
+  <div class="split-table">
+    <table>
+      <colgroup>
+        <col />
+        <col class="data" />
+      </colgroup>
+
+      <thead>
+        <tr>
+          <th colspan="2">Called Votes</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php if (empty($this->votes_called)) { ?>
+          <tr><td colspan="2">No votes called</td><tr>
+        <?php } else foreach ($this->votes_called as $vote) { ?>
+          <tr>
+             <td><?php echo $vote['vote_type']; ?></td>
+             <td><?php echo $vote['vote_count']; ?></td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table><!-- --><table>
+      <colgroup>
+        <col />
+        <col class="data" />
+      </colgroup>
+
+      <thead>
+        <tr>
+          <th colspan="2">Votes Against</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php if (empty($this->votes_against)) { ?>
+          <tr><td colspan="2">No votes against</td><tr>
+        <?php } else foreach ($this->votes_against as $vote) { ?>
+          <tr>
+             <td><?php echo $vote['vote_type']; ?></td>
+             <td><?php echo $vote['vote_count']; ?></td>
+          </tr>
+        <?php } ?>
+      <tbody>
+    </table>
+  </div>
 
   <table>
     <colgroup>

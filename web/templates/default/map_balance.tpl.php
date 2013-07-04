@@ -47,9 +47,9 @@
     </thead>
 
     <tbody>
-        <tr><td class="a">Alien Wins</td></tr>
-        <tr><td class="b">Ties / Draws</td></tr>
-        <tr><td class="c">Human Wins</td></tr>
+        <tr><td class="aliens">Alien Wins</td></tr>
+        <tr><td class="tied">Ties / Draws</td></tr>
+        <tr><td class="humans">Human Wins</td></tr>
     </tbody>
   </table>
 </section>
@@ -101,8 +101,8 @@
     </thead>
 
     <tbody>
-        <tr><td class="a">Alien Kills</td></tr>
-        <tr><td class="c">Human Kills</td></tr>
+        <tr><td class="aliens">Alien Kills</td></tr>
+        <tr><td class="humans">Human Kills</td></tr>
     </tbody>
   </table>
 </section>
@@ -154,8 +154,8 @@
     </thead>
 
     <tbody>
-        <tr><td class="a">Alien Deaths</td></tr>
-        <tr><td class="c">Human Deaths</td></tr>
+        <tr><td class="aliens">Alien Deaths</td></tr>
+        <tr><td class="humans">Human Deaths</td></tr>
     </tbody>
   </table>
 </section>

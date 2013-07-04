@@ -240,6 +240,22 @@ h2 {
   padding: 0;
 }
 
+/* assumption: two tables, side by side */
+div.split-table > * {
+  display: inline-table;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  width: 30.25rem;
+  margin-left: 0px;
+  margin-right: 1.5rem;
+}
+div.split-table > :last-child {
+  margin-right: 0px;
+}
+
 table {
   width: 100%;
   clear: both;
@@ -255,19 +271,43 @@ table.legend {
   margin-right: 0;
 }
 
-table.legend td.a {
+.aliens {
   background-color: #CC0000;
   color: #FFFFFF;
 }
 
-table.legend td.b {
+.tied, .spectators {
   background-color: #888888;
   color: #000000;
 }
 
-table.legend td.c {
+.humans {
   background-color: #0055FF;
   color: #FFFFFF;
+}
+
+.aliens-teamshader {
+  background: -moz-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background: -webkit-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background: -o-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background: -ms-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background: linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+}
+
+.spectators-teamshader {
+  background: -moz-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background: -webkit-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background: -o-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background: -ms-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background: linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+}
+
+.humans-teamshader {
+  background: -moz-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background: -webkit-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background: -o-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background: -ms-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background: linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
 }
 
 tr:nth-child(odd) {
@@ -308,8 +348,8 @@ tr.spacer {
 }
 tr.spacer * { display: none; }
 
-tr.list:hover {
-  background-color: #32363a;
+td.subtotal {
+  font-style: italic;
 }
 
 td.quote_public {

@@ -5,149 +5,167 @@
     <h2>Voting</h2>
   </header>
 
-  <table>
-    <colgroup>
-      <col class="playername" />
-      <col class="data" />
-      <col />
-      <col class="playername" />
-      <col class="data" />
-      <col />
-    </colgroup>
+  <div class="split-table">
+    <table>
+      <colgroup>
+        <col class="playername" />
+        <col class="data" />
+        <col />
+      </colgroup>
 
-    <thead>
-      <tr>
-        <th >Most Voted Maps</th>
-        <th >Pass</th>
-        <th >Fail</th>
-        <th >Most Skipped Maps</th>
-        <th >Pass</th>
-        <th >Fail</th>
-      </tr>
-    </thead>
+      <thead>
+        <tr>
+          <th >Most Voted Maps</th>
+          <th >Pass</th>
+          <th >Fail</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <?php $rows = max(count($this->map_votes), count($this->map_skips)); $rows = max($rows, 1) ?>
-      <?php for ($i=0; $i<$rows; $i++): ?>
-      <tr>
-        <?php if (!empty($this->map_votes[$i])): $map = $this->map_votes[$i]; ?>
+      <tbody>
+        <?php if (empty($this->map_votes)) { ?>
+          <tr><td colspan="3">No votes</td></tr>
+        <?php } else foreach ($this->map_votes as $map) { ?>
+        <tr>
           <td><a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_text_name']); ?></a></td>
           <td><?php echo $map['count_pass']; ?></td>
           <td><?php echo $map['count_fail']; ?></td>
-        <?php elseif ($i == 0): ?>
-          <td colspan="3">No Votes</td>
-        <?php else: ?>
-          <td colspan="3"></td>
-        <?php endif; ?>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table><!-- --><table>
+      <colgroup>
+        <col class="playername" />
+        <col class="data" />
+        <col />
+      </colgroup>
 
-        <?php if (!empty($this->map_skips[$i])): $map = $this->map_skips[$i]; ?>
+      <thead>
+        <tr>
+          <th >Most Skipped Maps</th>
+          <th >Pass</th>
+          <th >Fail</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php if (empty($this->map_skips)) { ?>
+          <tr><td colspan="3">No votes</td></tr>
+        <?php } else foreach ($this->map_skips as $map) { ?>
+        <tr>
           <td><a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_text_name']); ?></a></td>
           <td><?php echo $map['count_pass']; ?></td>
           <td><?php echo $map['count_fail']; ?></td>
-        <?php elseif ($i == 0): ?>
-          <td colspan="3">No Votes</td>
-        <?php else: ?>
-          <td colspan="3"></td>
-        <?php endif; ?>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
 
-      </tr>
-      <?php endfor; ?>
-    </tbody>
-  </table>
+  <div class="split-table">
+    <table>
+      <colgroup>
+        <col class="playername" />
+        <col class="data" />
+        <col />
+      </colgroup>
 
-  <table>
-    <colgroup>
-      <col class="playername" />
-      <col class="data" />
-      <col />
-      <col class="playername" />
-      <col class="data" />
-      <col />
-    </colgroup>
+      <thead>
+        <tr>
+          <th >Most Kicked Player</th>
+          <th >Pass</th>
+          <th >Fail</th>
+        </tr>
+      </thead>
 
-    <thead>
-      <tr>
-        <th >Most Kicked Player</th>
-        <th >Pass</th>
-        <th >Fail</th>
-        <th >Most Muted Player</th>
-        <th >Pass</th>
-        <th >Fail</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <?php $rows = max(count($this->kick_votes), count($this->mute_votes)); $rows = max($rows, 1) ?>
-      <?php for ($i=0; $i<$rows; $i++): ?>
-      <tr>
-        <?php if (!empty($this->kick_votes[$i])): $kick = $this->kick_votes[$i]; ?>
+      <tbody>
+        <?php if (empty($this->kick_votes)) { ?>
+          <tr><td colspan="3">No votes</td></tr>
+        <?php } else foreach ($this->kick_votes as $kick) { ?>
+        <tr>
           <td class="playername"><?php echo player_link($kick['player_id'], $kick['player_name']); ?></td>
           <td><?php echo $kick['count_pass']; ?></td>
           <td><?php echo $kick['count_fail']; ?></td>
-        <?php elseif ($i == 0): ?>
-          <td colspan="3">No Votes</td>
-        <?php else: ?>
-          <td colspan="3"></td>
-        <?php endif; ?>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table><!-- --><table>
+      <colgroup>
+        <col class="playername" />
+        <col class="data" />
+        <col />
+      </colgroup>
 
-        <?php if (!empty($this->mute_votes[$i])): $mute = $this->mute_votes[$i]; ?>
+      <thead>
+        <tr>
+          <th >Most Muted Player</th>
+          <th >Pass</th>
+          <th >Fail</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php if (empty($this->mute_votes)) { ?>
+          <tr><td colspan="3">No votes</td></tr>
+        <?php } else foreach ($this->mute_votes as $mute) { ?>
+        <tr>
           <td class="playername"><?php echo player_link($mute['player_id'], $mute['player_name']); ?></td>
           <td><?php echo $mute['count_pass']; ?></td>
           <td><?php echo $mute['count_fail']; ?></td>
-        <?php elseif ($i == 0): ?>
-          <td colspan="3">No Votes</td>
-        <?php else: ?>
-          <td colspan="3"></td>
-        <?php endif; ?>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
 
-      </tr>
-      <?php endfor; ?>
-    </tbody>
-  </table>
+  <div class="split-table">
+    <table>
+      <colgroup>
+        <col class="playername" />
+        <col />
+      </colgroup>
 
-  <table>
-    <colgroup>
-      <col class="playername" />
-      <col />
-      <col class="playername" />
-      <col />
-    </colgroup>
+      <thead>
+        <tr>
+          <th >Kick-Happy Players</th>
+          <th >Called Kicks</th>
+        </tr>
+      </thead>
 
-    <thead>
-      <tr>
-        <th >Kick-Happy Players</th>
-        <th >Called Kicks</th>
-        <th >Mute-Happy Players</th>
-        <th >Called Mutes</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <?php $rows = max(count($this->kick_happy), count($this->mute_happy)); $rows = max($rows, 1) ?>
-      <?php for ($i=0; $i<$rows; $i++): ?>
-      <tr>
-        <?php if (!empty($this->kick_happy[$i])): $kick = $this->kick_happy[$i]; ?>
+      <tbody>
+        <?php if (empty($this->kick_happy)) { ?>
+          <tr><td colspan="3">No votes</td></tr>
+        <?php } else foreach ($this->kick_happy as $kick) { ?>
+        <tr>
           <td class="playername"><?php echo player_link($kick['player_id'], $kick['player_name']); ?></td>
           <td><?php echo $kick['votes']; ?></td>
-        <?php elseif ($i == 0): ?>
-          <td colspan="2">No Votes</td>
-        <?php else: ?>
-          <td colspan="2"></td>
-        <?php endif; ?>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table><!-- --><table>
+      <colgroup>
+        <col class="playername" />
+        <col />
+      </colgroup>
 
-        <?php if (!empty($this->mute_happy[$i])): $mute = $this->mute_happy[$i]; ?>
+      <thead>
+        <tr>
+          <th >Mute-Happy Players</th>
+          <th >Called Mutes</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php if (empty($this->mute_happy)) { ?>
+          <tr><td colspan="3">No votes</td></tr>
+        <?php } else foreach ($this->mute_happy as $mute) { ?>
+        <tr>
           <td class="playername"><?php echo player_link($mute['player_id'], $mute['player_name']); ?></td>
           <td><?php echo $mute['votes']; ?></td>
-        <?php elseif ($i == 0): ?>
-          <td colspan="2">No Votes</td>
-        <?php else: ?>
-          <td colspan="2"></td>
-        <?php endif; ?>
-
-      </tr>
-      <?php endfor; ?>
-    </tbody>
-  </table>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
 
   <table>
     <colgroup>
