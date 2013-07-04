@@ -415,7 +415,7 @@ td.playerothernames {
   vertical-align: top;
 }
 
-span.quakecolor_0, span.quakecolor_black   { color: #000000; }
+span.quakecolor_0, span.quakecolor_black   { color: #333333; }
 span.quakecolor_1, span.quakecolor_red     { color: #FF0000; }
 span.quakecolor_2, span.quakecolor_green   { color: #00FF00; }
 span.quakecolor_3, span.quakecolor_yellow  { color: #FFFF00; }
