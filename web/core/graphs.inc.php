@@ -24,7 +24,7 @@ else // not a bot
         ++$clipID;
 
         if ($start == 0 && $end == $limit)
-            return array('drawing' => "<circle class='$class' cx='$x' cy='$y' r='$r' clip-path='clipPath_$clipID' />\n");
+            return array('drawing' => "<circle class='$class' cx='$x' cy='$y' r='$r' />\n");
 
         $end += $start;
         $toRad = deg2rad(360.0 / $limit);
