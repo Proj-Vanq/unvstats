@@ -270,23 +270,27 @@ table.legend td.c {
   color: #FFFFFF;
 }
 
-dtr:nth-child(odd) {
+tr:nth-child(odd) {
   background: rgba(0, 0, 0, 0.125);
 }
 
-dtr:nth-child(even) {
+tr:nth-child(even) {
   background: rgba(0, 0, 0, 0.0625);
 }
 
 th, td {
   padding: 1px 3px;
-
-  border: 1px outset #000000;
+  border: 1px solid black;
 }
 
-th {
+thead th {
   text-align: left;
   background: url(images/bar.png) #444444;
+}
+
+tbody th {
+  text-align: left;
+  font-weight: normal;
 }
 
 tbody.padded td {
@@ -306,10 +310,6 @@ tr.spacer * { display: none; }
 
 tr.list:hover {
   background-color: #32363a;
-}
-
-th, td {
-  border: 1px solid black;
 }
 
 td.quote_public {
