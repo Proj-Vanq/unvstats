@@ -320,9 +320,35 @@ th, td {
   border: 1px solid black;
 }
 
-thead th {
+thead tr {
   text-align: left;
-  background: url(images/bar.png) #444444;
+  background-image: url(images/bar.png);
+  background-image: -moz-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -o-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-color: #444444;
+}
+
+thead tr.aliens-teamshader {
+  background-image: -moz-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0)), -moz-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -webkit-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0)), -webkit-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -o-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0)), -o-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167)), linear-gradient(to right, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+}
+
+thead tr.spectators-teamshader {
+  background-image: -moz-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0)), -moz-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -webkit-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0)), -webkit-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -o-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0)), -o-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167)), linear-gradient(to right, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+}
+
+thead tr.humans-teamshader {
+  background-image: -moz-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0)), -moz-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -webkit-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0)), -webkit-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -o-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0)), -o-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167)), linear-gradient(to right, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
 }
 
 tbody th {

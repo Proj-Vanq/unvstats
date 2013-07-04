@@ -1,85 +1,98 @@
 <?php include '__header__.tpl.php'; ?>
 
-<section>
+<section id="serverstatus">
   <header>
     <h2>Server Status</h2>
   </header>
 
-  <?php if (isset($this->server_status)): ?>
+<?php if (isset($this->server_status)) {
+        if ($this->server_status === false) { ?>
+    <p>Server not reachable</p>
+<?php   } else { ?>
+  <div class="split-table">
+    <table>
+      <colgroup>
+        <col class="playername" />
+        <col />
+        <col />
+      </colgroup>
+
+      <thead>
+        <tr class="aliens-teamshader">
+          <th>Alien</th>
+          <th>Score</th>
+          <th>Ping</th>
+        </tr>
+      </thead>
+
+      <tbody>
+<?php     if (empty($this->server_status['aliens'])) { ?>
+        <tr><td colspan="3">No players</td></tr>
+<?php     } else foreach ($this->server_status['aliens'] as $alien) { ?>
+        <tr>
+          <td class="playername"><?php echo replace_color_codes($alien['name']); ?></td>
+          <td><?php echo $alien['kills']; ?></td>
+          <td><?php echo $alien['ping']; ?></td>
+        </tr>
+<?php     } ?>
+      </tbody>
+    </table><!-- --><table>
+      <colgroup>
+        <col class="playername" />
+        <col />
+        <col />
+      </colgroup>
+
+      <thead>
+        <tr class="humans-teamshader">
+          <th>Human</th>
+          <th>Score</th>
+          <th>Ping</th>
+        </tr>
+      </thead>
+
+      <tbody>
+<?php     if (empty($this->server_status['humans'])) { ?>
+        <tr><td colspan="3">No players</td></tr>
+<?php     } else foreach ($this->server_status['humans'] as $human) { ?>
+        <tr>
+          <td class="playername"><?php echo replace_color_codes($human['name']); ?></td>
+          <td><?php echo $human['kills']; ?></td>
+          <td><?php echo $human['ping']; ?></td>
+        </tr>
+<?php     } ?>
+      </tbody>
+    </table>
+  </div>
 
   <table>
     <colgroup>
-      <col class="playername" />
-      <col />
-      <col />
-      <col class="playername" />
-      <col />
-      <col />
+      <col class="playername" /><col class="playername" /><col class="playername" />
     </colgroup>
 
     <thead>
-      <tr>
-        <th colspan="3">Aliens</th>
-        <th colspan="3">Humans</th>
+      <tr class="spectators-teamshader">
+        <th colspan="3">Spectators</th>
       </tr>
     </thead>
 
     <tbody>
-      <?php if ($this->server_status === false): ?>
-        <tr>
-          <td colspan="6">Server not reachable</td>
-        </tr>
-      <?php elseif (!count($this->server_status['aliens']) && !count($this->server_status['humans']) && !count($this->server_status['specs'])): ?>
-        <tr>
-          <td colspan="6">No players online</td>
-        </tr>
-      <?php else: ?>
-        <tr>
-          <th>Player</th>
-          <th>Score</th>
-          <th>Ping</th>
-          <th>Player</th>
-          <th>Score</th>
-          <th>Ping</th>
-        </tr>
-
-        <?php $rows = max(count($this->server_status['aliens']), count($this->server_status['humans'])); ?>
-        <?php for ($i=0; $i<$rows; $i++): ?>
-          <?php
-          $alien = (isset($this->server_status['aliens'][$i]) ? $this->server_status['aliens'][$i]: null);
-          $human = (isset($this->server_status['humans'][$i]) ? $this->server_status['humans'][$i]: null);
-          ?>
-          <tr>
-            <?php if (!is_null($alien)): ?>
-              <td class="playername"><?php echo replace_color_codes($alien['name']); ?></td>
-              <td><?php echo $alien['kills']; ?></td>
-              <td><?php echo $alien['ping']; ?></td>
-            <?php else: ?>
-              <td colspan="3">&nbsp;</td>
-            <?php endif; ?>
-
-            <?php if (!is_null($human)): ?>
-              <td class="playername"><?php echo replace_color_codes($human['name']); ?></td>
-              <td><?php echo $human['kills']; ?></td>
-              <td><?php echo $human['ping']; ?></td>
-            <?php else: ?>
-              <td colspan="3">&nbsp;</td>
-            <?php endif; ?>
-          </tr>
-        <?php endfor; ?>
-      <?php endif; ?>
-
-      <?php if (count($this->server_status['specs'])): ?>
-        <tr>
-          <th colspan="6">Spectators</th>
-        </tr>
-
-        <?php foreach ($this->server_status['specs'] AS $spec): ?>
-          <tr>
-            <td colspan="6"><?php echo replace_color_codes($spec['name']); ?></td>
-          </tr>
-        <?php endforeach; ?>
-      <?php endif; ?>
+<?php     if (empty($this->server_status['specs'])) { ?>
+        <tr><td colspan="3">No spectators</td></tr>
+<?php     } else {
+            $i = 0;
+            foreach ($this->server_status['specs'] as $spec) {
+              if (!$i) echo '<tr>';
+              echo '<td class="playername">', replace_color_codes($spec['name']), '</td>';
+              $i = ($i + 1) % 3;
+              if (!$i) echo "</tr>\n";
+            }
+            switch ($i) {
+              case 1: echo "<td colspan='2'></td></tr>\n"; break;
+              case 2: echo "<td></td></tr>\n"; break;
+            }
+          }
+?>
     </tbody>
   </table>
 
@@ -126,12 +139,11 @@
       </tr>
     </tbody>
   </table>
-
-  <?php else: ?>
-    <blockquote>
-      <i>No response from server</i>
-    </blockquote>
-  <?php endif ?>
+<?php   }
+      } else {
+?>
+  <p>No response from server</p>
+<?php } ?>
 </section>
 
 <section>
