@@ -329,6 +329,14 @@ tbody tr:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.375);
 }
 
+span.playername {
+  margin: -0.125rem -0.25rem;
+  padding: 0.125rem 0.25rem;
+}
+.playername:hover {
+  background-color: black;
+}
+
 th, td {
   padding: 1px 3px;
   border: 1px solid black;
