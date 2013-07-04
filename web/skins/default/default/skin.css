@@ -114,7 +114,7 @@ input[type="submit"], input[type="button"] {
   background: -moz-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
   background: -webkit-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
   background: -o-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: -ms-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: linear-gradient(to bottom, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
   border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
   box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.5);
   white-space: normal;
@@ -185,10 +185,10 @@ nav li {
   list-style-type: none;
 
   background: #444444;
-  background: -moz-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: -webkit-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: -o-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
-  background: linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%) repeat scroll 0 0 transparent;
+  background: -moz-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%);
+  background: -webkit-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%);
+  background: -o-linear-gradient(top, #4C4C4C 0%, #3B3B3B 100%);
+  background: linear-gradient(to bottom, #4C4C4C 0%, #3B3B3B 100%);
 
   border: 0.25rem solid #222222;
   border-radius: 0.25rem;
@@ -199,10 +199,10 @@ nav li {
 
 #currentPage {
   background: #222222;
-  background: -moz-linear-gradient(top, #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
-  background: -webkit-linear-gradient(top, #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
-  background: -o-linear-gradient(top, #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
-  background: -ms-linear-gradient(top, #191919 0%, #2A2A2A 100%) repeat scroll 0 0 transparent;
+  background: -moz-linear-gradient(top, #191919 0%, #2A2A2A 100%);
+  background: -webkit-linear-gradient(top, #191919 0%, #2A2A2A 100%);
+  background: -o-linear-gradient(top, #191919 0%, #2A2A2A 100%);
+  background: linear-gradient(to bottom, #191919 0%, #2A2A2A 100%);
   border-color: #111111;
 }
 
@@ -287,35 +287,32 @@ table.legend {
 }
 
 .aliens-teamshader {
-  background: -moz-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
-  background: -webkit-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
-  background: -o-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
-  background: -ms-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
-  background: linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background-image: -moz-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background-image: -webkit-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background-image: -o-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background-image: linear-gradient(to right, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
 }
 
 .spectators-teamshader {
-  background: -moz-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
-  background: -webkit-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
-  background: -o-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
-  background: -ms-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
-  background: linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background-image: -moz-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background-image: -webkit-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background-image: -o-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background-image: linear-gradient(to right, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
 }
 
 .humans-teamshader {
-  background: -moz-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
-  background: -webkit-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
-  background: -o-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
-  background: -ms-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
-  background: linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background-image: -moz-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background-image: -webkit-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background-image: -o-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background-image: linear-gradient(to right, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
 }
 
-tr:nth-child(odd) {
-  background: rgba(0, 0, 0, 0.125);
+tbody tr:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.333);
 }
 
-tr:nth-child(even) {
-  background: rgba(0, 0, 0, 0.0625);
+tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.167);
 }
 
 th, td {
