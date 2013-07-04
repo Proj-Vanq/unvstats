@@ -322,11 +322,11 @@ table.legend {
 }
 
 tbody tr:nth-child(odd) {
-  background-color: rgba(0, 0, 0, 0.333);
+  background-color: rgba(0, 0, 0, 0.625);
 }
 
 tbody tr:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.167);
+  background-color: rgba(0, 0, 0, 0.375);
 }
 
 th, td {
