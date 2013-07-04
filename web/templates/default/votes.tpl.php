@@ -1,9 +1,9 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div>
-  <div class="heading">
-    <span class="heading"><h2>Voting</h2></span>
-  </div>
+<section>
+  <header>
+    <h2>Voting</h2>
+  </header>
 
   <table>
     <colgroup>
@@ -179,7 +179,7 @@
           <td><?php echo (int)(100 * $vote['count_pass'] / $vote['count']); ?> %</td>
       </tr>
       <?php endforeach; ?>
-      <tr class="spacer"></td>
+      <tr class="spacer"><td colspan="5"></td></tr>
       <tr>
         <td>Totals</td>
         <td><?php echo $total; ?></td>
@@ -190,6 +190,6 @@
     </tbody>
   </table>
 
-</div>
+</section>
 
 <?php include '__footer__.tpl.php'; ?>

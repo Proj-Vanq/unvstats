@@ -1,10 +1,10 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div>
-  <div class="heading">
-    <span class="heading"><h2>Game #<?php echo $this->game_details['game_id']; ?> Summary</h2></span>
-    <span class="headinglink"> ( <a href="game_log.php?game_id=<?php echo $this->game_details['game_id'] ?>">show game log</a> )</span>
-  </div>
+<section>
+  <header>
+    <h2 class="heading">Game #<?php echo $this->game_details['game_id']; ?> Summary</h2>
+    <div class="headinglink"> ( <a href="game_log.php?game_id=<?php echo $this->game_details['game_id'] ?>">show game log</a> )</div>
+  </header>
 
   <table>
     <colgroup>
@@ -162,6 +162,6 @@
     </tbody>
   </table>
 
- </div>
+</section>
 
  <?php include '__footer__.tpl.php'; ?>

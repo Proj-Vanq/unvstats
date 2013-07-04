@@ -1,7 +1,9 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div>
-  <h2>Top Team Killers</h2>
+<section>
+  <header>
+    <h2>Top Team Killers</h2>
+  </header>
 
   <table>
     <colgroup>
@@ -48,7 +50,6 @@
       <?php endif; ?>
     </tbody>
   </table>
- </div>
+ </section>
 
  <?php include '__footer__.tpl.php'; ?>
-

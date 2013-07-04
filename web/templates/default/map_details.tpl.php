@@ -1,10 +1,10 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div>
-  <div class="heading">
-    <span class="heading"><h2>Map Details for <?php echo replace_color_codes($this->map_details['map_text_name']); ?></h2></span>
-    <span class="headinglink"><a href="games.php?map_id=<?php echo $this->map_details['map_id'] ?>">See game list for this map</a></span>
-  </div>
+<section>
+  <header>
+    <h2>Map Details for <?php echo replace_color_codes($this->map_details['map_text_name']); ?></h2>
+    <div class="headinglink"><a href="games.php?map_id=<?php echo $this->map_details['map_id'] ?>">See game list for this map</a></div>
+  </header>
 
   <table>
     <colgroup>
@@ -204,6 +204,6 @@
     </tbody>
   </table>
 
-</div>
+</section>
 
 <?php include '__footer__.tpl.php'; ?>

@@ -1,9 +1,11 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div id="mapbalance">
-  <h2>Map Balance by Wins</h2>
+<section>
+  <header>
+    <h2>Map Balance by Wins</h2>
+  </header>
 
-  <table>
+  <table class="mapbalance">
     <colgroup>
       <col class="item" />
       <col class="balancebar" />
@@ -50,10 +52,14 @@
         <tr><td class="c">Human Wins</td></tr>
     </tbody>
   </table>
+</section>
 
-  <h2>Map Balance by Kills</h2>
+<section>
+  <header>
+    <h2>Map Balance by Kills</h2>
+  </header>
 
-  <table>
+  <table class="mapbalance">
     <colgroup>
       <col class="item" />
       <col class="balancebar" />
@@ -99,8 +105,12 @@
         <tr><td class="c">Human Kills</td></tr>
     </tbody>
   </table>
+</section>
 
-  <h2>Map Balance by Deaths</h2>
+<section>
+  <header>
+    <h2>Map Balance by Deaths</h2>
+  </header>
 
   <table>
     <colgroup>
@@ -148,7 +158,6 @@
         <tr><td class="c">Human Deaths</td></tr>
     </tbody>
   </table>
-
- </div>
+</section>
 
  <?php include '__footer__.tpl.php'; ?>

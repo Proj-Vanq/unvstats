@@ -32,7 +32,7 @@ body > * {
   border-radius: 0.5em;
 }
 
-body > *, #header .search {
+body > *, form.search > div {
   margin: 1rem auto;
   padding: 0.5rem;
 
@@ -45,7 +45,7 @@ body > *, #header .search {
 
   border-radius: 0.5em;
 }
-body > * > *, #header .search > * {
+article > *, footer > *, form.search fieldset {
   background: #222222;
 }
 
@@ -53,7 +53,7 @@ form.search {
   float: right;
   margin: 0;
   padding: 0;
-  margin-top: 3.4rem !important; /* alignment with 'stats' in logo */
+  margin-top: 2.4rem !important; /* alignment with 'stats' in logo */
 }
 
 form.search fieldset {
@@ -64,19 +64,19 @@ form.search fieldset {
   box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
 }
 
-#header {
+body > header {
   background: none;
   margin: 0px auto;
   padding: 0px 0.5rem;
 }
 
-#header h1 {
+body > header h1 {
   background: none;
   padding: 1rem;
 }
 
 /* server name alignment */
-#header h1 img {
+body > header h1 img {
   margin-bottom: -2rem;
 }
 #serverName {
@@ -159,13 +159,13 @@ span.for {
   vertical-align: baseline;
 }
 
-div.menu {
+nav {
   clear: both;
   font-variant: small-caps;
   padding: 0px;
 }
 
-div.menu > div {
+nav > div {
   display: table;
   width: 100%;
   padding: 0px;
@@ -173,13 +173,13 @@ div.menu > div {
   border-collapse: separate;
   background: none;
 }
-div.menu > div + div {
+nav > div + div {
   margin-top: -0.5rem;
 }
-div.menu ul {
+nav ul {
   display: table-row;
 }
-div.menu li {
+nav li {
   display: table-cell;
   text-align: center;
   list-style-type: none;
@@ -206,18 +206,18 @@ div.menu li {
   border-color: #111111;
 }
 
-div.menu li a {
+nav li a {
   display: block;
   margin: -0.5rem;
   padding: 0.75rem;
   color: #FFFFFF;
   text-decoration: none;
 }
-div.menu li a:hover, div.menu li a:active {
+nav li a:hover, nav li a:active {
   color: cyan;
 }
 
-#footer {
+footer {
   text-align: right;
 }
 
@@ -300,8 +300,9 @@ tr td {
 */
 
 tr.spacer {
-  height: 1em;
+  height: 1rem;
 }
+tr.spacer * { display: none; }
 
 tr.list:hover {
   background-color: #32363a;
@@ -370,17 +371,14 @@ div.update {
   text-align: right;
 }
 
-div.heading {
+article header h2 {
   width: 100%;
   text-align: left;
 }
 
-span.heading {
-  float: left;
-}
-
-span.headinglink {
+article header .headinglink {
   float: right;
+  margin-top: -2.75rem;
 }
 
 div.filter {
@@ -395,16 +393,16 @@ div.privacy {
   color: #FF0000;
 }
 
-#mapbalance table {
+table.mapbalance {
   table-layout: fixed;
 }
-#mapbalance col.item {
+table.mapbalance col.item {
   width: auto;
 }
-#mapbalance col.balancebar {
+table.mapbalance col.balancebar {
   width: 410px;
 }
-#mapbalance col.data {
+table.mapbalance col.data {
   width: 10%;
 }
 

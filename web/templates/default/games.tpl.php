@@ -22,15 +22,15 @@
       endif;
 ?>
 
-<div>
-  <div class="heading">
-    <span class="heading"><h2><?php if(isset($this->order_name)): echo "Games with most ".$this->order_name; else: echo "Recent Games"; endif; ?></h2></span>
-    <span class="headinglink">
+<section>
+  <header>
+    <h2><?php if(isset($this->order_name)): echo "Games with most ".$this->order_name; else: echo "Recent Games"; endif; ?></h2>
+    <div class="headinglink">
      Sort by: <a href="games.php?order=gameid<?php echo $game_search ?>">Game ID</a> | <a href="games.php?order=kills<?php echo $game_search; ?>">Kills</a> | <a href="games.php?order=deaths<?php echo $game_search; ?>">Deaths</a> | <a href="games.php?order=length<?php echo $game_search; ?>">Length</a>
      ♢
      Show empty games: <a href="games.php?hideempty=<?php echo (isset($this->hideempty)) ? "0" : "1"; echo $game_empty; ?>"><?php echo (isset($this->hideempty)) ? "No" : "Yes"; ?></a>
-    </span>
-  </div>
+    </div>
+  </header>
 
   <table>
     <colgroup>
@@ -87,6 +87,6 @@
     </tbody>
   </table>
 
- </div>
+ </section>
 
  <?php include '__footer__.tpl.php'; ?>
