@@ -285,7 +285,7 @@ table.legend {
   color: #FFFFFF;
 }
 
-.tied, .spectators {
+.tied {
   background-color: #888888;
   color: #000000;
 }
@@ -293,6 +293,11 @@ table.legend {
 .humans {
   background-color: #0055FF;
   color: #FFFFFF;
+}
+
+.spectators {
+  background-color: #00AA00;
+  color: #000000;
 }
 
 .aliens-teamshader {
@@ -303,10 +308,10 @@ table.legend {
 }
 
 .spectators-teamshader {
-  background-image: -moz-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
-  background-image: -webkit-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
-  background-image: -o-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
-  background-image: linear-gradient(to right, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background-image: -moz-linear-gradient(left, rgba(0,170,0,0.5), rgba(0,170,0,0.5) 25%, rgba(0,170,0,0) 50%, rgba(0,0,0,0));
+  background-image: -webkit-linear-gradient(left, rgba(0,170,0,0.5), rgba(0,170,0,0.5) 25%, rgba(0,170,0,0) 50%, rgba(0,0,0,0));
+  background-image: -o-linear-gradient(left, rgba(0,170,0,0.5), rgba(0,170,0,0.5) 25%, rgba(0,170,0,0) 50%, rgba(0,0,0,0));
+  background-image: linear-gradient(to right, rgba(0,170,0,0.5), rgba(0,170,0,0.5) 25%, rgba(0,170,0,0) 50%, rgba(0,0,0,0));
 }
 
 .humans-teamshader {
@@ -347,10 +352,10 @@ thead tr.aliens-teamshader {
 }
 
 thead tr.spectators-teamshader {
-  background-image: -moz-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0)), -moz-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
-  background-image: -webkit-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0)), -webkit-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
-  background-image: -o-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0)), -o-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
-  background-image: linear-gradient(to bottom, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167)), linear-gradient(to right, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background-image: -moz-linear-gradient(left, rgba(0,170,0,0.5), rgba(0,170,0,0.5) 25%, rgba(0,170,0,0) 50%, rgba(0,0,0,0)), -moz-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -webkit-linear-gradient(left, rgba(0,170,0,0.5), rgba(0,170,0,0.5) 25%, rgba(0,170,0,0) 50%, rgba(0,0,0,0)), -webkit-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: -o-linear-gradient(left, rgba(0,170,0,0.5), rgba(0,170,0,0.5) 25%, rgba(0,170,0,0) 50%, rgba(0,0,0,0)), -o-linear-gradient(top, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167));
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.167), rgba(143,143,143,0.167) 25%, rgba(112,112,112,0.167) 75%, rgba(0,0,0,0.167)), linear-gradient(to right, rgba(0,170,0,0.5), rgba(0,170,0,0.5) 25%, rgba(0,170,0,0) 50%, rgba(0,0,0,0));
 }
 
 thead tr.humans-teamshader {
