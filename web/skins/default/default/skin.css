@@ -403,39 +403,39 @@ table.mapbalance col.balancebar {
   width: 410px;
 }
 table.mapbalance col.data {
-  width: 10%;
+  width: 8rem;
 }
 
 col.id {
-  width: 8%;
+  width: 5rem;
 }
 
 col.data {
-  width: 10%;
+  width: 6.24rem;
 }
 
 col.datamore {
-  width: 12%;
+  width: 7.5rem;
 }
 
 col.datawide {
-  width: 14%;
+  width: 8.75rem;
 }
 
 col.datadouble {
-  width: 24%;
+  width: 15rem;
 }
 
 col.item {
-  width: 20%;
+  width: 12.5rem;
 }
 
 col.playername {
-  width: 30%;
+  width: 18.75rem;
 }
 
 col.playernamewide {
-  width: 35%;
+  width: 21.75rem;
 }
 
 col.weaponicon {
