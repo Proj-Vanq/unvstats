@@ -1,12 +1,12 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div>
-  <div class="heading">
-    <span class="heading"><h2><?php if ($this->order == 'alienwins'): echo "Maps by Alien Wins"; elseif ($this->order == 'humanwins'): echo "Maps by Human Wins"; elseif ($this->order == 'mapname'): echo "Maps by Name"; else: echo "Most Played Maps"; endif; ?></h2></span>
-    <span class="headinglink">
+<section>
+  <header>
+    <h2><?php if ($this->order == 'alienwins'): echo "Maps by Alien Wins"; elseif ($this->order == 'humanwins'): echo "Maps by Human Wins"; elseif ($this->order == 'mapname'): echo "Maps by Name"; else: echo "Most Played Maps"; endif; ?></h2>
+    <div class="headinglink">
       Sort by: <a href="most_played_maps.php">Most Played</a> | <a href="most_played_maps.php?sort=alienwins">Alien Wins</a> | <a href="most_played_maps.php?sort=humanwins">Human Wins</a> | <a href="most_played_maps.php?sort=mapname">Map Name</a>
-    </span>
-  </div>
+    </div>
+  </header>
 
   <table>
     <colgroup>
@@ -36,7 +36,7 @@
       <?php $pos = 1; ?>
       <?php foreach ($this->top AS $game): ?>
         <?php if ($pos != 1): ?>
-          <tr class="spacer"></tr>
+          <tr class="spacer"><td colspan="4"></td></tr>
         <?php endif; ?>
         <tr>
           <td rowspan="5" class="levelshot">
@@ -77,6 +77,6 @@
       <?php endif; ?>
     </tbody>
   </table>
- </div>
+</section>
 
  <?php include '__footer__.tpl.php'; ?>

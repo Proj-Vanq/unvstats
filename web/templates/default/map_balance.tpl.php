@@ -1,12 +1,11 @@
-<?php
-include '__header__.tpl.php';
-include dirname(__FILE__).'/../../_graph.php';
-?>
+<?php include '__header__.tpl.php'; ?>
 
-<div id="mapbalance">
-  <h2>Map Balance by Wins</h2>
+<section>
+  <header>
+    <h2>Map Balance by Wins</h2>
+  </header>
 
-  <table>
+  <table class="mapbalance">
     <colgroup>
       <col class="item" />
       <col class="balancebar" />
@@ -48,15 +47,19 @@ include dirname(__FILE__).'/../../_graph.php';
     </thead>
 
     <tbody>
-        <tr><td class="a">Alien Wins</td></tr>
-        <tr><td class="b">Ties / Draws</td></tr>
-        <tr><td class="c">Human Wins</td></tr>
+        <tr><td class="aliens">Alien Wins</td></tr>
+        <tr><td class="tied">Ties / Draws</td></tr>
+        <tr><td class="humans">Human Wins</td></tr>
     </tbody>
   </table>
+</section>
 
-  <h2>Map Balance by Kills</h2>
+<section>
+  <header>
+    <h2>Map Balance by Kills</h2>
+  </header>
 
-  <table>
+  <table class="mapbalance">
     <colgroup>
       <col class="item" />
       <col class="balancebar" />
@@ -98,12 +101,16 @@ include dirname(__FILE__).'/../../_graph.php';
     </thead>
 
     <tbody>
-        <tr><td class="a">Alien Kills</td></tr>
-        <tr><td class="c">Human Kills</td></tr>
+        <tr><td class="aliens">Alien Kills</td></tr>
+        <tr><td class="humans">Human Kills</td></tr>
     </tbody>
   </table>
+</section>
 
-  <h2>Map Balance by Deaths</h2>
+<section>
+  <header>
+    <h2>Map Balance by Deaths</h2>
+  </header>
 
   <table>
     <colgroup>
@@ -147,11 +154,10 @@ include dirname(__FILE__).'/../../_graph.php';
     </thead>
 
     <tbody>
-        <tr><td class="a">Alien Deaths</td></tr>
-        <tr><td class="c">Human Deaths</td></tr>
+        <tr><td class="aliens">Alien Deaths</td></tr>
+        <tr><td class="humans">Human Deaths</td></tr>
     </tbody>
   </table>
-
- </div>
+</section>
 
  <?php include '__footer__.tpl.php'; ?>

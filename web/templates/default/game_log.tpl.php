@@ -1,10 +1,10 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div>
-  <div class="heading">
-    <span class="heading"><h2>Game #<?php echo $this->game_details['game_id']; ?> Log</h2></span>
-    <span class="headinglink"> ( <a href="game_details.php?game_id=<?php echo $this->game_details['game_id'] ?>">show game summary</a> )</span>
-  </div>
+<section>
+  <header>
+    <h2>Game #<?php echo $this->game_details['game_id']; ?> Log</h2>
+    <div class="headinglink"> ( <a href="game_details.php?game_id=<?php echo $this->game_details['game_id'] ?>">show game summary</a> )</div>
+  </header>
 
   <table>
     <colgroup>
@@ -13,8 +13,11 @@
       <col />
     </colgroup>
 
+    <thead>
+      <tr><th colspan="3">Game info</th></tr>
+    </thead>
+
     <tbody>
-     <th colspan="3">Game info</td>
      <tr>
       <td rowspan="10" class="levelshot">
         <img class="levelshot" alt="<?php echo htmlspecialchars($this->map['game_map_name'],ENT_QUOTES); ?>" src="_levelshot.php?map_id=<?php echo ($this->game_details['game_map_id']); ?>" />
@@ -50,12 +53,16 @@
       <col />
     </colgroup>
 
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Player</th>
+        <th colspan="2">Action</th>
+        <th>Target</th>
+      </tr>
+    </tbody>
+
     <tbody>
-     <th>Time</td>
-     <th>Player</td>
-     <th></td>
-     <th>Action</td>
-     <th></td>
       <?php if( constant('PRIVACY_LOGS') == '1' ): ?>
         <tr>
           <td colspan="5">Game logs are disabled for privacy</td>
@@ -146,6 +153,6 @@
     </tbody>
   </table>
 
- </div>
+ </section>
 
  <?php include '__footer__.tpl.php'; ?>

@@ -66,7 +66,7 @@ svg .grid   { stroke: #57616b; }
   border-radius: 0.5em;
 }
 
-body > *, #header .search {
+body > *, form.search > div {
   margin: 1rem auto;
   padding: 0.5rem;
 
@@ -79,7 +79,7 @@ body > *, #header .search {
 
   border-radius: 0.5em;
 }
-body > * > *, #header .search > * {
+article > *, footer > *, form.search fieldset {
   background: #222222;
 }
 
@@ -87,7 +87,7 @@ form.search {
   float: right;
   margin: 0;
   padding: 0;
-  margin-top: 3.4rem !important; /* alignment with 'stats' in logo */
+  margin-top: 2.4rem !important; /* alignment with 'stats' in logo */
 }
 
 form.search fieldset {
@@ -98,19 +98,19 @@ form.search fieldset {
   box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
 }
 
-#header {
+body > header {
   background: none;
   margin: 0px auto;
   padding: 0px 0.5rem;
 }
 
-#header h1 {
+body > header h1 {
   background: none;
   padding: 1rem;
 }
 
 /* server name alignment */
-#header h1 img {
+body > header h1 img {
   margin-bottom: -2rem;
 }
 #serverName {
@@ -193,13 +193,13 @@ span.for {
   vertical-align: baseline;
 }
 
-div.menu {
+nav {
   clear: both;
   font-variant: small-caps;
   padding: 0px;
 }
 
-div.menu > div {
+nav > div {
   display: table;
   width: 100%;
   padding: 0px;
@@ -207,13 +207,13 @@ div.menu > div {
   border-collapse: separate;
   background: none;
 }
-div.menu > div + div {
+nav > div + div {
   margin-top: -0.5rem;
 }
-div.menu ul {
+nav ul {
   display: table-row;
 }
-div.menu li {
+nav li {
   display: table-cell;
   text-align: center;
   list-style-type: none;
@@ -240,18 +240,18 @@ div.menu li {
   border-color: #111111;
 }
 
-div.menu li a {
+nav li a {
   display: block;
   margin: -0.5rem;
   padding: 0.75rem;
   color: #FFFFFF;
   text-decoration: none;
 }
-div.menu li a:hover, div.menu li a:active {
+nav li a:hover, nav li a:active {
   color: cyan;
 }
 
-#footer {
+footer {
   text-align: right;
 }
 
@@ -274,6 +274,22 @@ h2 {
   padding: 0;
 }
 
+/* assumption: two tables, side by side */
+div.split-table > * {
+  display: inline-table;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  width: 30.25rem;
+  margin-left: 0px;
+  margin-right: 1.5rem;
+}
+div.split-table > :last-child {
+  margin-right: 0px;
+}
+
 table {
   width: 100%;
   clear: both;
@@ -289,38 +305,66 @@ table.legend {
   margin-right: 0;
 }
 
-table.legend td.a {
+.aliens {
   background-color: #CC0000;
   color: #FFFFFF;
 }
 
-table.legend td.b {
+.tied, .spectators {
   background-color: #888888;
   color: #000000;
 }
 
-table.legend td.c {
+.humans {
   background-color: #0055FF;
   color: #FFFFFF;
 }
 
-dtr:nth-child(odd) {
+.aliens-teamshader {
+  background: -moz-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background: -webkit-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background: -o-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background: -ms-linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+  background: linear-gradient(left, rgba(204,0,0,0.5), rgba(204,0,0,0.5) 25%, rgba(204,0,0,0) 50%, rgba(0,0,0,0));
+}
+
+.spectators-teamshader {
+  background: -moz-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background: -webkit-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background: -o-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background: -ms-linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+  background: linear-gradient(left, rgba(136,136,136,0.5), rgba(136,136,136,0.5) 25%, rgba(136,136,136,0) 50%, rgba(0,0,0,0));
+}
+
+.humans-teamshader {
+  background: -moz-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background: -webkit-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background: -o-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background: -ms-linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+  background: linear-gradient(left, rgba(0,85,255,0.5), rgba(0,85,255,0.5) 25%, rgba(0,85,255,0) 50%, rgba(0,85,255,0));
+}
+
+tr:nth-child(odd) {
   background: rgba(0, 0, 0, 0.125);
 }
 
-dtr:nth-child(even) {
+tr:nth-child(even) {
   background: rgba(0, 0, 0, 0.0625);
 }
 
 th, td {
   padding: 1px 3px;
-
-  border: 1px outset #000000;
+  border: 1px solid black;
 }
 
-th {
+thead th {
   text-align: left;
   background: url(images/bar.png) #444444;
+}
+
+tbody th {
+  text-align: left;
+  font-weight: normal;
 }
 
 tbody.padded td {
@@ -334,15 +378,12 @@ tr td {
 */
 
 tr.spacer {
-  height: 1em;
+  height: 1rem;
 }
+tr.spacer * { display: none; }
 
-tr.list:hover {
-  background-color: #32363a;
-}
-
-th, td {
-  border: 1px solid black;
+td.subtotal {
+  font-style: italic;
 }
 
 td.quote_public {
@@ -404,17 +445,14 @@ div.update {
   text-align: right;
 }
 
-div.heading {
+article header h2 {
   width: 100%;
   text-align: left;
 }
 
-span.heading {
-  float: left;
-}
-
-span.headinglink {
+article header .headinglink {
   float: right;
+  margin-top: -2.75rem;
 }
 
 div.filter {
@@ -429,49 +467,49 @@ div.privacy {
   color: #FF0000;
 }
 
-#mapbalance table {
+table.mapbalance {
   table-layout: fixed;
 }
-#mapbalance col.item {
+table.mapbalance col.item {
   width: auto;
 }
-#mapbalance col.balancebar {
+table.mapbalance col.balancebar {
   width: 410px;
 }
-#mapbalance col.data {
-  width: 10%;
+table.mapbalance col.data {
+  width: 8rem;
 }
 
 col.id {
-  width: 8%;
+  width: 5rem;
 }
 
 col.data {
-  width: 10%;
+  width: 6.24rem;
 }
 
 col.datamore {
-  width: 12%;
+  width: 7.5rem;
 }
 
 col.datawide {
-  width: 14%;
+  width: 8.75rem;
 }
 
 col.datadouble {
-  width: 24%;
+  width: 15rem;
 }
 
 col.item {
-  width: 20%;
+  width: 12.5rem;
 }
 
 col.playername {
-  width: 30%;
+  width: 18.75rem;
 }
 
 col.playernamewide {
-  width: 35%;
+  width: 21.75rem;
 }
 
 col.weaponicon {

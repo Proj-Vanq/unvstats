@@ -1,7 +1,9 @@
 <?php include '__header__.tpl.php'; ?>
 
-<div>
-  <h2>Server Status</h2>
+<section>
+  <header>
+    <h2>Server Status</h2>
+  </header>
 
   <?php if (isset($this->server_status)): ?>
 
@@ -130,8 +132,12 @@
       <i>No response from server</i>
     </blockquote>
   <?php endif ?>
+</section>
 
-  <h2>Overview</h2>
+<section>
+  <header>
+    <h2>Overview</h2>
+  </header>
 
   <table>
     <colgroup>
@@ -262,7 +268,6 @@
   </table>
 
  <div class="update">Last update: <?php echo $this->state['log_timestamp']; ?> <small>UTC</small></div>
-
-</div>
+</section>
 
 <?php include '__footer__.tpl.php'; ?>

@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
     <title>Unvstats – <?php echo replace_color_codes(SERVER_NAME); ?></title>
@@ -22,19 +21,22 @@ site_hook('site-style');
 ?>
   </head>
   <body>
+    <header>
 <?php site_hook('site-top'); ?>
-    <div id="header">
       <form class="search" method="get" accept-charset="utf-8" action="search_player.php">
-        <fieldset>
-          <label for="query">Player search:</label>
-          <input type="text" name="query" id="query" value="<?php if (isset($_GET['query'])): ?><?php echo htmlspecialchars($_GET['query'],ENT_QUOTES) ?><?php endif; ?>" />
-          <input type="submit" value="Search" />
-        </fieldset>
+        <div>
+          <fieldset>
+            <label for="query">Player search:</label>
+            <input type="text" name="query" id="query" value="<?php if (isset($_GET['query'])): ?><?php echo htmlspecialchars($_GET['query'],ENT_QUOTES) ?><?php endif; ?>" />
+            <input type="submit" value="Search" />
+          </fieldset>
+        </div>
       </form>
 
       <h1><img src="images/unvstats.png" alt="Unvstats " /><span class="for"><br /></span><span id="serverName"><?php echo replace_color_codes(SERVER_NAME); ?></span></h1>
-    </div>
-    <div class="menu">
+    </header>
+
+    <nav>
 <?php
 function menu_link($page, $title)
 {
@@ -63,9 +65,9 @@ site_hook('site-menu');
           <?php menu_link('games',               'Games'); ?>
         </ul>
       </div>
-    </div>
+    </nav>
 
-    <div id="box">
+    <article>
       <div class="container">
         <?php include '__pagelister__.php'; ?>
         <?php require '__skill__.php'; ?>

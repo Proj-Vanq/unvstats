@@ -8,8 +8,10 @@
  );
 ?>
 
-<div>
-  <h2>Player Signature for <?php echo player_link($this->player_details['player_id'], $this->player_details['player_name']); ?></h2>
+<section>
+  <header>
+    <h2>Player Signature for <?php echo player_link($this->player_details['player_id'], $this->player_details['player_name']); ?></h2>
+  </header>
 
   <table>
     <colgroup>
@@ -59,6 +61,6 @@
     <?php endforeach; ?>
   </table>
 
-</div>
+</section>
 
 <?php include '__footer__.tpl.php'; ?>
