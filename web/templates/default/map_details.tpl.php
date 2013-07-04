@@ -147,7 +147,7 @@
 
         <tbody>
           <?php if (empty($this->votes_called)) { ?>
-            <tr><td colspan="3">No votes called</td></tr>
+            <tr class="emptylist"><td colspan="3">No votes called</td></tr>
           <?php } else foreach ($this->votes_called as $vote) { ?>
           <tr>
             <td><?php echo $vote['vote_type']; ?></td>
@@ -172,7 +172,7 @@
 
       <tbody>
         <?php if (empty($this->weapon_kills)) { ?>
-          <tr><td colspan="3">No kills</td></tr>
+          <tr class="emptylist"><td colspan="3">No kills</td></tr>
         <?php } else foreach ($this->weapon_kills as $weapon) { ?>
         <tr>
           <td><?php $icon = "images/icons/".(!empty($weapon['weapon_icon']) ? $weapon['weapon_icon'] : "blank.png"); ?><img src="<?php echo $icon; ?>" <?php list($width, $height, $type, $attr) = getimagesize($icon); echo $attr; ?> <?php if ($width == 15): ?>style="margin-right: 15px;"<?php endif; ?> alt="<?php echo $weapon['weapon_name']; ?>" ><?php echo $weapon['weapon_name']; ?></td>
@@ -198,7 +198,7 @@
 
       <tbody>
         <?php if (empty($this->built_structures)) { ?>
-          <tr><td colspan="3">No structures built</td></tr>
+          <tr class="emptylist"><td colspan="3">No structures built</td></tr>
         <?php } else foreach ($this->built_structures as $build) { ?>
         <tr>
           <td><?php if (!empty($build['building_icon'])): ?><img src="images/icons/<?php echo $build['building_icon']; ?>" width="15" height="15" alt="<?php echo $build['building_name']; ?>" /> <?php endif; ?><?php echo $build['building_name']; ?></td>
@@ -220,7 +220,7 @@
 
       <tbody>
         <?php if (empty($this->destroyed_structures)) { ?>
-          <tr><td colspan="3">No structures destroyed</td></tr>
+          <tr class="emptylist"><td colspan="3">No structures destroyed</td></tr>
         <?php } else foreach ($this->destroyed_structures as $build) { ?>
         <tr>
           <td><?php if (!empty($build['building_icon'])): ?><img src="images/icons/<?php echo $build['building_icon']; ?>" width="15" height="15" alt="<?php echo $build['building_name']; ?>" /> <?php endif; ?><?php echo $build['building_name']; ?></td>

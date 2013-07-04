@@ -23,7 +23,7 @@
 
       <tbody>
         <?php if (empty($this->map_votes)) { ?>
-          <tr><td colspan="3">No votes</td></tr>
+          <tr class="emptylist"><td colspan="3">No votes</td></tr>
         <?php } else foreach ($this->map_votes as $map) { ?>
         <tr>
           <td><a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_text_name']); ?></a></td>
@@ -49,7 +49,7 @@
 
       <tbody>
         <?php if (empty($this->map_skips)) { ?>
-          <tr><td colspan="3">No votes</td></tr>
+          <tr class="emptylist"><td colspan="3">No votes</td></tr>
         <?php } else foreach ($this->map_skips as $map) { ?>
         <tr>
           <td><a href="map_details.php?map_id=<?php echo $map['map_id'] ; ?>"><?php echo replace_color_codes($map['map_text_name']); ?></a></td>
@@ -79,7 +79,7 @@
 
       <tbody>
         <?php if (empty($this->kick_votes)) { ?>
-          <tr><td colspan="3">No votes</td></tr>
+          <tr class="emptylist"><td colspan="3">No votes</td></tr>
         <?php } else foreach ($this->kick_votes as $kick) { ?>
         <tr>
           <td class="playername"><?php echo player_link($kick['player_id'], $kick['player_name']); ?></td>
@@ -105,7 +105,7 @@
 
       <tbody>
         <?php if (empty($this->mute_votes)) { ?>
-          <tr><td colspan="3">No votes</td></tr>
+          <tr class="emptylist"><td colspan="3">No votes</td></tr>
         <?php } else foreach ($this->mute_votes as $mute) { ?>
         <tr>
           <td class="playername"><?php echo player_link($mute['player_id'], $mute['player_name']); ?></td>
@@ -133,7 +133,7 @@
 
       <tbody>
         <?php if (empty($this->kick_happy)) { ?>
-          <tr><td colspan="3">No votes</td></tr>
+          <tr class="emptylist"><td colspan="3">No votes</td></tr>
         <?php } else foreach ($this->kick_happy as $kick) { ?>
         <tr>
           <td class="playername"><?php echo player_link($kick['player_id'], $kick['player_name']); ?></td>
@@ -156,7 +156,7 @@
 
       <tbody>
         <?php if (empty($this->mute_happy)) { ?>
-          <tr><td colspan="3">No votes</td></tr>
+          <tr class="emptylist"><td colspan="3">No votes</td></tr>
         <?php } else foreach ($this->mute_happy as $mute) { ?>
         <tr>
           <td class="playername"><?php echo player_link($mute['player_id'], $mute['player_name']); ?></td>
