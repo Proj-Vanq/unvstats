@@ -33,7 +33,7 @@ site_hook('site-style');
         </div>
       </form>
 
-      <h1><img src="images/unvstats.png" alt="Unvstats " /><span class="for"><br /></span><span id="serverName"><?php echo replace_color_codes(SERVER_NAME); ?></span></h1>
+      <h1><img src="images/unvstats.svg" height="142" alt="Unvstats " /><!-- img src="images/unvstats.png" alt="Unvstats " /--><span class="for"><br /></span><span id="serverName"><?php echo replace_color_codes(SERVER_NAME); ?></span></h1>
     </header>
 
     <nav>
