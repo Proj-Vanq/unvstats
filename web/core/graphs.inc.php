@@ -30,15 +30,15 @@ else // not a bot
         $toRad = deg2rad(360.0 / $limit);
 
         $result = "<clipPath id='clipPath_$clipID'><polygon points='$x,$y "
-                . (string)round($x + sin($start * $toRad) * $r * 1.2) . ',' . (string)round($y - cos($start * $toRad) * $r * 1.2);
+                . (string)round($x - sin($start * $toRad) * $r * 1.2) . ',' . (string)round($y - cos($start * $toRad) * $r * 1.2);
 
         $p_end = floor($end * 16.0 / $limit);
         for ($p = ceil($start * 16.0 / $limit) + 1; $p <= $p_end; ++$p) {
             $rad = deg2rad($p * 360.0 / 16);
-            $result .= ' ' . (string)round($x + sin($rad) * $r * 1.2) . ',' . (string)round($y - cos($rad) * $r * 1.2);
+            $result .= ' ' . (string)round($x - sin($rad) * $r * 1.2) . ',' . (string)round($y - cos($rad) * $r * 1.2);
         }
 
-        $result .= ' ' . (string)($x + sin($end * $toRad) * $r * 1.2) . ',' . (string)round($y - cos($end * $toRad) * $r * 1.2);
+        $result .= ' ' . (string)($x - sin($end * $toRad) * $r * 1.2) . ',' . (string)round($y - cos($end * $toRad) * $r * 1.2);
 
         return array('clip' => $result . "' /></clipPath>\n", 'drawing' => "<circle class='$class' cx='$x' cy='$y' r='$r' clip-path='url(#clipPath_$clipID)' />");
     }
