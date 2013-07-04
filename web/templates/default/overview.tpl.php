@@ -7,7 +7,7 @@
 
 <?php if (isset($this->server_status)) {
         if ($this->server_status === false) { ?>
-    <p>Server not reachable</p>
+    <p class="noserver">Server not reachable</p>
 <?php   } else { ?>
   <div class="split-table">
     <table>
@@ -27,7 +27,7 @@
 
       <tbody>
 <?php     if (empty($this->server_status['aliens'])) { ?>
-        <tr><td colspan="3">No players</td></tr>
+        <tr class="emptylist"><td colspan="3">No players</td></tr>
 <?php     } else foreach ($this->server_status['aliens'] as $alien) { ?>
         <tr>
           <td class="playername"><?php echo replace_color_codes($alien['name']); ?></td>
@@ -53,7 +53,7 @@
 
       <tbody>
 <?php     if (empty($this->server_status['humans'])) { ?>
-        <tr><td colspan="3">No players</td></tr>
+        <tr class="emptylist"><td colspan="3">No players</td></tr>
 <?php     } else foreach ($this->server_status['humans'] as $human) { ?>
         <tr>
           <td class="playername"><?php echo replace_color_codes($human['name']); ?></td>
@@ -78,7 +78,7 @@
 
     <tbody>
 <?php     if (empty($this->server_status['specs'])) { ?>
-        <tr><td colspan="3">No spectators</td></tr>
+        <tr class="emptylist"><td colspan="3">No spectators</td></tr>
 <?php     } else {
             $i = 0;
             foreach ($this->server_status['specs'] as $spec) {
@@ -142,7 +142,7 @@
 <?php   }
       } else {
 ?>
-  <p>No response from server</p>
+  <p class="noserver">No response from server</p>
 <?php } ?>
 </section>
 

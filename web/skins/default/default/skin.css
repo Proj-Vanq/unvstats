@@ -240,6 +240,15 @@ h2 {
   padding: 0;
 }
 
+.noserver {
+  font-style: italic;
+  font-weight: bold;
+  color: red;
+}
+.emptylist {
+  font-style: italic;
+}
+
 /* assumption: two tables, side by side */
 div.split-table > * {
   display: inline-table;
