@@ -289,6 +289,10 @@ EOF;
 
     function graph_winsOnMap($map_id)
     {
+        $xo = 50;
+        $yo = 60;
+        $r = 40;
+
         global $db;
         $wins = $db->GetRow('SELECT mapstat_alien_wins,
                                     mapstat_human_wins,
@@ -307,11 +311,11 @@ EOF;
         $total = $alien + $human + $tie;
 
         if ($total) {
-            $sectors = array(graphlib_makeSector(50, 60, 40, 0,             $alien, $total, 'alien'),
-                             graphlib_makeSector(50, 60, 40, $alien,        $tie,   $total, 'tied'),
-                             graphlib_makeSector(50, 60, 40, $alien + $tie, $human, $total, 'human'));
+            $sectors = array(graphlib_makeSector($xo, $yo, $r, 0,             $alien, $total, 'alien'),
+                             graphlib_makeSector($xo, $yo, $r, $alien,        $tie,   $total, 'tied'),
+                             graphlib_makeSector($xo, $yo, $r, $alien + $tie, $human, $total, 'human'));
         } else
-            $sectors = array(graphlib_makeSector(50, 60, 40, 0, 1, 1, 'null'));
+            $sectors = array(graphlib_makeSector($xo, $yo, $r, 0, 1, 1, 'null'));
 
         echo <<<EOF
 <svg width='200' height='120' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>
@@ -323,7 +327,7 @@ EOF;
             if (array_key_exists('clip', $sector))
                 echo $sector['clip'];
         }
-        echo "</defs>\n<circle cx='50' cy='60' r='41' class='filler' />\n";
+        echo "</defs>\n<circle cx='$xo' cy='$yo' r='", $r + 1, "' class='filler' />\n";
         foreach ($sectors as $sector)
         {
             if (array_key_exists('drawing', $sector))
@@ -333,14 +337,14 @@ EOF;
         if ($total)
         {
             if ($alien != $total && $human != $total && $tie != $total)
-                echo "<line class='pie' x1='50' y1='60' x2='50' y2='20' />\n";
+                echo "<line class='pie' x1='$xo' y1='$yo' x2='$xo' y2='", $yo - $r, "' />\n";
             if ($alien && $alien != $total) {
-                $point = graphlib_calcSpoke(40, $alien, $total);
-                echo "<line class='pie' x1='50' y1='60' x2='", $point[0] + 50, "' y2='", $point[1] + 60, "' />\n";
+                $point = graphlib_calcSpoke($r, $alien, $total);
+                echo "<line class='pie' x1='$xo' y1='$yo' x2='", $point[0] + $xo, "' y2='", $point[1] + $yo, "' />\n";
             }
             if ($tie && ($alien + $tie) != $total) {
-                $point = graphlib_calcSpoke(40, $alien + $tie, $total);
-                echo "<line class='pie' x1='50' y1='60' x2='", $point[0] + 50, "' y2='", $point[1] + 60, "' />\n";
+                $point = graphlib_calcSpoke($r, $alien + $tie, $total);
+                echo "<line class='pie' x1='$xo' y1='$yo' x2='", $point[0] + $xo, "' y2='", $point[1] + $yo, "' />\n";
             }
 
             $ap = round($alien * 100.0 / $total);
