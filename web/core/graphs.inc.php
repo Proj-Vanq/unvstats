@@ -369,11 +369,15 @@ EOF;
 <rect x='105' y='17' width='10' height='10' class='alien box' /><text x='120' y='26' >Aliens</text><text class='percent' x='120' y='30' >$ap%</text>
 <rect x='105' y='55' width='10' height='10' class='tied box'  /><text x='120' y='64' >Tied</text>  <text class='percent' x='120' y='68' >$tp%</text>
 <rect x='105' y='93' width='10' height='10' class='human box' /><text x='120' y='102'>Humans</text><text class='percent' x='120' y='106'>$hp%</text>
+</svg>
 EOF;
-        } else // No results? Just draw a blank disc
+        } else { // No results? Draw a blank disc
             graphlib_drawSector($xo, $yo, $r, 0, 1, 1, 'null');
-
-        echo "</svg>\n";
+            echo <<<EOF
+<text x='120' y='64' class='null'>No results</text>
+</svg>
+EOF;
+        }
     }
 
     // Balance bar showing wins, draws, losses for a given map
