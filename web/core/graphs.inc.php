@@ -15,13 +15,13 @@ if (CLIENT_IS_BOT)
 }
 else // not a bot
 {
-    function graphlib_spoke($r, $angle, $limit)
+    function graphlib_calcSpoke($r, $angle, $limit)
     {
         $angle = deg2rad($angle * 360.0 / $limit);
         return array(-sin($angle) * $r, -cos($angle) * $r);
     }
 
-    function graphlib_drawSector($x, $y, $r, $start, $end, $limit, $class)
+    function graphlib_makeSector($x, $y, $r, $start, $end, $limit, $class)
     {
         if ($end == 0)
             return array();
@@ -35,23 +35,23 @@ else // not a bot
         $end += $start;
         $rx = $r * 1.2;
 
-        $point = graphlib_spoke($rx, $start, $limit);
+        $point = graphlib_calcSpoke($rx, $start, $limit);
         $result = "<clipPath id='clipPath_$clipID'><polygon points='$x,$y "
                 . (string)round($x + $point[0]) . ',' . (string)round($y + $point[1]);
 
         $p_end = floor($end * 16.0 / $limit);
         for ($p = ceil($start * 16.0 / $limit) + 1; $p <= $p_end; ++$p) {
-            $point = graphlib_spoke($rx, $p, 16);
+            $point = graphlib_calcSpoke($rx, $p, 16);
             $result .= ' ' . (string)round($x + $point[0]) . ',' . (string)round($y + $point[1]);
         }
 
-        $point = graphlib_spoke($rx, $end, $limit);
+        $point = graphlib_calcSpoke($rx, $end, $limit);
         $result .= ' ' . (string)($x + $point[0]) . ',' . (string)round($y + $point[1]);
 
         return array('clip' => $result . "' /></clipPath>\n", 'drawing' => "<circle class='$class' cx='$x' cy='$y' r='$r' clip-path='url(#clipPath_$clipID)' />");
     }
 
-    function graphlib_calculateAxisMarkings($length, $ppu)
+    function graphlib_calcAxisMarkings($length, $ppu)
     {
         $mark = $length;
         $skip = floor(log($mark) / log(10)) + 1;
@@ -117,7 +117,7 @@ else // not a bot
 EOF;
 
         // X axis
-        list($mark, $number) = graphlib_calculateAxisMarkings($max_x - $min_x, $unit_x);
+        list($mark, $number) = graphlib_calcAxisMarkings($max_x - $min_x, $unit_x);
         $i = true;
         for ($a = $min_x - ($min_x % $mark); $a <= $max_x; $a += $mark)
         {
@@ -130,7 +130,7 @@ EOF;
         }
 
         // Y axis
-        list($mark, $step) = graphlib_calculateAxisMarkings($max_y - $min_y, $unit_y);
+        list($mark, $step) = graphlib_calcAxisMarkings($max_y - $min_y, $unit_y);
         $i = true;
         for ($a = $min_y - ($min_y % $mark); $a <= $max_y; $a += $mark)
         {
@@ -307,11 +307,11 @@ EOF;
         $total = $alien + $human + $tie;
 
         if ($total) {
-            $sectors = array(graphlib_drawSector(50, 60, 40, 0,             $alien, $total, 'alien'),
-                             graphlib_drawSector(50, 60, 40, $alien,        $tie,   $total, 'tied'),
-                             graphlib_drawSector(50, 60, 40, $alien + $tie, $human, $total, 'human'));
+            $sectors = array(graphlib_makeSector(50, 60, 40, 0,             $alien, $total, 'alien'),
+                             graphlib_makeSector(50, 60, 40, $alien,        $tie,   $total, 'tied'),
+                             graphlib_makeSector(50, 60, 40, $alien + $tie, $human, $total, 'human'));
         } else
-            $sectors = array(graphlib_drawSector(50, 60, 40, 0, 1, 1, 'null'));
+            $sectors = array(graphlib_makeSector(50, 60, 40, 0, 1, 1, 'null'));
 
         echo <<<EOF
 <svg width='200' height='120' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>
@@ -335,11 +335,11 @@ EOF;
             if ($alien != $total && $human != $total && $tie != $total)
                 echo "<line class='pie' x1='50' y1='60' x2='50' y2='20' />\n";
             if ($alien && $alien != $total) {
-                $point = graphlib_spoke(40, $alien, $total);
+                $point = graphlib_calcSpoke(40, $alien, $total);
                 echo "<line class='pie' x1='50' y1='60' x2='", $point[0] + 50, "' y2='", $point[1] + 60, "' />\n";
             }
             if ($tie && ($alien + $tie) != $total) {
-                $point = graphlib_spoke(40, $alien + $tie, $total);
+                $point = graphlib_calcSpoke(40, $alien + $tie, $total);
                 echo "<line class='pie' x1='50' y1='60' x2='", $point[0] + 50, "' y2='", $point[1] + 60, "' />\n";
             }
 
