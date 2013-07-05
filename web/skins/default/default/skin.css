@@ -24,10 +24,6 @@ body > * {
 }
 
 /* for embedded SVG */
-svg * {
-  stroke: white;
-  stroke-width: 0px;
-}
 svg text     { fill: white; }
 svg .percent { fill: #888888; dominant-baseline: hanging; alignment-baseline: hanging; font-size: 75%; }
 svg .axis-x  { text-anchor: middle; dominant-baseline: hanging; alignment-baseline: hanging; font-size: 75%; }
@@ -49,11 +45,11 @@ svg .player-deaths    { fill: #0000FF; }
 svg .line.player-kills     { stroke: #00FF00; }
 svg .line.player-teamkills { stroke: #FF0000; }
 svg .line.player-deaths    { stroke: #0000FF; }
-svg .filler { fill: black; }
+svg .filler { stroke: none; fill: black; }
 svg .box    { stroke: black; stroke-width: 1px; }
 svg line,
-svg .line   { stroke-width: 1px; fill: none; }
-svg .pie    { stroke: black; stroke-width: 0.666px; fill: none; }
+svg .line   { stroke: white; stroke-width: 1px; fill: none; }
+svg .pie    { stroke: black; stroke-width: 0.666px; }
 svg .grid   { stroke: #57616b; }
 
 /* back to HTML */
