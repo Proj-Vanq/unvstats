@@ -353,11 +353,8 @@ EOF;
 
         // Start drawing
         $r1 = $r + 1;
-        echo <<<EOF
-<svg width='200' height='120' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>
-<circle cx='$xo' cy='$yo' r='$r1' class='filler' />
+        echo "<svg width='200' height='120' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>\n";
 
-EOF;
         // If we have at least one result, render (up to) three sectors representing the results
         if ($total) {
             graphlib_drawSector($xo, $yo, $r, 0,             $alien, $total, 'alien');
