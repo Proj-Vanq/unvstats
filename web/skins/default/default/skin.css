@@ -53,6 +53,7 @@ svg .filler { fill: black; }
 svg .box    { stroke: black; stroke-width: 1px; }
 svg line,
 svg .line   { stroke-width: 1px; fill: none; }
+svg .pie    { stroke: black; stroke-width: 0.666px; fill: none; }
 svg .grid   { stroke: #57616b; }
 
 /* back to HTML */

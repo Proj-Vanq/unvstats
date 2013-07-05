@@ -15,6 +15,12 @@ if (CLIENT_IS_BOT)
 }
 else // not a bot
 {
+    function graphlib_spoke($r, $angle, $limit)
+    {
+        $angle = deg2rad($angle * 360.0 / $limit);
+        return array(-sin($angle) * $r, -cos($angle) * $r);
+    }
+
     function graphlib_drawSector($x, $y, $r, $start, $end, $limit, $class)
     {
         if ($end == 0)
@@ -27,18 +33,20 @@ else // not a bot
             return array('drawing' => "<circle class='$class' cx='$x' cy='$y' r='$r' />\n");
 
         $end += $start;
-        $toRad = deg2rad(360.0 / $limit);
+        $rx = $r * 1.2;
 
+        $point = graphlib_spoke($rx, $start, $limit);
         $result = "<clipPath id='clipPath_$clipID'><polygon points='$x,$y "
-                . (string)round($x - sin($start * $toRad) * $r * 1.2) . ',' . (string)round($y - cos($start * $toRad) * $r * 1.2);
+                . (string)round($x + $point[0]) . ',' . (string)round($y + $point[1]);
 
         $p_end = floor($end * 16.0 / $limit);
         for ($p = ceil($start * 16.0 / $limit) + 1; $p <= $p_end; ++$p) {
-            $rad = deg2rad($p * 360.0 / 16);
-            $result .= ' ' . (string)round($x - sin($rad) * $r * 1.2) . ',' . (string)round($y - cos($rad) * $r * 1.2);
+            $point = graphlib_spoke($rx, $p, 16);
+            $result .= ' ' . (string)round($x + $point[0]) . ',' . (string)round($y + $point[1]);
         }
 
-        $result .= ' ' . (string)($x - sin($end * $toRad) * $r * 1.2) . ',' . (string)round($y - cos($end * $toRad) * $r * 1.2);
+        $point = graphlib_spoke($rx, $end, $limit);
+        $result .= ' ' . (string)($x + $point[0]) . ',' . (string)round($y + $point[1]);
 
         return array('clip' => $result . "' /></clipPath>\n", 'drawing' => "<circle class='$class' cx='$x' cy='$y' r='$r' clip-path='url(#clipPath_$clipID)' />");
     }
@@ -302,7 +310,6 @@ EOF;
             $sectors = array(graphlib_drawSector(50, 60, 40, 0,             $alien, $total, 'alien'),
                              graphlib_drawSector(50, 60, 40, $alien,        $tie,   $total, 'tied'),
                              graphlib_drawSector(50, 60, 40, $alien + $tie, $human, $total, 'human'));
-
         } else
             $sectors = array(graphlib_drawSector(50, 60, 40, 0, 1, 1, 'null'));
 
@@ -310,6 +317,7 @@ EOF;
 <svg width='200' height='120' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>
 <defs>
 EOF;
+
         foreach ($sectors as $sector)
         {
             if (array_key_exists('clip', $sector))
@@ -324,6 +332,17 @@ EOF;
 
         if ($total)
         {
+            if ($alien != $total && $human != $total && $tie != $total)
+                echo "<line class='pie' x1='50' y1='60' x2='50' y2='20' />\n";
+            if ($alien && $alien != $total) {
+                $point = graphlib_spoke(40, $alien, $total);
+                echo "<line class='pie' x1='50' y1='60' x2='", $point[0] + 50, "' y2='", $point[1] + 60, "' />\n";
+            }
+            if ($tie && ($alien + $tie) != $total) {
+                $point = graphlib_spoke(40, $alien + $tie, $total);
+                echo "<line class='pie' x1='50' y1='60' x2='", $point[0] + 50, "' y2='", $point[1] + 60, "' />\n";
+            }
+
             $ap = round($alien * 100.0 / $total);
             $tp = round($tie   * 100.0 / $total);
             $hp = round($human * 100.0 / $total);
