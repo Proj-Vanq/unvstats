@@ -37,9 +37,9 @@ $players = $db->GetAll("SELECT player_name,
                                stats_teamkills,
                                stats_deaths,
                                stats_score,
-                               SEC_TO_TIME( stats_time_alien ) AS time_alien,
-                               SEC_TO_TIME( stats_time_human ) AS time_human,
-                               SEC_TO_TIME( stats_time_spec ) AS time_spec
+                               IF(stats_time_alien = 0, NULL, SEC_TO_TIME( stats_time_alien )) AS time_alien,
+                               IF(stats_time_human = 0, NULL, SEC_TO_TIME( stats_time_human )) AS time_human,
+                               IF(stats_time_spec = 0, NULL, SEC_TO_TIME( stats_time_spec )) AS time_spec
                         FROM per_game_stats
                         INNER JOIN players ON stats_player_id = player_id
                         WHERE stats_game_id = ?
