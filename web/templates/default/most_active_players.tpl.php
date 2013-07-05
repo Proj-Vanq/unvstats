@@ -59,7 +59,7 @@
       <?php endforeach; ?>
 
       <?php if (!count($this->top)): ?>
-        <tr>
+        <tr class="emptylist">
           <td colspan="10">No players yet</td>
         </tr>
       <?php endif; ?>
