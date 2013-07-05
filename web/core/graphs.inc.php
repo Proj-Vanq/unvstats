@@ -27,10 +27,10 @@ else // not a bot
     // args: origin, radius, start angle, turn angle, units/circle (for angle conversion), CSS class
     function graphlib_drawSector($x, $y, $r, $start, $size, $limit, $class)
     {
-        if ($size == 0)
+        if ($size <= 0)
             return; // trivial case
 
-        if ($size == $limit)
+        if ($size >= $limit)
         {   // 360°
             echo "<circle class='pie $class' cx='$x' cy='$y' r='$r' />\n";
             return;
@@ -195,6 +195,7 @@ EOF;
                                      stats_deaths
                               FROM per_game_stats
                               WHERE stats_player_id = ?
+                              ORDER BY stats_game_id DESC
                               LIMIT ?',
                               array($_GET['player_id'], $limit));
         $count = $db->GetAll('SELECT COUNT(stats_player_id) AS count
@@ -214,6 +215,11 @@ EOF;
           $death_data[]  = $stat['stats_deaths'];
           $i++;
         }
+
+        // we asked for the data in reverse order, so...
+        $kill_data = array_reverse($kill_data);
+        $teamkill_data = array_reverse($teamkill_data);
+        $death_data = array_reverse($death_data);
 
         // Check data
         if ($i == 1) {
