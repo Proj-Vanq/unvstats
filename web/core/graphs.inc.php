@@ -15,31 +15,39 @@ if (CLIENT_IS_BOT || CLIENT_IS_TEXT)
 }
 else // not a bot
 {
+    // point on circumference corresponding to the given angle ($limit steps, clockwise, from top)
+    // args: radius, angle, units/circle (for angle conversion), optionally origin
     function graphlib_calcSpoke($r, $angle, $limit, $x = 0, $y = 0)
     {
         $angle = deg2rad($angle * 360.0 / $limit);
         return array($x - sin($angle) * $r, $y - cos($angle) * $r);
     }
 
+    // sector, typically of a pie chart
+    // args: origin, radius, start angle, turn angle, units/circle (for angle conversion), CSS class
     function graphlib_drawSector($x, $y, $r, $start, $size, $limit, $class)
     {
         if ($size == 0)
-            return;
+            return; // trivial case
 
         if ($size == $limit)
-        {
+        {   // 360°
             echo "<circle class='pie $class' cx='$x' cy='$y' r='$r' />\n";
             return;
         }
 
-        $long = ($size >= ($limit / 2.0)) ? 1 : 0;
+        $long = ($size >= ($limit / 2.0)) ? 1 : 0; // ≥180°?
 
+        // points on circumference
         $p0 = graphlib_calcSpoke($r, $start, $limit, $x, $y);
         $p1 = graphlib_calcSpoke($r, $start + $size, $limit, $x, $y);
 
+        // move to p0, arc to p1, line to centre, close path
         echo "<path class='pie $class' d='M $p0[0],$p0[1] A $r,$r 0 $long 0 $p1[0],$p1[1] L $x,$y Z' />";
     }
 
+    // magic to work out some suitable scales for axis marking
+    // args: axis length (pixels), pixels per unit
     function graphlib_calcAxisMarkings($length, $ppu)
     {
         $mark = $length;
@@ -56,16 +64,21 @@ else // not a bot
         return array($mark, $number);
     }
 
+    // plot a curve given a set of equally-spaced Y values
+    // tangent at any point for which a value is supplied ∥ straight line joining preceding and next points
+    // Y value at the origin is 0
+    // args: origin, unit sizes, data array, CSS class name, clip rectangle id
     function graphlib_drawData($xo, $yo, $unit_x, $unit_y, $data_y, $class, $clip)
     {
         $num = count($data_y) + 1;
-        $data_y[] = 0;
+        $data_y[] = 0; // padding
         $data_y[] = 0;
         $data_y[] = 0;
 
+        // first, move to origin
         echo "<path clip-path='url(#$clip)' class='line $class' d='M $xo,$yo S";
-        $y  = $yo;
-        $ny = $yo;
+        $y  = $yo; // current point
+        $ny = $yo; // next point
         for ($a = 0; $a <= $num; ++$a)
         {
             $x = $xo + $a * $unit_x;
@@ -79,6 +92,11 @@ else // not a bot
         echo "' />\n";
     }
 
+    // draw a line graph
+    // args: min x, max x, min y, max y, array of (values, class, key) arrays
+    // 'values' => array of Y co-ordinates; 'class' => CSS class name (colour is set from this), 'key' => text for the graph key
+    // Uses CSS classes 'line', 'axis-x', 'axis-y', 'grid' for the graph axes, labels and grid lines
+    // TODO: use min y properly
     function graphlib_drawGraph($min_x, $max_x, $min_y, $max_y, $data)
     {
         if ($max_x - $min_x == 0 || $max_y - $min_y == 0)
@@ -87,6 +105,7 @@ else // not a bot
         static $clip = 0;
         ++$clip;
 
+        // graph bounds & dimensions
         $xo = 31.5;
         $yo = 180.5;
         $xe = 671.5;
@@ -94,9 +113,11 @@ else // not a bot
         $xl = $xe - $xo;
         $yl = $yo - $ye;
 
+        // pixels per unit for each axis
         $unit_x = $xl / ($max_x - $min_x);
         $unit_y = $yl / ($max_y - $min_y);
 
+        // clip path is for clipping the curve ends
         $a = ceil($xo);
         $b = $xl - $a + $xo;
         echo <<<EOF
@@ -140,12 +161,14 @@ EOF;
         }
 
         $i = 0;
-        $xl = $xe + 16;
-        $xt = $xl + 21;
+        $xl = $xe + 16; // key colours
+        $xt = $xl + 21; // key names
         foreach ($data as $line)
         {
+            // render a curve
             graphlib_drawData($xo, $yo, $unit_x, $unit_y, $line['values'], $line['class'], "graph_clip_$clip");
 
+            // and render the key info for the curve
             $iyl = 24 * ++$i;
             $iyt = $iyl + 7;
             echo <<<EOF
@@ -159,10 +182,13 @@ EOF;
 
 
 
+    // Line graph – kills per game
+    // Uses CSS classes 'player-kills', 'player-teamkills', 'player-deaths'
+    // Args: the player id
     function graph_killsPerGame($player_id)
     {
+        // Retrieve the data
         global $db;
-
         $limit = 100;
         $stats = $db->GetAll('SELECT stats_kills,
                                      stats_teamkills,
@@ -177,6 +203,7 @@ EOF;
                               array($_GET['player_id']));
         $count = $count[0]['count'];
 
+        // Separate out the data
         $i = 1;
         $kill_data  = array();
         $teamkill_data  = array();
@@ -185,7 +212,6 @@ EOF;
           $kill_data[]  = $stat['stats_kills'];
           $teamkill_data[]   = $stat['stats_teamkills'];
           $death_data[]  = $stat['stats_deaths'];
-
           $i++;
         }
 
@@ -208,10 +234,13 @@ EOF;
                                  array('values' => $death_data,    'class' => 'player-deaths',    'key' => 'Deaths')));
     }
 
+    // Line graph – kills per game
+    // Uses CSS classes 'alien', 'human', 'world'
+    // Args: the game id
     function graph_killsInGame($game_id)
     {
+        // Retrieve the data
         global $db;
-
         $stats = $db->GetAll('SELECT kill_type,
                                      kill_weapon_id,
                                      kill_gametime,
@@ -228,6 +257,7 @@ EOF;
                              WHERE game_id = ?',
                              array($game_id));
 
+        // Game length
         sscanf($game['game_length'], '%d:%d:%d', $hh, $mm, $ss);
         $maxoffset = (($hh * 60 + $mm) * 60 + $ss) / 60;
         $yscale = 0;
@@ -235,6 +265,7 @@ EOF;
         $length = count($stats);
         $offset = 1;
 
+        // Separate out the data
         $alien_data = array();
         $human_data = array();
         $world_data = array();
@@ -268,6 +299,8 @@ EOF;
             if ($world_data[$k] > $yscale) $yscale = $world_data[$k];
           }
         }
+
+        // Ensure that there's enough data
         while ($offset < 3 || $offset <= $maxoffset ) {
           $alien_data[] = 0;
           $human_data[] = 0;
@@ -283,18 +316,25 @@ EOF;
                                  array('values' => $world_data, 'class' => 'world', 'key' => 'Misc deaths')));
     }
 
+    // Pie chart – teams' wins and tied games on a given map; excludes no-result games
+    // Uses CSS classes 'alien', 'tied', 'human', and 'null' (if no results).
+    // Args: the map id
     function graph_winsOnMap($map_id)
     {
+        // Pie chart origin & radius
         $xo = 49.5;
         $yo = 59.5;
         $r = 40;
 
+        // Retrieve the data
         global $db;
         $wins = $db->GetRow('SELECT mapstat_alien_wins,
                                     mapstat_human_wins,
                                     mapstat_ties + mapstat_draws AS ties
                              FROM map_stats WHERE mapstat_id = ?',
                              array($map_id));
+
+        // Process the data
         if ($wins['mapstat_alien_wins'] + $wins['mapstat_human_wins'] + $wins['ties'] > 0) {
             $alien = $wins['mapstat_alien_wins'];
             $human = $wins['mapstat_human_wins'];
@@ -306,18 +346,20 @@ EOF;
         }
         $total = $alien + $human + $tie;
 
-
+        // Start drawing
         $r1 = $r + 1;
         echo <<<EOF
 <svg width='200' height='120' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>
 <circle cx='$xo' cy='$yo' r='$r1' class='filler' />
 
 EOF;
+        // If we have at least one result, render (up to) three sectors representing the results
         if ($total) {
             graphlib_drawSector($xo, $yo, $r, 0,             $alien, $total, 'alien');
             graphlib_drawSector($xo, $yo, $r, $alien,        $tie,   $total, 'tied');
             graphlib_drawSector($xo, $yo, $r, $alien + $tie, $human, $total, 'human');
 
+            // Draw a key for the chart
             $ap = round($alien * 100.0 / $total);
             $tp = round($tie   * 100.0 / $total);
             $hp = round($human * 100.0 / $total);
@@ -326,14 +368,18 @@ EOF;
 <rect x='105' y='55' width='10' height='10' class='tied box'  /><text x='120' y='64' >Tied</text>  <text class='percent' x='120' y='68' >$tp%</text>
 <rect x='105' y='93' width='10' height='10' class='human box' /><text x='120' y='102'>Humans</text><text class='percent' x='120' y='106'>$hp%</text>
 EOF;
-        } else
+        } else // No results? Just draw a blank disc
             graphlib_drawSector($xo, $yo, $r, 0, 1, 1, 'null');
 
         echo "</svg>\n";
     }
 
+    // Balance bar showing wins, draws, losses for a given map
+    // Uses CSS classes 'marker_minor' (¼ and ¾ marks), 'marker_major' (½ marks), 'alien', 'tied', 'human' and, for no results, 'null'
+    // Args: nos. of wins and tied games
     function graph_mapBalanceBar($alien, $tie, $human)
     {
+        // Unusually, we're given the data!
         $total = $alien + $tie + $human;
 
         echo <<<EOF
