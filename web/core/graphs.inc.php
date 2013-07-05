@@ -108,10 +108,12 @@ else // not a bot
         $unit_x = $xl / ($max_x - $min_x);
         $unit_y = $yl / ($max_y - $min_y);
 
+        $a = ceil($xo);
+        $b = $xl - $a + $xo;
         echo <<<EOF
 <svg width='800' height='200' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>
 <defs>
-  <clipPath id='graph_clip_$clip'><rect fill='black' stroke-width='0' x='$xo' y='$ye' width='$xl' height='$yl' /></clipPath>
+  <clipPath id='graph_clip_$clip'><rect fill='black' stroke-width='0' x='$a' y='0' width='$b' height='200' /></clipPath>
 </defs>
 <path d='M $xo,$ye L $xo,$yo L $xe,$yo' class='line' />
 EOF;
