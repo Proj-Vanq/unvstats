@@ -98,10 +98,10 @@ else // not a bot
         static $clip = 0;
         ++$clip;
 
-        $xo = 32;
-        $yo = 180;
-        $xe = 672;
-        $ye = 10;
+        $xo = 31.5;
+        $yo = 180.5;
+        $xe = 671.5;
+        $ye = 10.5;
         $xl = $xe - $xo;
         $yl = $yo - $ye;
 
@@ -139,21 +139,26 @@ EOF;
             $v = $a;
             if ($b > $yo) { $v = $min_y; $b = $yo; } else $v = $a;
             echo "<line x1='$xo' y1='$b' x2='", $xo + ($r ? 6 : 3), "' y2='$b' />\n";
-            if ($r || $i) echo "<text x='", $xo - 5, "' y='$b' class='axis-y'>$v</text><line x1='$xo' y1='$b' x2='$xe' y2='$b' class='grid' />\n";
+            if ($r || $i)
+            {
+                echo "<text x='", $xo - 5, "' y='$b' class='axis-y'>$v</text>\n";
+                if ($b != $yo)
+                    echo "<line x1='$xo' y1='$b' x2='$xe' y2='$b' class='grid' />\n";
+            }
             $i = false;
         }
 
         $i = 0;
-        $xl = $xe + 24;
-        $xt = $xl + 24;
+        $xl = $xe + 16;
+        $xt = $xl + 21;
         foreach ($data as $line)
         {
             graphlib_drawData($xo, $yo, $unit_x, $unit_y, $line['values'], $line['class'], "graph_clip_$clip");
 
             $iyl = 24 * ++$i;
-            $iyt = $iyl + 6;
+            $iyt = $iyl + 7;
             echo <<<EOF
-<rect class='$line[class]' x='$xl' y='$iyl' width='20' height='5' />
+<rect class='$line[class]' x='$xl' y='$iyl' width='16' height='4' />
 <text x='$xt' y='$iyt'>$line[key]</text>
 EOF;
         }
@@ -289,8 +294,8 @@ EOF;
 
     function graph_winsOnMap($map_id)
     {
-        $xo = 50;
-        $yo = 60;
+        $xo = 49.5;
+        $yo = 59.5;
         $r = 40;
 
         global $db;
