@@ -8,6 +8,9 @@
 
 $calculation_start = microtime(true);
 
+if (function_exists('locale_set_default'))
+  locale_set_default('POSIX');
+
 define('VERSION', '0.2.0');
 
 define('CLIENT_IS_BOT', preg_match( '/apache|bot|catalog|cr[ao]wler|digg|https?:|facebook|feed|monitor|spider|syndication|yahoo/i', $_SERVER['HTTP_USER_AGENT'] ) ? true : false);
