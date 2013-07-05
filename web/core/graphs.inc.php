@@ -124,8 +124,8 @@ EOF;
             $b = $xo + ($a - $min_x) * $unit_x;
             $r = fmod($a / $mark, $number) == 0;
             if ($b < $xo) { $v = $min_x; $b = $xo; } else $v = $a;
-            echo "<line x1='$b' y1='$yo' x2='$b' y2='", $yo - ($r ? 6 : 3), "' />\n";
             if ($r || $i) echo "<text x='$b' y='", $yo + 5, "' class='axis-x'>$v</text>\n";
+            echo "<line x1='$b' y1='$yo' x2='$b' y2='", $yo - ($r ? 6 : 3), "' />\n";
             $i = false;
         }
 
@@ -138,13 +138,13 @@ EOF;
             $r = fmod($a / $mark, $number) == 0;
             $v = $a;
             if ($b > $yo) { $v = $min_y; $b = $yo; } else $v = $a;
-            echo "<line x1='$xo' y1='$b' x2='", $xo + ($r ? 6 : 3), "' y2='$b' />\n";
             if ($r || $i)
             {
                 echo "<text x='", $xo - 5, "' y='$b' class='axis-y'>$v</text>\n";
                 if ($b != $yo)
                     echo "<line x1='$xo' y1='$b' x2='$xe' y2='$b' class='grid' />\n";
             }
+            echo "<line x1='$xo' y1='$b' x2='", $xo + ($r ? 6 : 3), "' y2='$b' />\n";
             $i = false;
         }
 
