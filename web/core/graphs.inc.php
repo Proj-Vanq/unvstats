@@ -43,7 +43,7 @@ else // not a bot
         $p1 = graphlib_calcSpoke($r, $start + $size, $limit, $x, $y);
 
         // move to p0, arc to p1, line to centre, close path
-        echo "<path class='pie $class' d='M $p0[0],$p0[1] A $r,$r 0 $long 0 $p1[0],$p1[1] L $x,$y Z' />";
+        printf('<path class="pie %s" d="M %.5G,%.5G A %d,%4$d 0 %d,0 %.5G,%.5G L %.5G,%.5G Z" />', $class, $p0[0], $p0[1], $r, $long, $p1[0], $p1[1], $x, $y);
     }
 
     // magic to work out some suitable scales for axis marking
@@ -86,8 +86,7 @@ else // not a bot
             $y = $ny;
             $ny = $yo - $data_y[$a] * $unit_y;
 
-            echo ' ', $x - $unit_x / 3, ',', $y - ($ny - $py) / 6, ' ', $x, ',', $y;
-
+            printf(' %.5G,%.5G %.5G,%.5G', $x - $unit_x / 3, $y - ($ny - $py) / 6, $x, $y);
         }
         echo "' />\n";
     }
