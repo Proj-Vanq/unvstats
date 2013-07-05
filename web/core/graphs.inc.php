@@ -133,7 +133,7 @@ EOF;
         for ($a = $min_x - fmod($min_x, $mark); $a <= $max_x; $a += $mark)
         {
             $b = $xo + ($a - $min_x) * $unit_x;
-            $r = fmod($a / $mark, $number) == 0;
+            $r = fmod($a / $mark + 0.5, $number) <= 1; // account for FP inaccuracy
             if ($b < $xo) { $v = $min_x; $b = $xo; } else $v = $a;
             if ($r || $i) echo "<text x='$b' y='", $yo + 5, "' class='axis-x'>$v</text>\n";
             echo "<line x1='$b' y1='$yo' x2='$b' y2='", $yo - ($r ? 6 : 3), "' />\n";
@@ -146,7 +146,7 @@ EOF;
         for ($a = $min_y - fmod($min_y, $mark); $a <= $max_y; $a += $mark)
         {
             $b = $yo - ($a - $min_y) * $unit_y;
-            $r = fmod($a / $mark, $number) == 0;
+            $r = fmod($a / $mark + 0.5, $number) <= 1; // account for FP inaccuracy
             $v = $a;
             if ($b > $yo) { $v = $min_y; $b = $yo; } else $v = $a;
             if ($r || $i)
