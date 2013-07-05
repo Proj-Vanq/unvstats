@@ -6,12 +6,12 @@
  * For license and version information, see /index.php
  */
 
-if (CLIENT_IS_BOT)
+if (CLIENT_IS_BOT || CLIENT_IS_TEXT)
 {
-    function graph_killsPerGame($player_id) {}
-    function graph_killsInGame($game_id) {}
-    function graph_winsOnMap($map_id) {}
-    function graph_mapBalanceBar($alien, $tie, $human) {}
+    function graph_killsPerGame($player_id) { echo '<p class="unavailable">Graph not available</p>'; }
+    function graph_killsInGame($game_id) { echo '<p class="unavailable">Graph not available</p>'; }
+    function graph_winsOnMap($map_id) { echo '<p class="unavailable">Graph not available</p>'; }
+    function graph_mapBalanceBar($alien, $tie, $human) { echo '<p class="unavailable">Graph not available</p>'; }
 }
 else // not a bot
 {
