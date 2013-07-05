@@ -39,19 +39,23 @@
      </tr>
     </tbody>
   </table>
-
+<?php $tables = array(array('Aliens', 'alien'), array('Humans', 'human'));
+      foreach ($tables as $table)
+      {
+?>
   <table>
     <colgroup>
       <col class="playername" />
-      <col />
-      <col />
-      <col />
-      <col />
+      <col class="data" />
+      <col class="data" />
+      <col class="data" />
+      <col class="data" />
+      <col class="data" />
     </colgroup>
 
     <thead>
-      <tr>
-        <th>Player</th>
+      <tr class="<?php echo $table[1]; ?>s-teamshader">
+        <th><?php echo $table[0]; ?> (stage <?php if (!empty($this->game_details['game_stage_alien3'])) echo 3; elseif (!empty($this->game_details['game_stage_alien2'])) echo 2; else echo 1; ?>)</th>
         <th>Score</th>
         <th>Kills</th>
         <th>Team Kills</th>
@@ -61,63 +65,55 @@
     </thead>
 
     <tbody>
-      <tr>
-        <th colspan="6" class="aliens-teamshader">Aliens (stage <?php if (!empty($this->game_details['game_stage_alien3'])) echo 3; elseif (!empty($this->game_details['game_stage_alien2'])) echo 2; else echo 1; ?>)</th>
-      </tr>
-      <?php $count = false; foreach ($this->players as $player) { ?>
-        <?php if ($player['time_alien']) { ?>
+      <?php $count = false; $time = 'time_'.$table[1];
+            foreach ($this->players as $player) { ?>
+        <?php if ($player[$time]) { ?>
       <tr class="list" >
         <td class="playername"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
         <td><?php echo $player['stats_score'] ?></td>
         <td><?php echo $player['stats_kills'] ?></td>
         <td><?php echo $player['stats_teamkills'] ?></td>
         <td><?php echo $player['stats_deaths'] ?></td>
-        <td><?php echo $player['time_alien'] ?></td>
+        <td><?php echo $player[$time] ?></td>
       </tr>
         <?php   $count = true;
               }
             }
             if (!$count) { ?>
-        <tr>
+        <tr class="emptylist">
           <td colspan="6">No players</td>
         </tr>
       <?php } ?>
+    </tbody>
+  </table>
+<?php } ?>
 
-      <tr>
-        <th colspan="6" class="humans-teamshader">Humans (stage <?php if (!empty($this->game_details['game_stage_human3'])) echo 3; elseif (!empty($this->game_details['game_stage_human2'])) echo 2; else echo 1; ?>)</th>
-      </tr>
-      <?php $count = false; foreach ($this->players as $player) { ?>
-        <?php if ($player['time_human']) { ?>
-      <tr class="list" >
-        <td class="playername"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
-        <td><?php echo $player['stats_score'] ?></td>
-        <td><?php echo $player['stats_kills'] ?></td>
-        <td><?php echo $player['stats_teamkills'] ?></td>
-        <td><?php echo $player['stats_deaths'] ?></td>
-        <td><?php echo $player['time_human'] ?></td>
-      </tr>
-        <?php   $count = true;
-              }
-            }
-            if (!$count) { ?>
-        <tr>
-          <td colspan="6">No players</td>
-        </tr>
-      <?php } ?>
+  <table>
+    <colgroup>
+      <col class="playername" />
+      <col class="data" /><col class="data" /><col class="data" /><col class="data" /><!-- dummy columns for width calculation -->
+      <col class="data" />
+    </colgroup>
 
-      <tr>
-        <th colspan="6" class="spectators-teamshader">Spectators</th>
+    <thead>
+      <tr class="specs-teamshader">
+        <th colspan="5">Spectators</th>
+        <th>Time</th>
       </tr>
+    </thead>
+
+    <tbody>
       <?php $count = false; foreach ($this->players as $player) { ?>
         <?php if ($player['time_spec'] && !$player['time_human'] && !$player['time_alien']) { ?>
-      <tr class="list" >
-        <td class="playername" colspan="6"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
+      <tr class="list">
+        <td class="playername" colspan="5"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
+        <td><?php echo $player['time_spec'] ?></td>
       </tr>
         <?php   $count = true;
               }
             }
             if (!$count) { ?>
-        <tr>
+        <tr class="emptylist">
           <td colspan="6">None</td>
         </tr>
       <?php } ?>
