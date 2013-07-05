@@ -96,7 +96,7 @@
     </colgroup>
 
     <thead>
-      <tr class="specs-teamshader">
+      <tr class="spectators-teamshader">
         <th colspan="5">Spectators</th>
         <th>Time</th>
       </tr>
