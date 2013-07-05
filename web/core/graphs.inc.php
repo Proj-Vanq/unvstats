@@ -15,40 +15,29 @@ if (CLIENT_IS_BOT || CLIENT_IS_TEXT)
 }
 else // not a bot
 {
-    function graphlib_calcSpoke($r, $angle, $limit)
+    function graphlib_calcSpoke($r, $angle, $limit, $x = 0, $y = 0)
     {
         $angle = deg2rad($angle * 360.0 / $limit);
-        return array(-sin($angle) * $r, -cos($angle) * $r);
+        return array($x - sin($angle) * $r, $y - cos($angle) * $r);
     }
 
-    function graphlib_makeSector($x, $y, $r, $start, $end, $limit, $class)
+    function graphlib_drawSector($x, $y, $r, $start, $size, $limit, $class)
     {
-        if ($end == 0)
-            return array();
+        if ($size == 0)
+            return;
 
-        static $clipID = 0;
-        ++$clipID;
-
-        if ($start == 0 && $end == $limit)
-            return array('drawing' => "<circle class='$class' cx='$x' cy='$y' r='$r' />\n");
-
-        $end += $start;
-        $rx = $r * 1.2;
-
-        $point = graphlib_calcSpoke($rx, $start, $limit);
-        $result = "<clipPath id='clipPath_$clipID'><polygon points='$x,$y "
-                . (string)round($x + $point[0]) . ',' . (string)round($y + $point[1]);
-
-        $p_end = floor($end * 16.0 / $limit);
-        for ($p = ceil($start * 16.0 / $limit) + 1; $p <= $p_end; ++$p) {
-            $point = graphlib_calcSpoke($rx, $p, 16);
-            $result .= ' ' . (string)round($x + $point[0]) . ',' . (string)round($y + $point[1]);
+        if ($size == $limit)
+        {
+            echo "<circle class='pie $class' cx='$x' cy='$y' r='$r' />\n";
+            return;
         }
 
-        $point = graphlib_calcSpoke($rx, $end, $limit);
-        $result .= ' ' . (string)($x + $point[0]) . ',' . (string)round($y + $point[1]);
+        $long = ($size >= ($limit / 2.0)) ? 1 : 0;
 
-        return array('clip' => $result . "' /></clipPath>\n", 'drawing' => "<circle class='$class' cx='$x' cy='$y' r='$r' clip-path='url(#clipPath_$clipID)' />");
+        $p0 = graphlib_calcSpoke($r, $start, $limit, $x, $y);
+        $p1 = graphlib_calcSpoke($r, $start + $size, $limit, $x, $y);
+
+        echo "<path class='pie $class' d='M $p0[0],$p0[1] A $r,$r 0 $long 0 $p1[0],$p1[1] L $x,$y Z' />";
     }
 
     function graphlib_calcAxisMarkings($length, $ppu)
@@ -317,42 +306,17 @@ EOF;
         }
         $total = $alien + $human + $tie;
 
-        if ($total) {
-            $sectors = array(graphlib_makeSector($xo, $yo, $r, 0,             $alien, $total, 'alien'),
-                             graphlib_makeSector($xo, $yo, $r, $alien,        $tie,   $total, 'tied'),
-                             graphlib_makeSector($xo, $yo, $r, $alien + $tie, $human, $total, 'human'));
-        } else
-            $sectors = array(graphlib_makeSector($xo, $yo, $r, 0, 1, 1, 'null'));
 
+        $r1 = $r + 1;
         echo <<<EOF
 <svg width='200' height='120' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>
-<defs>
+<circle cx='$xo' cy='$yo' r='$r1' class='filler' />
+
 EOF;
-
-        foreach ($sectors as $sector)
-        {
-            if (array_key_exists('clip', $sector))
-                echo $sector['clip'];
-        }
-        echo "</defs>\n<circle cx='$xo' cy='$yo' r='", $r + 1, "' class='filler' />\n";
-        foreach ($sectors as $sector)
-        {
-            if (array_key_exists('drawing', $sector))
-                echo $sector['drawing'];
-        }
-
-        if ($total)
-        {
-            if ($alien != $total && $human != $total && $tie != $total)
-                echo "<line class='pie' x1='$xo' y1='$yo' x2='$xo' y2='", $yo - $r, "' />\n";
-            if ($alien && $alien != $total) {
-                $point = graphlib_calcSpoke($r, $alien, $total);
-                echo "<line class='pie' x1='$xo' y1='$yo' x2='", $point[0] + $xo, "' y2='", $point[1] + $yo, "' />\n";
-            }
-            if ($tie && ($alien + $tie) != $total) {
-                $point = graphlib_calcSpoke($r, $alien + $tie, $total);
-                echo "<line class='pie' x1='$xo' y1='$yo' x2='", $point[0] + $xo, "' y2='", $point[1] + $yo, "' />\n";
-            }
+        if ($total) {
+            graphlib_drawSector($xo, $yo, $r, 0,             $alien, $total, 'alien');
+            graphlib_drawSector($xo, $yo, $r, $alien,        $tie,   $total, 'tied');
+            graphlib_drawSector($xo, $yo, $r, $alien + $tie, $human, $total, 'human');
 
             $ap = round($alien * 100.0 / $total);
             $tp = round($tie   * 100.0 / $total);
@@ -362,7 +326,8 @@ EOF;
 <rect x='105' y='55' width='10' height='10' class='tied box'  /><text x='120' y='64' >Tied</text>  <text class='percent' x='120' y='68' >$tp%</text>
 <rect x='105' y='93' width='10' height='10' class='human box' /><text x='120' y='102'>Humans</text><text class='percent' x='120' y='106'>$hp%</text>
 EOF;
-        }
+        } else
+            graphlib_drawSector($xo, $yo, $r, 0, 1, 1, 'null');
 
         echo "</svg>\n";
     }
