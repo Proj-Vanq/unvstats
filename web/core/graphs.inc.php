@@ -119,10 +119,10 @@ EOF;
         // X axis
         list($mark, $number) = graphlib_calcAxisMarkings($max_x - $min_x, $unit_x);
         $i = true;
-        for ($a = $min_x - ($min_x % $mark); $a <= $max_x; $a += $mark)
+        for ($a = $min_x - fmod($min_x, $mark); $a <= $max_x; $a += $mark)
         {
             $b = $xo + ($a - $min_x) * $unit_x;
-            $r = (($a / $mark) % $number) == 0;
+            $r = fmod($a / $mark, $number) == 0;
             if ($b < $xo) { $v = $min_x; $b = $xo; } else $v = $a;
             echo "<line x1='$b' y1='$yo' x2='$b' y2='", $yo - ($r ? 6 : 3), "' />\n";
             if ($r || $i) echo "<text x='$b' y='", $yo + 5, "' class='axis-x'>$v</text>\n";
@@ -132,10 +132,10 @@ EOF;
         // Y axis
         list($mark, $step) = graphlib_calcAxisMarkings($max_y - $min_y, $unit_y);
         $i = true;
-        for ($a = $min_y - ($min_y % $mark); $a <= $max_y; $a += $mark)
+        for ($a = $min_y - fmod($min_y, $mark); $a <= $max_y; $a += $mark)
         {
             $b = $yo - ($a - $min_y) * $unit_y;
-            $r = (($a / $mark) % $number) == 0;
+            $r = fmod($a / $mark, $number) == 0;
             $v = $a;
             if ($b > $yo) { $v = $min_y; $b = $yo; } else $v = $a;
             echo "<line x1='$xo' y1='$b' x2='", $xo + ($r ? 6 : 3), "' y2='$b' />\n";

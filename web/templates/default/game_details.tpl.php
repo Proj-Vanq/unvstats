@@ -65,7 +65,7 @@
         <th colspan="6" class="aliens-teamshader">Aliens (stage <?php if (!empty($this->game_details['game_stage_alien3'])) echo 3; elseif (!empty($this->game_details['game_stage_alien2'])) echo 2; else echo 1; ?>)</th>
       </tr>
       <?php $count = false; foreach ($this->players as $player) ?>
-        <?php if ($player['time_alien']) { ?>
+        <?php if (!empty($player['time_alien'])) { ?>
       <tr class="list" >
         <td class="playername"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
         <td><?php echo $player['stats_score'] ?></td>
@@ -86,7 +86,7 @@
         <th colspan="6" class="humans-teamshader">Humans (stage <?php if (!empty($this->game_details['game_stage_human3'])) echo 3; elseif (!empty($this->game_details['game_stage_human2'])) echo 2; else echo 1; ?>)</th>
       </tr>
       <?php $count = false; foreach ($this->players as $player) ?>
-        <?php if ($player['time_human']) { ?>
+        <?php if (!empty($player['time_human'])) { ?>
       <tr class="list" >
         <td class="playername"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
         <td><?php echo $player['stats_score'] ?></td>
@@ -107,7 +107,7 @@
         <th colspan="6" class="spectators-teamshader">Spectators</th>
       </tr>
       <?php $count = false; foreach ($this->players as $player) ?>
-        <?php if ($player['time_spec'] && !$player['time_human'] && !$player['time_alien']) { ?>
+        <?php if (!empty($player['time_spec']) && empty($player['time_human']) && empty($player['time_alien'])) { ?>
       <tr class="list" >
         <td class="playername" colspan="6"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
       </tr>
