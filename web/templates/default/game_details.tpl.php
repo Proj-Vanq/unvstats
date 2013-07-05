@@ -93,7 +93,7 @@
         <td><?php echo $player['stats_kills'] ?></td>
         <td><?php echo $player['stats_teamkills'] ?></td>
         <td><?php echo $player['stats_deaths'] ?></td>
-        <td><?php echo $player['time_alien'] ?></td>
+        <td><?php echo $player['time_human'] ?></td>
       </tr>
         <?php $count = true;
             }
