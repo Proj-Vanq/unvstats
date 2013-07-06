@@ -133,7 +133,7 @@
 
     <tbody>
       <tr>
-        <td><?php graph_killsInGame($this->game_details['game_id']); ?></td>
+        <td><?php graph_killsInGame($this->game_details['game_id'], 'Nothing of interest… short game…', 'Wow, like really peaceful, man!'); ?></td>
       </tr>
     </tbody>
   </table>

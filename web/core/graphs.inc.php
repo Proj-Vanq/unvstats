@@ -12,6 +12,7 @@ if (CLIENT_IS_BOT || CLIENT_IS_TEXT)
     function graph_killsInGame($game_id) { echo '<p class="unavailable">Graph not available</p>'; }
     function graph_winsOnMap($map_id) { echo '<p class="unavailable">Graph not available</p>'; }
     function graph_mapBalanceBar($alien, $tie, $human) { echo '<p class="unavailable">Graph not available</p>'; }
+    function graph_emptyGraphBox() { echo '<p class="unavailable">Graph not available</p>'; }
 }
 else // not a bot
 {
@@ -182,7 +183,7 @@ EOF;
 
 
     // Line graph – kills per game
-    // Uses CSS classes 'player-kills', 'player-teamkills', 'player-deaths'
+    // Uses CSS classes 'player-kills', 'player-teamkills', 'player-deaths', 'null'
     // Args: the player id
     function graph_killsPerGame($player_id)
     {
@@ -239,13 +240,26 @@ EOF;
                                  array('values' => $death_data,    'class' => 'player-deaths',    'key' => 'Deaths')));
     }
 
-    // Line graph – kills per game
+    // Line graph – kills per minute (or an empty box if nothing interesting – cheapest to do that check here)
     // Uses CSS classes 'alien', 'human', 'world'
-    // Args: the game id
-    function graph_killsInGame($game_id)
+    // Args: the game id, 'short game' msg, 'no kills' msg
+    function graph_killsInGame($game_id, $shortGame = 'Short game', $noKills = 'No kills')
     {
         // Retrieve the data
         global $db;
+        $game = $db->GetRow('SELECT game_length
+                             FROM games
+                             WHERE game_id = ?',
+                             array($game_id));
+
+        sscanf($game['game_length'], '%d:%d:%d', $hh, $mm, $ss);
+        $maxoffset = (($hh * 60 + $mm) * 60 + $ss) / 60;
+        if ($maxoffset < 1)
+        {
+            graph_emptyGraphBox($shortGame);
+            return;
+        }
+
         $stats = $db->GetAll('SELECT kill_type,
                                      kill_weapon_id,
                                      kill_gametime,
@@ -254,20 +268,19 @@ EOF;
                               WHERE kill_game_id = ?
                               ORDER BY kill_id',
                               array($game_id));
+
+        $length = count($stats);
+        if (!$length)
+        {
+            graph_emptyGraphBox($noKills);
+            return;
+        }
+
         $weapons = $db->GetAll('SELECT weapon_id,
                                        weapon_team
                                 FROM weapons');
-        $game = $db->GetRow('SELECT game_length
-                             FROM games
-                             WHERE game_id = ?',
-                             array($game_id));
 
-        // Game length
-        sscanf($game['game_length'], '%d:%d:%d', $hh, $mm, $ss);
-        $maxoffset = (($hh * 60 + $mm) * 60 + $ss) / 60;
         $yscale = 0;
-
-        $length = count($stats);
         $offset = 1;
 
         // Separate out the data
@@ -417,5 +430,18 @@ EOF;
 </svg>
 EOF;
     }
+
+    // Placeholder for a line graph for when there may be something of interest.
+    // Uses CSS class 'null'
+    function graph_emptyGraphBox($msg)
+    {
+        $msg = htmlspecialchars($msg);
+        echo <<<EOF
+<svg width='800' height='200' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg'>
+<text x="50%" y="50%" text-anchor='middle' dominant-baseline='middle' alignment-baseline='middle' class='null'>$msg</text>
+</svg>
+EOF;
+    }
+
 } // not a bot
 ?>

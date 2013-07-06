@@ -296,7 +296,14 @@
 
     <tbody>
       <tr>
-        <td><?php graph_killsPerGame($this->player_details['player_id']); ?></td>
+        <td><?php // plot something? cheapest to do the games/kills checks here
+          if ($this->player_details['player_games_played'] < 2)
+            graph_emptyGraphBox('Nothing of interest… play some more games?');
+          elseif (!$this->player_details['player_kills'] && !$this->player_details['player_teamkills'] && !$this->player_details['player_deaths'])
+            graph_emptyGraphBox('You\'ve left no corpses yet!');
+          else
+            graph_killsPerGame($this->player_details['player_id']);
+        ?></td>
       </tr>
     </tbody>
   </table>
