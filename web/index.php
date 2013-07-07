@@ -165,10 +165,9 @@ $overview['top_skill']          = $top_skill;
 $overview['most_played_map'] = $most_played_map;
 
 // Assign variables to template
-if (!empty($running_map)):
-  $tpl->assign('server_status', $server_status);
-  $tpl->assign('running_map',   $running_map);
-endif;
+if (!empty($server_status)) $tpl->assign('server_status', $server_status);
+if (!empty($running_map)) $tpl->assign('running_map',   $running_map);
+
 $tpl->assign('overview',      $overview);
 
 $tpl->assign('state',         $state);
