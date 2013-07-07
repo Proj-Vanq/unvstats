@@ -52,8 +52,8 @@ $running_map = $db->GetRow("SELECT map_id,
                                    mapstat_alien_wins,
                                    mapstat_human_wins,
                                    mapstat_ties + mapstat_draws AS ties
-                            FROM map_stats
-                            INNER JOIN maps ON map_id = mapstat_id
+                            FROM maps
+                            LEFT JOIN map_stats ON map_id = mapstat_id
                             WHERE map_name = ?
                             LIMIT 0, 1",
                             array($server_status['server_vars']['mapname']));
