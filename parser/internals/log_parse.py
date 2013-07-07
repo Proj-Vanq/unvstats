@@ -851,7 +851,7 @@ class Parser:
 
 		result = match.groups()
 		try:
-			player_id   = int(result[0])
+			player_id   = result[0]
 		except Exception:
 			return
 		message     = result[2]
@@ -862,8 +862,7 @@ class Parser:
 		if len(message) > 255:
 			message = message[0:255]
 
-		if player_id == -1 or self.players.has_key(player_id):
-
+		if player_id == '-1' or self.players.has_key(player_id):
 			if mode == 'team':
 				if self.players[player_id]['team'] == 'alien':
 					channel = 'alien'
@@ -874,7 +873,7 @@ class Parser:
 			else:
 				channel = 'public'
 
-			if player_id == -1:
+			if player_id == '-1':
 				self.dbc.execute("""INSERT INTO `says` (`say_game_id`, `say_gametime`, `say_mode`, `say_player_id`, `say_message`)
 				                    VALUES (%s, %s, %s, 0, %s)""", (self.game_id, gametime, channel, message))
 			else:
