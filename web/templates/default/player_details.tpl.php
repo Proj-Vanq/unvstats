@@ -49,7 +49,7 @@
       <tr>
         <th>Random Quote</th>
         <td class="<?php if (!$this->random_quote): ?>noquote<?php elseif ($this->random_quote['say_mode'] == 'public'): ?>quote_public<?php else: ?>quote_team<?php endif; ?>">
-          <?php if (!$this->random_quote): ?>No quote available<?php else: ?><?php echo replace_color_codes(wordwrap($this->random_quote['say_message'], 60, '<br \>', true)); ?><?php endif; ?>
+          <?php if (!$this->random_quote): ?>No quote available<?php else: ?><?php echo replace_color_codes($this->random_quote['say_message']); ?><?php endif; ?>
         </td>
       </tr>
 
