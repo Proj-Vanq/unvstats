@@ -25,6 +25,11 @@ $custom_orders = array (
 );
 $order = get_custom_sort($custom_orders, 'rank');
 
+$min_games = $db->GetRow("SELECT MAX(player_games_played) AS games FROM players")['games'] - TRESHOLD_MIN_GAMES_PLAYED;
+if ($min_games > TRESHOLD_MIN_GAMES_PLAYED)
+    $min_games = TRESHOLD_MIN_GAMES_PLAYED;
+
+
 $db->Execute("SET @n := 0");
 $db->Execute("CREATE TEMPORARY TABLE tmp (
                SELECT player_id,
@@ -49,7 +54,7 @@ $db->Execute("CREATE TEMPORARY TABLE tmp (
                      AND player_last_game_id > ?
                      AND player_is_bot = FALSE
                ORDER BY player_game_time_factor DESC
-             )", array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
+             )", array($min_games, $game_cutoff));
 
 
 $pagelister->SetQuery("SELECT player_id,

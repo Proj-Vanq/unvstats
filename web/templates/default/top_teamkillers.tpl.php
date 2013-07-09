@@ -45,7 +45,7 @@
 
       <?php if (!count($this->top)): ?>
         <tr class="emptylist">
-          <td colspan="5">No players yet</td>
+          <td colspan="5">No players yet, or not enough games played</td>
         </tr>
       <?php endif; ?>
     </tbody>
