@@ -115,6 +115,7 @@ $top_score = $db->GetRow("SELECT player_id,
                           FROM per_game_stats
                           INNER JOIN players ON player_id = stats_player_id
                           WHERE player_last_game_id > ?
+                                AND stats_score > 0
                                 AND player_is_bot = FALSE
                           ORDER BY stats_score DESC
                           LIMIT 0, 1",
