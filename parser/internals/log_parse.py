@@ -864,7 +864,9 @@ class Parser:
 
 		if player_id == '-1' or self.players.has_key(player_id):
 			if mode == 'team':
-				if self.players[player_id]['team'] == 'alien':
+				if player_id == '-1':
+					channel = 'spectator'
+				elif self.players[player_id]['team'] == 'alien':
 					channel = 'alien'
 				elif self.players[player_id]['team'] == 'human':
 					channel = 'human'
