@@ -1133,6 +1133,11 @@ class Parser:
 		elif votetype == 'echo' and votearg1 == 'poll':
 			votetype = 'poll'
 			votearg1 = votearg2
+		elif votetype == 'bot':
+			if votearg1 == 'spec':
+				votetype = 'spectatebots'
+			elif votearg1 == 'del':
+				votetype = 'kickbots'
 
 		if victim_id != None and self.players[victim_id].has_key('id'):
 			victim_mysql_id = self.players[victim_id]['id']
