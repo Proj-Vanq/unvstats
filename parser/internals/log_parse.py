@@ -89,8 +89,8 @@ class Parser:
 					# CallVote: ID "name": VOTETYPE VOTEDATA
 		self.RE_VOTE         = re.compile("^([0-9]+) \"[^\"]*\": ([a-zA-Z0-9_]+)[ \"]*([^\" ]*)[ \"]*([^\"]*).*$");
 
-					# EndVote: TEAM pass|fail YESCOUNT NOCOUNT MAXVOTERS
-		self.RE_ENDVOTE      = re.compile("^(global|alien|human) (pass|fail) ([0-9]+) ([0-9]+) ([0-9]+)$");
+					# EndVote: TEAM pass|fail YESCOUNT NOCOUNT MAXVOTERS [QUORUM]
+		self.RE_ENDVOTE      = re.compile("^(global|alien|human) (pass|fail) ([0-9]+) ([0-9]+) ([0-9]+)(?: [0-9]+)?$");
 
 		# Localize parents function
 		self.Check_map_in_database = Check_map_in_database
