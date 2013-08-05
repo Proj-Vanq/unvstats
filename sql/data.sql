@@ -30,6 +30,7 @@ INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_FLAMER_SPLASH', 'Flamer Splash', 'Human/Weapons/Flamer.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_BURN', 'Fire', 'Human/Weapons/Flamer.png', 'human');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_GRENADE', 'Grenade', 'Human/Weapons/Grenade.png', 'human');
+INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_WEIGHT_H', 'Crush', 'Human/Items/Human.png', 'human');
 
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_WATER', 'Water', '', 'world');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_SLIME', 'Slime', '', 'world');
@@ -53,6 +54,7 @@ INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL4_CLAW', 'Tyrant''s Claw', 'Alien/Aliens/Tyrant.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL4_TRAMPLE', 'Tyrant''s Trample', 'Alien/Aliens/Tyrant.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL4_CRUSH', 'Tyrant''s Crush', 'Alien/Aliens/Tyrant.png', 'alien');
+INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_WEIGHT_A', 'Crush', 'Alien/Aliens/Dretch.png', 'alien');
 
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_SLOWBLOB', 'Granger''s Spit', 'Alien/Aliens/Advanced_Granger.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_POISON', 'Alien''s Poison', 'Alien/Structures/Booster.png', 'alien');
