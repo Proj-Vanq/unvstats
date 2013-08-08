@@ -257,7 +257,7 @@ class Parser:
 
 		# Start the progressbar
 		try:
-			pbar = ProgressBar(filesize - logstart, [Percentage(), ' ', Bar(), ' ', ETA()]).start()
+			pbar = ProgressBar(filesize - logstart, [Percentage(), ' ', Bar(), ' ', ETA()], fd = sys.stdout).start()
 			sizedone = 0
 		except:
 			pbar = None
@@ -303,7 +303,7 @@ class Parser:
 
 		# Start the progressbar
 		try:
-			pbar = ProgressBar(filesize - logstart, [Percentage(), ' ', Bar(), ' ', ETA()]).start()
+			pbar = ProgressBar(filesize - logstart, [Percentage(), ' ', Bar(), ' ', ETA()], fd = sys.stdout).start()
 			sizedone = 0
 		except:
 			pbar = None

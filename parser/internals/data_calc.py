@@ -46,7 +46,7 @@ class Calculator:
 
 		# Start the progressbar
 		try:
-			pbar = ProgressBar(player_count, [Percentage(), ' ', Bar(), ' ', ETA()]).start()
+			pbar = ProgressBar(player_count, [Percentage(), ' ', Bar(), ' ', ETA()], fd = sys.stdout).start()
 		except:
 			pbar = None
 

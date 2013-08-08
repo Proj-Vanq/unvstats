@@ -127,7 +127,7 @@ def progress(lst, fn):
     # Start the progressbar
     l = len(lst)
     try:
-        pbar = ProgressBar(l, [Percentage(), ' ', Bar(), ' ', ETA()]).start()
+        pbar = ProgressBar(l, [Percentage(), ' ', Bar(), ' ', ETA()], fd = sys.stdout).start()
     except:
         pbar = None
     i = 0
