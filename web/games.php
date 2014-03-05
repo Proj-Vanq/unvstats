@@ -10,8 +10,11 @@ require_once 'core/init.inc.php';
 
 $map_search="";
 if (isset($_GET['map_id'])) {
-  $map_search="WHERE game_map_id = '".$_GET['map_id']."'";
-  $tpl->assign('map_id', $_GET['map_id']);
+  $map_id = $_GET['map_id'];
+  if (!is_numeric($map_id))
+    $map_id = '0';
+  $map_search="WHERE game_map_id = '".$map_id."'";
+  $tpl->assign('map_id', $map_id);
 }
 if (isset($_GET['hideempty']) and $_GET['hideempty'] == "1") {
   if (isset($_GET['map_id'])) {
