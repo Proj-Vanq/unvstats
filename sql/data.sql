@@ -45,8 +45,8 @@ INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `
 
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_ABUILDER_CLAW', 'Granger''s Claw', 'Alien/Aliens/Granger.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL0_BITE', 'Dretch''s Bite', 'Alien/Aliens/Dretch.png', 'alien');
-INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL1_CLAW', 'Basilisk''s Claw', 'Alien/Aliens/Basilisk.png', 'alien');
-INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL1_PCLOUD', 'Basilisk''s Gas', 'Alien/Aliens/Advanced_Basilisk.png', 'alien');
+INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL1_CLAW', 'Mantis'' Claw', 'Alien/Aliens/Basilisk.png', 'alien');
+INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL1_PCLOUD', 'Mantis'' Gas', 'Alien/Aliens/Advanced_Basilisk.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL3_CLAW', 'Dragoon''s Claw', 'Alien/Aliens/Dragoon.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL3_POUNCE', 'Dragoon''s Pounce', 'Alien/Aliens/Dragoon.png', 'alien');
 INSERT IGNORE INTO `weapons` (`weapon_constant`, `weapon_name`, `weapon_icon`, `weapon_team`) VALUES ('MOD_LEVEL3_BOUNCEBALL', 'Dragoon''s Barb', 'Alien/Aliens/Advanced_Dragoon.png', 'alien');
