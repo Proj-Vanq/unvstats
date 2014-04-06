@@ -78,6 +78,16 @@ $top_player = $db->GetRow("SELECT player_id,
                            ORDER BY player_total_efficiency DESC
                            LIMIT 0, 1",
                            array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
+$top_assistant = $db->GetRow("SELECT player_id,
+                                     player_name,
+                                     IF (player_games_played = 0, 0, player_assists / player_games_played) AS average_assists_for_team
+                               FROM players
+                               WHERE player_games_played >= ?
+                                     AND player_last_game_id > ?
+                                     AND player_is_bot = FALSE
+                               ORDER BY average_assists_for_team DESC
+                               LIMIT 0, 1",
+                               array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
 $top_feeder = $db->GetRow("SELECT player_id,
                                   player_name,
                                   IF (player_games_played = 0, 0, player_deaths_enemy / player_games_played) AS average_deaths_by_enemy
@@ -97,6 +107,16 @@ $top_teamkiller = $db->GetRow("SELECT player_id,
                                      AND player_is_bot = FALSE
                                ORDER BY average_kills_to_team DESC
                                LIMIT 0, 1",
+                               array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
+$top_enemyassistant = $db->GetRow("SELECT player_id,
+                                          player_name,
+                                          IF (player_games_played = 0, 0, player_enemyassists / player_games_played) AS average_assists_for_enemy
+                                   FROM players
+                                   WHERE player_games_played >= ?
+                                         AND player_last_game_id > ?
+                                         AND player_is_bot = FALSE
+                                   ORDER BY average_assists_for_enemy DESC
+                                   LIMIT 0, 1",
                                array(TRESHOLD_MIN_GAMES_PLAYED, $game_cutoff));
 $most_active_player = $db->GetRow("SELECT player_id,
                                           player_name,
@@ -157,8 +177,10 @@ $overview['human_wins'] = $human_wins['count'];
 $overview['ties']       = $ties['count'];
 
 $overview['top_player']         = $top_player;
+$overview['top_assistant']      = $top_assistant;
 $overview['top_feeder']         = $top_feeder;
 $overview['top_teamkiller']     = $top_teamkiller;
+$overview['top_enemyassistant'] = $top_enemyassistant;
 $overview['most_active_player'] = $most_active_player;
 $overview['top_score']          = $top_score;
 $overview['top_skill']          = $top_skill;

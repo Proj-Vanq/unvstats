@@ -183,7 +183,7 @@ EOF;
 
 
     // Line graph – kills per game
-    // Uses CSS classes 'player-kills', 'player-teamkills', 'player-deaths', 'null'
+    // Uses CSS classes 'player-kills', 'player-assists', 'player-teamkills', 'player-enemyassists', 'player-deaths', 'null'
     // Args: the player id
     function graph_killsPerGame($player_id)
     {
@@ -191,7 +191,9 @@ EOF;
         global $db;
         $limit = 100;
         $stats = $db->GetAll('SELECT stats_kills,
+                                     stats_assists,
                                      stats_teamkills,
+                                     stats_enemyassists,
                                      stats_deaths
                               FROM per_game_stats
                               WHERE stats_player_id = ?
@@ -211,33 +213,43 @@ EOF;
         $death_data  = array();
         foreach ($stats AS $stat) {
           $kill_data[]  = $stat['stats_kills'];
+          $assist_data[]  = $stat['stats_assists'];
           $teamkill_data[]   = $stat['stats_teamkills'];
+          $enemyassist_data[]   = $stat['stats_enemyassists'];
           $death_data[]  = $stat['stats_deaths'];
           $i++;
         }
 
         // we asked for the data in reverse order, so...
         $kill_data = array_reverse($kill_data);
+        $assist_data = array_reverse($assist_data);
         $teamkill_data = array_reverse($teamkill_data);
+        $enemyassist_data = array_reverse($enemyassist_data);
         $death_data = array_reverse($death_data);
 
         // Check data
         if ($i == 1) {
           $kill_data  = array(0, 0);
+          $assist_data  = array(0, 0);
           $teamkill_data  = array(0, 0);
+          $enemyassist_data  = array(0, 0);
           $death_data  = array(0, 0);
           $i = 3;
         } elseif ($i == 2) {
           $kill_data[]  = $kill_data[0];
+          $assist_data[]  = $assist_data[0];
           $teamkill_data[]  = $teamkill_data[0];
+          $enemyassist_data[]  = $enemyassist_data[0];
           $death_data[]  = $death_data[0];
           $i = 3;
         }
 
         graphlib_drawGraph(max(0, $count - $limit), $count, 0, max(10, max($kill_data), max($teamkill_data), max($death_data)),
-                           array(array('values' => $kill_data,     'class' => 'player-kills',     'key' => 'Kills'),
-                                 array('values' => $teamkill_data, 'class' => 'player-teamkills', 'key' => 'Team kills'),
-                                 array('values' => $death_data,    'class' => 'player-deaths',    'key' => 'Deaths')));
+                           array(array('values' => $kill_data,        'class' => 'player-kills',        'key' => 'Kills'),
+                                 array('values' => $assist_data,      'class' => 'player-assists',      'key' => 'Assists'),
+                                 array('values' => $teamkill_data,    'class' => 'player-teamkills',    'key' => 'Team kills'),
+                                 array('values' => $enemyassist_data, 'class' => 'player-enemyassists', 'key' => 'Enemy assists'),
+                                 array('values' => $death_data,       'class' => 'player-deaths',       'key' => 'Deaths')));
     }
 
     // Line graph – kills per minute (or an empty box if nothing interesting – cheapest to do that check here)

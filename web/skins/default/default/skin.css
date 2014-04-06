@@ -39,12 +39,16 @@ svg .line.human   { stroke: #0055FF; }
 svg .line.world   { stroke: #88FF00; }
 svg .marker_major { stroke: #666666; stroke-width: 1px; }
 svg .marker_minor { stroke: #444444; stroke-width: 1px; }
-svg .player-kills     { fill: #00FF00; }
-svg .player-teamkills { fill: #FF0000; }
-svg .player-deaths    { fill: #0000FF; }
-svg .line.player-kills     { stroke: #00FF00; }
-svg .line.player-teamkills { stroke: #FF0000; }
-svg .line.player-deaths    { stroke: #0000FF; }
+svg .player-kills        { fill: #00FF00; }
+svg .player-assists      { fill: #33AA33; }
+svg .player-teamkills    { fill: #FF0000; }
+svg .player-enemyassists { fill: #AA3333; }
+svg .player-deaths       { fill: #0000FF; }
+svg .line.player-kills        { stroke: #00FF00; }
+svg .line.player-assists      { stroke: #33AA33; }
+svg .line.player-teamkills    { stroke: #00FF00; }
+svg .line.player-enemyassists { stroke: #AA3333; }
+svg .line.player-deaths       { stroke: #0000FF; }
 svg .filler { stroke: none; fill: black; }
 svg .box    { stroke: black; stroke-width: 1px; }
 svg line,

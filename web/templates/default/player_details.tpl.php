@@ -96,10 +96,22 @@
         <td><?php echo $this->player_details['player_kills_human']; ?></td>
       </tr>
       <tr>
+        <th>Assists</th>
+        <td><?php echo $this->player_details['player_assists']; ?></td>
+        <td><?php echo $this->player_details['player_assists_alien']; ?></td>
+        <td><?php echo $this->player_details['player_assists_human']; ?></td>
+      </tr>
+      <tr>
         <th>Team Kills</th>
         <td><?php echo $this->player_details['player_teamkills']; ?></td>
         <td><?php echo $this->player_details['player_teamkills_alien']; ?></td>
         <td><?php echo $this->player_details['player_teamkills_human']; ?></td>
+      </tr>
+      <tr>
+        <th>Enemy Assists</th>
+        <td><?php echo $this->player_details['player_enemyassists']; ?></td>
+        <td><?php echo $this->player_details['player_enemyassists_alien']; ?></td>
+        <td><?php echo $this->player_details['player_enemyassists_human']; ?></td>
       </tr>
       <tr>
         <th>Deaths (total)</th>
@@ -299,7 +311,7 @@
         <td><?php // plot something? cheapest to do the games/kills checks here
           if ($this->player_details['player_games_played'] < 2)
             graph_emptyGraphBox('Nothing of interest… play some more games?');
-          elseif (!$this->player_details['player_kills'] && !$this->player_details['player_teamkills'] && !$this->player_details['player_deaths'])
+          elseif (!$this->player_details['player_kills'] && !$this->player_details['player_assists'] && !$this->player_details['player_teamkills'] && !$this->player_details['player_enemyassists'] && !$this->player_details['player_deaths'])
             graph_emptyGraphBox('You\'ve left no corpses yet!');
           else
             graph_killsPerGame($this->player_details['player_id']);

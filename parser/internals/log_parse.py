@@ -77,6 +77,9 @@ class Parser:
 					# Die: KILLERId VICTIMId MOD: killername killed victimname
 		self.RE_DIE          = re.compile("^([0-9]+) ([0-9]+) ([^:]+): .+ killed .+$")
 
+					# Die: KILLERId VICTIMId MOD: killername killed victimname
+		self.RE_DIE_ASSISTED = re.compile("^([0-9]+) ([0-9]+) ([^:]+) ([0-9]+) ([0-9]+): .+ killed .+; .+ assisted$")
+
 					# Deconstruct: ID entitynum BUILDING MOD: buildingname action by name
 		self.RE_DECON        = re.compile("^([0-9]+) [0-9]+ ([^ ]+) ([^:]+): .+ (deconstructed|destroyed) by .+$")
 
@@ -442,6 +445,8 @@ class Parser:
 		self.game_players[player_mysql_id] = {'joins': joins,
 		  'kills': 0, 'kills_alien':0, 'kills_human':0,
 		  'teamkills': 0, 'teamkills_alien':0, 'teamkills_human':0,
+		  'assists': 0, 'assists_alien':0, 'assists_human':0,
+		  'enemyassists': 0, 'enemyassists_alien':0, 'enemyassists_human':0,
 		  'deaths': 0, 'deaths_enemy':0,
 		  'deaths_world_alien':0, 'deaths_world_human':0,
 		  'deaths_team_alien':0, 'deaths_team_human':0,
@@ -459,6 +464,12 @@ class Parser:
 		                      `player_teamkills`       = `player_teamkills` + %s,
 		                      `player_teamkills_alien`     = `player_teamkills_alien` + %s,
 		                      `player_teamkills_human`     = `player_teamkills_human` + %s,
+		                      `player_assists`            = `player_assists` + %s,
+		                      `player_assists_alien`          = `player_assists_alien` + %s,
+		                      `player_assists_human`          = `player_assists_human` + %s,
+		                      `player_enemyassists`       = `player_enemyassists` + %s,
+		                      `player_enemyassists_alien`     = `player_enemyassists_alien` + %s,
+		                      `player_enemyassists_human`     = `player_enemyassists_human` + %s,
 		                      `player_deaths`          = `player_deaths` + %s,
 		                      `player_deaths_enemy`    = `player_deaths_enemy` + %s,
 		                      `player_deaths_enemy_alien`  = `player_deaths_enemy_alien` + %s,
@@ -479,6 +490,12 @@ class Parser:
 		                     player['teamkills'],
 		                     player['teamkills_alien'],
 		                     player['teamkills_human'],
+		                     player['assists'],
+		                     player['assists_alien'],
+		                     player['assists_human'],
+		                     player['enemyassists'],
+		                     player['enemyassists_alien'],
+		                     player['enemyassists_human'],
 		                     player['deaths'],
 		                     player['deaths_enemy'],
 		                     player['deaths_enemy_alien'],
@@ -494,11 +511,11 @@ class Parser:
 		                     player_id))
 		self.dbc.execute("""INSERT INTO `per_game_stats`
 		  (`stats_player_id`, `stats_game_id`,
-		   `stats_kills`, `stats_teamkills`, `stats_deaths`, `stats_score`,
+		   `stats_kills`, `stats_teamkills`, `stats_assists`, `stats_enemyassists`, `stats_deaths`, `stats_score`,
 		   `stats_time_spec`, `stats_time_alien`, `stats_time_human`)
-		  VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+		  VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
 		  (player_id, self.game_id,
-		   player['kills'], player['teamkills'], player['deaths'], player['score'],
+		   player['kills'], player['teamkills'], player['assists'], player['enemyassists'], player['deaths'], player['score'],
 		   player['time_spec'], player['time_alien'], player['time_human']))
 
 		# Non-bot player has spent time on a team => game isn't empty
@@ -891,7 +908,9 @@ class Parser:
 	""" A kill was done """
 	def Log_Die(self, gametime, line):
 		# Parse the line
-		match = self.RE_DIE.search(line)
+		match = self.RE_DIE_ASSISTED.search(line)
+		if match == None:
+			match = self.RE_DIE.search(line)
 		if match == None:
 			return
 
@@ -899,6 +918,11 @@ class Parser:
 		player_source_id   = result[0]
 		player_target_id   = result[1]
 		weapon_constant    = result[2]
+		player_assist_id   = None
+		player_assist_team = None
+		if len(result) > 3:
+		        player_assist_id   = result[3]
+		        player_assist_team = result[4]
 
 		# Check weapon
 		if self.weapons.has_key(weapon_constant):
@@ -940,6 +964,15 @@ class Parser:
 			# Seems to be no valid player, return
 			return
 
+		# Check assistant player
+		if player_assist_id != None:
+			if self.players.has_key(player_assist_id):
+				# The player is in the internal list
+				player_assist_mysql_id = self.players[player_assist_id]['id']
+			else:
+				# Seems to be no valid player, return
+				return
+
 		# Get kill type (kill / teamkill)
 		if player_source_team == None or player_target_team == None:
 			killtype = 'world'
@@ -948,9 +981,21 @@ class Parser:
 		else:
 			killtype = 'team'
 
+		if player_assist_id != None:
+			if player_assist_team == None or player_target_team == None:
+				assisttype = 'world'
+			elif player_assist_team != player_target_team:
+				assisttype = 'enemy'
+			else:
+				assisttype = 'team'
+
 		# Insert the kill into the database
-		self.dbc.execute("""INSERT INTO `kills` (`kill_game_id`, `kill_gametime`, `kill_type`, `kill_source_player_id`, `kill_target_player_id`, `kill_weapon_id`)
-		                    VALUES (%s, %s, %s, %s, %s, %s)""", (self.game_id, gametime, killtype, player_source_mysql_id, player_target_mysql_id, weapon_id))
+		if player_assist_id != None:
+			self.dbc.execute("""INSERT INTO `kills` (`kill_game_id`, `kill_gametime`, `kill_type`, `kill_source_player_id`, `kill_target_player_id`, `kill_weapon_id`, `kill_assist_player_id`, `kill_assist_type`)
+			                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""", (self.game_id, gametime, killtype, player_source_mysql_id, player_target_mysql_id, weapon_id, player_assist_mysql_id, assisttype))
+                else:
+			self.dbc.execute("""INSERT INTO `kills` (`kill_game_id`, `kill_gametime`, `kill_type`, `kill_source_player_id`, `kill_target_player_id`, `kill_weapon_id`)
+			                    VALUES (%s, %s, %s, %s, %s, %s)""", (self.game_id, gametime, killtype, player_source_mysql_id, player_target_mysql_id, weapon_id))
 
 		# Update the internal list
 		if self.game_players.has_key(player_source_mysql_id):
@@ -966,6 +1011,20 @@ class Parser:
 					self.game_players[player_source_mysql_id]['kills_alien'] += 1
 				else:
 					self.game_players[player_source_mysql_id]['kills_human'] += 1
+
+		if player_assist_id != None and self.game_players.has_key(player_assist_mysql_id):
+			if killtype == 'team':
+				self.game_players[player_source_mysql_id]['enemyassists'] += 1
+				if player_source_team == 'alien':
+					self.game_players[player_source_mysql_id]['enemyassists_alien'] += 1
+				else:
+					self.game_players[player_source_mysql_id]['enemyassists_human'] += 1
+			elif killtype == 'enemy':
+				self.game_players[player_source_mysql_id]['assists'] += 1
+				if player_source_team == 'alien':
+					self.game_players[player_source_mysql_id]['assists_alien'] += 1
+				else:
+					self.game_players[player_source_mysql_id]['assists_human'] += 1
 
 		if self.game_players.has_key(player_target_mysql_id):
 			self.game_players[player_target_mysql_id]['deaths'] += 1

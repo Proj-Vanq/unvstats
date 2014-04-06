@@ -51,6 +51,8 @@
       <col class="data" />
       <col class="data" />
       <col class="data" />
+      <col class="data" />
+      <col class="data" />
     </colgroup>
 
     <thead>
@@ -58,7 +60,9 @@
         <th><?php echo $table[0]; ?> (stage <?php if (!empty($this->game_details['game_stage_alien3'])) echo 3; elseif (!empty($this->game_details['game_stage_alien2'])) echo 2; else echo 1; ?>)</th>
         <th>Score</th>
         <th>Kills</th>
+        <th>Assists</th>
         <th>Team Kills</th>
+        <th>Enemy Assists</th>
         <th>Deaths</th>
         <th>Time</th>
       </tr>
@@ -72,7 +76,9 @@
         <td class="playername"><?php echo player_link($player['player_id'], $player['player_name']) ?></td>
         <td><?php echo $player['stats_score'] ?></td>
         <td><?php echo $player['stats_kills'] ?></td>
+        <td><?php echo $player['stats_assists'] ?></td>
         <td><?php echo $player['stats_teamkills'] ?></td>
+        <td><?php echo $player['stats_enemyassists'] ?></td>
         <td><?php echo $player['stats_deaths'] ?></td>
         <td><?php echo $player[$time] ?></td>
       </tr>
@@ -81,7 +87,7 @@
             }
             if (!$count) { ?>
         <tr class="emptylist">
-          <td colspan="6">No players</td>
+          <td colspan="8">No players</td>
         </tr>
       <?php } ?>
     </tbody>

@@ -65,10 +65,11 @@ class Calculator:
 					continue
 
 			# Calculate kill- and destruction efficiency
+			# Use of assists here is a little arbitrary
 			self.dbc.execute("""UPDATE players SET
 			                    `player_kill_efficiency` = (
-			                      `player_kills` -
-			                      `player_teamkills` -
+			                      `player_kills` - `player_teamkills` +
+			                      (`player_assists` / 2.5) - (`player_enemyassists` / 5) -
 			                      ((`player_deaths_world_alien` + `player_deaths_world_human`) / 10)
 			                    ) / (`player_deaths_enemy` + 1),
 

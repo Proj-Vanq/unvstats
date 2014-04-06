@@ -12,11 +12,13 @@ $last_game  = $db->GetRow("SELECT game_id FROM games ORDER BY game_id DESC LIMIT
 $game_cutoff= $last_game['game_id'] - TRESHOLD_MAX_GAMES_PAUSED;
 
 $custom_orders = array (
-  'rank'               => 'player_rank',
-  'player'             => 'player_name_uncolored',
-  'average_kills'      => 'average_kills_to_enemy',
-  'average_team_kills' => 'average_kills_to_team',
-  'average_deaths'     => 'average_deaths_by_enemy',
+  'rank'                  => 'player_rank',
+  'player'                => 'player_name_uncolored',
+  'average_kills'         => 'average_kills_to_enemy',
+  'average_team_kills'    => 'average_kills_to_team',
+  'average_assists'       => 'average_assists_for_team',
+  'average_enemy_assists' => 'average_assists_for_enemy',
+  'average_deaths'        => 'average_deaths_by_enemy',
 );
 $order = get_custom_sort($custom_orders, 'rank');
 
@@ -28,6 +30,8 @@ $db->Execute("CREATE TEMPORARY TABLE tmp (
                        player_name_uncolored,
                        IF (player_games_played = 0, 0, player_kills / player_games_played) AS average_kills_to_enemy,
                        IF (player_games_played = 0, 0, player_teamkills / player_games_played) AS average_kills_to_team,
+                       IF (player_games_played = 0, 0, player_assists / player_games_played) AS average_assists_for_team,
+                       IF (player_games_played = 0, 0, player_enemyassists / player_games_played) AS average_assists_for_enemy,
                        IF (player_games_played = 0, 0, player_deaths_enemy / player_games_played) AS average_deaths_by_enemy
                 FROM players
                 WHERE player_games_played >= ?
@@ -41,6 +45,8 @@ $pagelister->SetQuery("SELECT player_id,
                              player_name,
                              average_kills_to_enemy,
                              average_kills_to_team,
+                             average_assists_for_team,
+                             average_assists_for_enemy,
                              average_deaths_by_enemy
                       FROM tmp
                       ORDER BY ".$order);
