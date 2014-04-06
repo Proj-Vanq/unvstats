@@ -5,6 +5,52 @@ from PIL import Image
 import StringIO
 import tempfile
 
+def dpkg_version_cmp(x, y):
+	xp = 0
+	yp = 0
+
+	def order(c):
+		if c.isdigit():
+			return 0
+		if c.isalpha():
+			return ord(c)
+		if c == '~':
+			return -1
+		return ord(c) + 256
+
+	while xp < len(x) or yp < len(y):
+		firstDiff = 0
+
+		while (xp < len(x) and not x[xp].isdigit()) or (yp < len(y) and not y[yp].isdigit()):
+			ac = order(x[xp]) if xp < len(x) else 0
+			bc = order(y[yp]) if yp < len(y) else 0
+
+			if ac != bc:
+				return cmp(ac, bc)
+
+			xp += 1
+			yp += 1
+
+		while xp < len(x) and x[xp] == '0':
+			xp += 1
+		while yp < len(y) and y[yp] == '0':
+			yp += 1
+
+		while (xp < len(x) and x[xp].isdigit()) and (yp < len(y) and y[yp].isdigit()):
+			if firstDiff == 0:
+				firstDiff = cmp((ord(x[xp]) if xp < len(x) else 0), (ord(y[yp]) if yp < len(y) else 0))
+			xp += 1
+			yp += 1
+
+		if xp < len(x) and x[xp].isdigit():
+			return 1
+		if yp < len(y) and y[yp].isdigit():
+			return -1
+		if firstDiff:
+			return firstDiff
+
+	return 0
+
 """ Class: Reader """
 class Reader:
 	""" Init Reader """
@@ -33,10 +79,13 @@ class Reader:
 		if not os.path.isdir(self.pk3_dir):
 			sys.exit("PK3 directory does not exist")
 
+		pk3s = [i for i in os.listdir(self.pk3_dir) if re.match('^map-[^_]+_.*\.pk3$', i)]
+		pk3s.sort(cmp=lambda x,y: dpkg_version_cmp(x[:-4], y[:-4]))
+
 		# Loop through all files
-		for singlefile in os.listdir(self.pk3_dir):
+		for singlefile in pk3s:
 			# Check if file is ok
-			if os.path.isfile(self.pk3_dir + '/' + singlefile) and singlefile.endswith('.pk3'):
+			if os.path.isfile(self.pk3_dir + '/' + singlefile) and re.match('^map-[^_]+_.*\.pk3$', singlefile):
 				print "Reading " + singlefile + " ..."
 				filepath = self.pk3_dir + '/' + singlefile
 				self.Scan_PK3(filepath)
