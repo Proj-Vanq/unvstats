@@ -10,7 +10,7 @@ class Reader:
 	""" Init Reader """
 	def Main(self, dbc, Check_map_in_database, pk3_dir, one_pk3):
 		# Regular expressions
-		self.RE_FILESCAN = re.compile("^(levelshots|scripts)/(.+)\.(png|jpg|webp|tga|arena)$")
+		self.RE_FILESCAN = re.compile("^(levelshots|scripts)/(.+)\.(png|jpg|webp|tga|arena|crn)$")
 		self.RE_ARENA    = re.compile("longname\s*\"(.*?)\"")
 
 		# Localize parents function
@@ -70,26 +70,43 @@ class Reader:
 	""" Save a levelshot """
 	def Save_levelshot(self, pk3, mapname, extension):
 		data = pk3.read('levelshots/' + mapname + '.' + extension)
-		webp = None
-		png = None
+		srcimg = None
+		dstimg = None
 
 		try:
 			if extension == 'webp':
 				# We need to convert to PNG: use dwebp
 				# This is expected to break on Windows (or maybe any non-POSIX)
-				webp = tempfile.NamedTemporaryFile(suffix = '.webp')
-				png = tempfile.NamedTemporaryFile(suffix = '.png')
+				srcimg = tempfile.NamedTemporaryFile(suffix = '.webp')
+				dstimg = tempfile.NamedTemporaryFile(suffix = '.png')
 
-				webp.file.write(data)
-				webp.file.flush()
+				srcimg.file.write(data)
+				srcimg.file.flush()
 
-				print 'running dwebp %s -o %s' % (webp.name, png.name)
-				ret = os.spawnlp(os.P_WAIT, 'dwebp', 'dwebp', webp.name, '-o', png.name)
+				print 'running dwebp %s -o %s' % (srcimg.name, dstimg.name)
+				ret = os.spawnlp(os.P_WAIT, 'dwebp', 'dwebp', srcimg.name, '-o', dstimg.name)
 				if ret:
 					raise Exception('dwebp returned %d' % ret)
 
-				png.file.seek(0)
-				data = png.file.read()
+				dstimg.file.seek(0)
+				data = dstimg.file.read()
+				# now we have PNG
+			elif extension == 'crn':
+				# We need to convert to PNG: use crunch
+				# This is expected to break on Windows (or maybe any non-POSIX)
+				srcimg = tempfile.NamedTemporaryFile(suffix = '.crn')
+				dstimg = tempfile.NamedTemporaryFile(suffix = '.png')
+
+				srcimg.file.write(data)
+				srcimg.file.flush()
+
+				print 'running crunch -fileformat png -outsamedir %s' % (srcimg.name)
+				ret = os.spawnlp(os.P_WAIT, 'crunch', 'crunch', '-fileformat', 'png', '-outsamedir', srcimg.name)
+				if ret:
+					raise Exception('crunch returned %d' % ret)
+
+				dstimg.file.seek(0)
+				data = dstimg.file.read()
 				# now we have PNG
 
 			image = Image.open(StringIO.StringIO(data))
@@ -99,16 +116,16 @@ class Reader:
 			levelshot_string = levelshot.getvalue()
 		except Exception as e:
 			print "Error while processing levelshot %s.%s: %s" % (mapname, extension, e)
-			if webp != None:
-				webp.file.close()
-			if png != None:
-				png.file.close()
+			if srcimg != None:
+				srcimg.file.close()
+			if dstimg != None:
+				dstimg.file.close()
 			return
 
-		if webp != None:
-			webp.file.close()
-		if png != None:
-			png.file.close()
+		if srcimg != None:
+			srcimg.file.close()
+		if dstimg != None:
+			dstimg.file.close()
 
 		# Image thumbnail created, insert it into database
 		map_id    = self.Check_map_in_database(mapname)
