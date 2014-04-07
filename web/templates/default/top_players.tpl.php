@@ -40,7 +40,7 @@
 
     <tfoot>
       <tr>
-        <td colspan="10">
+        <td colspan="12">
           Pages: <?php echo $this->pagelister->GetHTML(); ?>
         </td>
       </tr>
