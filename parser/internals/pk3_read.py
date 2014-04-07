@@ -121,6 +121,7 @@ class Reader:
 		data = pk3.read('levelshots/' + mapname + '.' + extension)
 		srcimg = None
 		dstimg = None
+		tmpname = None
 
 		try:
 			if extension == 'webp':
@@ -143,9 +144,9 @@ class Reader:
 			elif extension == 'crn':
 				# We need to convert to PNG: use crunch
 				# This is expected to break on Windows (or maybe any non-POSIX)
+				# crunch actually replaces the output file, so work around that
 				srcimg = tempfile.NamedTemporaryFile(suffix = '.crn')
-				dstimg = tempfile.NamedTemporaryFile(suffix = '.png')
-
+				tmpname = srcimg.name[:-3] + 'png'
 				srcimg.file.write(data)
 				srcimg.file.flush()
 
@@ -154,8 +155,8 @@ class Reader:
 				if ret:
 					raise Exception('crunch returned %d' % ret)
 
-				dstimg.file.seek(0)
-				data = dstimg.file.read()
+				with open(tmpname, 'rb') as tmpimg:
+					data = tmpimg.read()
 				# now we have PNG
 
 			image = Image.open(StringIO.StringIO(data))
@@ -169,12 +170,16 @@ class Reader:
 				srcimg.file.close()
 			if dstimg != None:
 				dstimg.file.close()
+			if tmpname != None:
+				os.unlink(tmpname)
 			return
 
 		if srcimg != None:
 			srcimg.file.close()
 		if dstimg != None:
 			dstimg.file.close()
+		if tmpname != None:
+			os.unlink(tmpname)
 
 		# Image thumbnail created, insert it into database
 		map_id    = self.Check_map_in_database(mapname)
