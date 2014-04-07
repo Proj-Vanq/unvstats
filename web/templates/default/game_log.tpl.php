@@ -82,7 +82,7 @@
          <td><?php echo $log['kill_gametime'] ?></td>
          <td class="playername"><?php if (!empty($log['killer_id'])) echo player_link($log['killer_id'], $log['killer_name']); ?></td>
          <td><?php if (!empty($log['weapon_icon'])): ?><img src="images/icons/<?php echo $log['weapon_icon']; ?>" alt="<?php echo $log['weapon_name']; ?>" <?php list($width, $height, $type, $attr) = getimagesize('images/icons/'.$log['weapon_icon']); echo $attr; ?>><?php endif; ?></td>
-         <td><?php if ($log['kill_type'] == 'team'): ?><span class="quakecolor_red">teamkilled</a><?php elseif ($log['kill_type'] == 'enemy'): ?>killed<?php elseif (!empty($log['weapon_icon'])): ?>killed<?php endif; ?></td>
+         <td><?php if ($log['kill_type'] == 'team'): ?><span class="quakecolor_red">teamkilled</span><?php elseif ($log['kill_type'] == 'enemy'): ?>killed<?php elseif (!empty($log['weapon_icon'])): ?>killed<?php endif; ?></td>
          <td><?php if (!empty($log['victim_id'])) echo player_link($log['victim_id'], $log['victim_name']); if (empty($log['weapon_icon'])): ?> died by <?php echo $log['weapon_name']; endif;?></td>
 
         <?php elseif (isset($log['destruct_gametime'])): ?>
