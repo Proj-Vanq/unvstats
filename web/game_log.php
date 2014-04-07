@@ -50,13 +50,17 @@ $kills = $db->GetAll("SELECT players.player_name AS victim_name,
                              players.player_id AS victim_id,
                              source.player_name AS killer_name,
                              source.player_id AS killer_id,
+                             source2.player_name AS assistant_name,
+                             source2.player_id AS assistant_id,
                              kill_gametime,
                              kill_type,
+                             kill_assist_type,
                              weapon_name,
                              weapon_icon
                         FROM kills
                         INNER JOIN players ON kill_target_player_id = player_id
                         LEFT JOIN players AS source ON kill_source_player_id = source.player_id
+                        LEFT JOIN players AS source2 ON kill_assist_player_id = source2.player_id
                         INNER JOIN weapons ON weapon_id = kill_weapon_id
                         WHERE kill_game_id = ?",
                         array($_GET['game_id']));
