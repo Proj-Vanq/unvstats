@@ -57,7 +57,7 @@
 
     <thead>
       <tr class="<?php echo $table[1]; ?>s-teamshader">
-        <th><?php echo $table[0]; ?> (stage <?php if (!empty($this->game_details['game_stage_alien3'])) echo 3; elseif (!empty($this->game_details['game_stage_alien2'])) echo 2; else echo 1; ?>)</th>
+        <th><?php echo $table[0]; ?></th>
         <th>Score</th>
         <th>Kills</th>
         <th>Assists</th>

@@ -12,12 +12,7 @@ $game_details = $db->GetRow("SELECT game_id,
                                     game_timestamp,
                                     game_map_id,
                                     game_winner,
-                                    game_length,
-                                    game_sudden_death,
-                                    game_stage_alien2,
-                                    game_stage_alien3,
-                                    game_stage_human2,
-                                    game_stage_human3
+                                    game_length
                              FROM games
                              WHERE game_id = ?",
                              array($_GET['game_id']));
@@ -171,12 +166,6 @@ function add_misc($gametime, $action, $text, $salt) {
     $logs[$key] = $data;
   endif;
 }
-
-add_misc($game_details['game_stage_alien2'], 'stage', 'Aliens Stage 2', $N++);
-add_misc($game_details['game_stage_alien3'], 'stage', 'Aliens Stage 3', $N++);
-add_misc($game_details['game_stage_human2'], 'stage', 'Humans Stage 2', $N++);
-add_misc($game_details['game_stage_human3'], 'stage', 'Humans Stage 3', $N++);
-add_misc($game_details['game_sudden_death'], 'time', 'Sudden Death', $N++);
 
 // Assign variables to template
 $tpl->assign('game_details', $game_details);

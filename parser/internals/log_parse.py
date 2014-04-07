@@ -59,12 +59,6 @@ class Parser:
 					# ChangeTeam: ID TEAMNAME: NAME switched teams
 		self.RE_CHANGETEAM   = re.compile("^([0-9]+) (alien|human|spectator): (.+)$")
 
-					# Stage: T STAGE: Team reached Stage stage
-		self.RE_STAGE        = re.compile("^(A|H) ([2-3]): (Aliens|Humans) reached Stage ([2-3])?$")
-
-					# Beginning Sudden Death
-		self.RE_SUDDENDEATH  = re.compile("^[ ]*([0-9]+):([0-9]{2}) Beginning Sudden Death")
-
 					# Exit: RESULT MISC
 		self.RE_EXIT         = re.compile("^(Aliens|Humans|Timelimit|Evacuation).*\.$")
 
@@ -125,11 +119,6 @@ class Parser:
 		self.game_id             = None
 		self.game_map_id         = None
 		self.game_timestamp      = None
-		self.game_sudden_death   = None
-		self.game_stage_alien2   = None
-		self.game_stage_alien3   = None
-		self.game_stage_human2   = None
-		self.game_stage_human3   = None
 		self.game_alien_kills    = 0
 		self.game_human_kills    = 0
 		self.game_alien_deaths   = 0
@@ -370,16 +359,6 @@ class Parser:
 		# Get the logtype
 		match = self.RE_LOGTYPE.search(line)
 		if match == None:
-			# If there is no game-id yet, return now
-			if self.game_id == None:
-				return
-
-			match = self.RE_SUDDENDEATH.search(line)
-			if match != None:
-				result = match.groups()
-				gametime = self.Build_gametime(0, int(result[0]), int(result[1]))
-				self.game_sudden_death = gametime
-
 			return
 
 		# The line is ok, truncate it
@@ -416,8 +395,6 @@ class Parser:
 			self.Log_ClientTeamClass(gametime, line)
 		elif logtype == 'ClientRename':
 			self.Log_ClientRename(gametime, line)
-		elif logtype == 'Stage':
-			self.Log_Stage(gametime, line)
 		elif logtype == 'CallVote':
 			self.Log_Vote(gametime, line, None)
 		elif logtype == 'CallTeamVote':
@@ -629,11 +606,6 @@ class Parser:
 		                         `game_total_kills` = %s,
 		                         `game_total_deaths` = %s,
 		                         `game_length` = %s,
-		                         `game_sudden_death` = %s,
-		                         `game_stage_alien2` = %s,
-		                         `game_stage_alien3` = %s,
-		                         `game_stage_human2` = %s,
-		                         `game_stage_human3` = %s,
 		                         `game_is_empty` = %s
 		                  WHERE `game_id` = %s""",
 				  (self.game_exit,
@@ -644,11 +616,6 @@ class Parser:
 				   self.game_alien_kills + self.game_human_kills,
 				   self.game_alien_deaths + self.game_human_deaths,
 				   self.game_exit_time,
-				   self.game_sudden_death,
-				   self.game_stage_alien2,
-				   self.game_stage_alien3,
-				   self.game_stage_human2,
-				   self.game_stage_human3,
 				   self.game_is_empty,
 				   self.game_id))
 
@@ -1125,28 +1092,6 @@ class Parser:
 		else:
 			self.dbc.execute("""INSERT INTO `destructions` (`destruct_game_id`, `destruct_gametime`, `destruct_player_id`, `destruct_building_id`, `destruct_weapon_id`)
 			                    VALUES (%s, %s, %s, %s, %s)""", (self.game_id, gametime, player_mysql_id, building_id, weapon_id))
-
-	""" A team stages """
-	def Log_Stage(self, gametime, line):
-		# Parse the line
-		match = self.RE_STAGE.search(line)
-		if match == None:
-			return
-
-		result = match.groups()
-		team  = result[0]
-		stage = result[1]
-
-		if team == 'A':
-			if stage == '2':
-				self.game_stage_alien2 = gametime
-			elif stage == '3':
-				self.game_stage_alien3 = gametime
-		elif team == 'H':
-			if stage == '2':
-				self.game_stage_human2 = gametime
-			elif stage == '3':
-				self.game_stage_human3 = gametime
 
 	""" A Player called a vote """
 	def Log_Vote(self, gametime, line, team):

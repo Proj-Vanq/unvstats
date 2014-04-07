@@ -37,31 +37,6 @@ if( !isset($map_details['map_id']) ):
 endif;
 
 
-$stage_alien2 = $db->GetRow("SELECT COUNT(game_id) AS count
-                               FROM games
-                               WHERE game_map_id = ? AND game_winner = 'aliens' AND game_stage_alien2 != 'null'",
-                               array($map_details['map_id']));
-$stage_alien3 = $db->GetRow("SELECT COUNT(game_id) AS count
-                               FROM games
-                               WHERE game_map_id = ? AND game_winner = 'aliens' AND game_stage_alien3 != 'null'",
-                               array($map_details['map_id']));
-$stage_human2 = $db->GetRow("SELECT COUNT(game_id) AS count
-                               FROM games
-                               WHERE game_map_id = ? AND game_winner = 'humans' AND game_stage_human2 != 'null'",
-                               array($map_details['map_id']));
-$stage_human3 = $db->GetRow("SELECT COUNT(game_id) AS count
-                               FROM games
-                               WHERE game_map_id = ? AND game_winner = 'humans' AND game_stage_human3 != 'null'",
-                               array($map_details['map_id']));
-
-$stage_speeds = $db->GetRow("SELECT MIN(game_stage_alien2) AS alien_s2,
-                                    MIN(game_stage_alien3) AS alien_s3,
-                                    MIN(game_stage_human2) AS human_s2,
-                                    MIN(game_stage_human3) AS human_s3
-                               FROM games
-                               WHERE game_map_id = ?",
-                               array($map_details['map_id']));
-
 // Prefered weapons
 $weapon_kills = $db->GetAll("SELECT COUNT(kill_id) AS weapon_count,
                                         weapon_name,
@@ -117,12 +92,6 @@ $tpl->assign('destroyed_structures', $destroyed_structures);
 $tpl->assign('built_structures',     $built_structures);
 $tpl->assign('votes_called',         $votes_called);
 
-$tpl->assign('stage_alien2',         $stage_alien2);
-$tpl->assign('stage_alien3',         $stage_alien3);
-$tpl->assign('stage_human2',         $stage_human2);
-$tpl->assign('stage_human3',         $stage_human3);
-$tpl->assign('stage_speeds',         $stage_speeds);
-                                     
 // Show the template
 $tpl->display('map_details.tpl.php');
 ?>

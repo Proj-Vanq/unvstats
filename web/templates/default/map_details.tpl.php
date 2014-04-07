@@ -90,51 +90,6 @@
 
       <table>
         <colgroup>
-          <col class="item" />
-          <col class="data" />
-          <col class="data" />
-          <col />
-        </colgroup>
-
-        <thead>
-          <tr>
-            <th>Stage Breakdown</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Alien Wins</td>
-            <td><?php echo $this->map_details['mapstat_alien_wins'] - $this->stage_alien2['count']; ?></td>
-            <td><?php echo $this->stage_alien2['count'] - $this->stage_alien3['count']; ?></td>
-            <td><?php echo $this->stage_alien3['count']; ?></td>
-          </tr>
-          <tr>
-            <td>Human Wins</td>
-            <td><?php echo $this->map_details['mapstat_human_wins'] - $this->stage_human2['count']; ?></td>
-            <td><?php echo $this->stage_human2['count'] - $this->stage_human3['count']; ?></td>
-            <td><?php echo $this->stage_human3['count']; ?></td>
-          </tr>
-          <tr>
-            <td>Fastest Alien Stage</td>
-            <td></td>
-            <td><?php echo $this->stage_speeds['alien_s2']; ?></td>
-            <td><?php echo $this->stage_speeds['alien_s3']; ?></td>
-          </tr>
-          <tr>
-            <td>Fastest Human Stage</td>
-            <td></td>
-            <td><?php echo $this->stage_speeds['human_s2']; ?></td>
-            <td><?php echo $this->stage_speeds['human_s3']; ?></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <table>
-        <colgroup>
           <col />
           <col class="data" />
         </colgroup>

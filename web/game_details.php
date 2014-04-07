@@ -12,11 +12,7 @@ $game_details = $db->GetRow("SELECT game_id,
                                     game_timestamp,
                                     game_map_id,
                                     game_winner,
-                                    game_length,
-                                    game_stage_alien2,
-                                    game_stage_alien3,
-                                    game_stage_human2,
-                                    game_stage_human3
+                                    game_length
                              FROM games
                              WHERE game_id = ?",
                              array($_GET['game_id']));
