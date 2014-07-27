@@ -158,7 +158,7 @@ echo "Enter 'yes' to create the database '$MYSQL_NAME' or 'no' to skip this step
 read -p "Create database ? [yes/no] ]" INPUT
 if [ "$INPUT" == "yes" ] ; then
   echo "Creating database..."
-  mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASS -e "CREATE DATABASE $MYSQL_NAME"
+  mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASS" -e "CREATE DATABASE $MYSQL_NAME"
   MYSQL_OK=$?
   if [ "$MYSQL_OK" != "0" ] ; then
     echo "I got an error trying to create '$MYSQL_NAME'"
@@ -174,8 +174,8 @@ echo "NOTE: by saying 'yes', any existing unvstats data in database '$MYSQL_NAME
 read -p "Setup database structure ? [yes/no] ]" INPUT
 if [ "$INPUT" == "yes" ] ; then
   echo "setting up essential data..."
-  mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASS $MYSQL_NAME < sql/structure.sql
-  mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASS $MYSQL_NAME < sql/data.sql
+  mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASS" "$MYSQL_NAME" < sql/structure.sql
+  mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASS" "$MYSQL_NAME" < sql/data.sql
   echo "database is ready, continuing"
 else
   echo " ** that was not a 'yes', database creation SKIPPED."
